@@ -368,7 +368,28 @@ async function startFinanceSession(session){
  try{await syncFromCloud(currentUser);$("monthSelect").value=selectedMonth;render();toast("Dados sincronizados com o Supabase.")}
  catch(err){$("authGate").style.display="grid";$("financeApp").style.display="none";$("authMessage").textContent="Falha ao carregar dados: "+(err.message||"verifique a configuração do banco.");console.error(err)}
 }
-$("authForm").addEventListener("submit",async ev=>{ev.preventDefault();const btn=$("authSubmit"),msg=$("authMessage");btn.disabled=true;btn.textContent="Entrando…";msg.textContent="";const {data,error}=await supabaseClient.auth.signInWithPassword({email:$("authEmail").value.trim(),password:$("authPassword").value});btn.disabled=false;btn.textContent="Entrar";if(error){msg.textContent="Não foi possível entrar. Confira o e-mail e a senha.";console.error(error);return}await startFinanceSession(data.session)});
+$("authForm").addEventListener("submit",async ev=>{
+ ev.preventDefault();
+ const btn=$("authSubmit"),msg=$("authMessage");
+ if(btn.disabled)return;
+ btn.disabled=true;btn.textContent="Entrando…";msg.textContent="Verificando acesso…";
+ try{
+  const email=$("authEmail").value.trim(),password=$("authPassword").value;
+  const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+  if(error){
+   console.error("Erro de login Supabase:",error);
+   msg.textContent=/invalid login credentials/i.test(error.message||"")?"E-mail ou senha incorretos. Confira os dados e tente novamente.":/email not confirmed/i.test(error.message||"")?"Confirme o e-mail da conta antes de entrar.":"Não foi possível autenticar: "+(error.message||"verifique a configuração do Supabase.");
+   return;
+  }
+  if(!data.session){msg.textContent="Login não retornou uma sessão. Tente novamente.";return;}
+  await startFinanceSession(data.session);
+ }catch(err){
+  console.error("Falha inesperada no login:",err);
+  msg.textContent="Falha de conexão ao entrar. Verifique sua internet e tente novamente.";
+ }finally{
+  btn.disabled=false;btn.textContent="Entrar";
+ }
+});
 (async()=>{const {data,error}=await supabaseClient.auth.getSession();if(error){$("authMessage").textContent="Erro de autenticação: "+error.message;return}if(data.session)await startFinanceSession(data.session)})();
 </script>
 </body></html>
