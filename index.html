@@ -103,6 +103,12 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
  .navbar{width:100%;box-sizing:border-box}
 }
 
+
+/* Marcas nas linhas de lançamentos */
+.logo{width:36px;height:36px;min-width:36px;border-radius:11px;background:#fff!important;border:1px solid #dbe5ee!important;display:grid;place-items:center;overflow:hidden;padding:5px;box-sizing:border-box}
+.brand-logo-img{display:block;width:100%;height:100%;object-fit:contain}
+.brand-logo-fallback{align-items:center;justify-content:center;width:100%;height:100%;font-size:10px;font-weight:800;color:#34424c}
+
 </style>
 </head>
 <body>
@@ -235,7 +241,40 @@ $("incomeFoot").textContent=rows.filter(e=>e.type==="income").length+" receita(s
 let share=inc?Math.min(100,exp/inc*100):0;$("expenseShare").textContent=Math.round(share)+"%";$("donut").style.background=`conic-gradient(var(--accent) 0 ${share}%, #e1e7e4 ${share}% 100%)`;
 $("legendIncome").textContent=money(inc);$("legendExpense").textContent=money(exp);$("legendBalance").textContent=money(bal);
 let cats={};rows.filter(e=>e.type==="expense").forEach(e=>cats[e.category]=(cats[e.category]||0)+Number(e.amount));let top=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,5),max=top[0]?.[1]||1;$("categoryBars").innerHTML=top.length?top.map(([n,v])=>`<div><div class="bar-label"><span>${esc(n)}</span><strong>${money(v)}</strong></div><div class="bar"><span style="width:${Math.max(2,v/max*100)}%"></span></div></div>`).join(""):'<div class="empty">Sem despesas no período.</div>';
-let data=filtered();$("transactionsBody").innerHTML=data.map(e=>`<tr><td><div class="merchant"><div class="logo">${esc(e.logo||e.name.slice(0,2).toUpperCase())}</div><div><div class="merchant-name">${esc(e.name)}</div><div class="merchant-sub">${esc(e.note||"")}</div></div></div></td><td>${esc(e.category)}</td><td><span class="pill ${e.type==="income"?"recurring":""}">${e.type==="income"?"Receita":"Despesa"}</span></td><td><span class="pill ${e.kind==="installment"?"installment":e.kind==="recurring"?"recurring":""}">${installmentLabel(e)}</span></td><td class="amount ${e.type==="income"?"income":"expense"}">${e.type==="income"?"+ ":"− "}${money(e.amount)}</td><td>${esc(e.payment||"—")}</td><td><div class="row-actions"><button class="icon-btn" title="Editar" onclick="editEntry('${e.id}')">Editar</button><button class="icon-btn" title="Excluir" onclick="deleteEntry('${e.id}')">Excluir</button></div></td></tr>`).join("");$("emptyState").classList.toggle("hide",data.length>0);
+
+/* Logotipos de marcas nas movimentações */
+function brandLogoHTML(name,fallback){
+ const n=String(name||"").toLocaleLowerCase("pt-BR");
+ const brands=[
+  [/spotify/,"spotify","1ED760"],
+  [/youtube/,"youtube","FF0033"],
+  [/prime\s*video|amazon\s*prime/,"primevideo","00A8E0"],
+  [/amazon/,"amazon","FFFFFF"],
+  [/mercado\s*livre|mercadolivre/,"mercadolivre","FFE600"],
+  [/apple|icloud/,"apple","FFFFFF"],
+  [/netflix/,"netflix","E50914"],
+  [/disney\s*\+|disneyplus/,"disneyplus","FFFFFF"],
+  [/google|youtube music/,"google","4285F4"],
+  [/microsoft|xbox/,"microsoft","FFFFFF"],
+  [/nubank/,"nubank","8A05BE"],
+  [/ifood/,"ifood","EA1D2C"],
+  [/uber/,"uber","FFFFFF"],
+  [/steam/,"steam","FFFFFF"],
+  [/playstation/,"playstation","FFFFFF"],
+  [/deezer/,"deezer","FEAA2D"],
+  [/twitch/,"twitch","9146FF"],
+  [/adobe/,"adobe","FF0000"],
+  [/canva/,"canva","00C4CC"],
+  [/chatgpt|openai/,"openai","FFFFFF"],
+  [/visa/,"visa","1A1F71"],
+  [/mastercard/,"mastercard","EB001B"]
+ ];
+ const brand=brands.find(([re])=>re.test(n));
+ if(!brand)return esc(fallback||String(name||"").slice(0,2).toUpperCase());
+ return '<img class="brand-logo-img" src="https://cdn.simpleicons.org/'+brand[1]+'/'+brand[2]+'" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" style="display:none">'+esc(fallback||String(name||"").slice(0,2).toUpperCase())+'</span>';
+}
+
+let data=filtered();$("transactionsBody").innerHTML=data.map(e=>`<tr><td><div class="merchant"><div class="logo">${brandLogoHTML(e.name,e.logo||e.name.slice(0,2).toUpperCase())}</div><div><div class="merchant-name">${esc(e.name)}</div><div class="merchant-sub">${esc(e.note||"")}</div></div></div></td><td>${esc(e.category)}</td><td><span class="pill ${e.type==="income"?"recurring":""}">${e.type==="income"?"Receita":"Despesa"}</span></td><td><span class="pill ${e.kind==="installment"?"installment":e.kind==="recurring"?"recurring":""}">${installmentLabel(e)}</span></td><td class="amount ${e.type==="income"?"income":"expense"}">${e.type==="income"?"+ ":"− "}${money(e.amount)}</td><td>${esc(e.payment||"—")}</td><td><div class="row-actions"><button class="icon-btn" title="Editar" onclick="editEntry('${e.id}')">Editar</button><button class="icon-btn" title="Excluir" onclick="deleteEntry('${e.id}')">Excluir</button></div></td></tr>`).join("");$("emptyState").classList.toggle("hide",data.length>0);
 let recurring=rows.filter(e=>e.kind==="recurring"&&e.type==="expense").reduce((s,e)=>s+Number(e.amount),0),inst=rows.filter(e=>e.kind==="installment"&&e.type==="expense").reduce((s,e)=>s+Number(e.amount),0),once=rows.filter(e=>e.kind==="once"&&e.type==="expense").reduce((s,e)=>s+Number(e.amount),0);
 $("commitments").innerHTML=[["Assinaturas e fixos",recurring,"Mensal recorrente","↻"],["Parcelas em andamento",inst,"Compras parceladas","▤"],["Gastos pontuais",once,"Lançamentos únicos","•"]].map(([n,v,d,s])=>`<div class="cashflow-item"><div class="cashflow-label"><div class="cashflow-symbol">${s}</div><div><strong>${n}</strong><small>${d}</small></div></div><strong>${money(v)}</strong></div>`).join("");
 if(typeof renderLedgerViews==="function")renderLedgerViews();
