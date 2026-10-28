@@ -467,7 +467,6 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
    <label style="font-size:13px">E-mail<input id="authEmail" type="email" required autocomplete="username" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #35544b;border-radius:9px;background:#0d1917;color:#fff"></label>
    <label style="font-size:13px">Senha<input id="authPassword" type="password" required autocomplete="current-password" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #35544b;border-radius:9px;background:#0d1917;color:#fff"></label>
    <button id="authSubmit" type="submit" style="padding:12px;border:0;border-radius:9px;background:#7af0cb;color:#10231d;font-weight:800;cursor:pointer">Entrar</button>
-   <button id="forgotPasswordBtn" type="button" style="padding:8px;border:0;background:transparent;color:#8fc8ff;font-weight:650;cursor:pointer">Esqueci minha senha / Redefinir por e-mail</button>
    <div id="authMessage" role="status" style="font-size:13px;color:#ffb5a8"></div>
   </form>
  </section>
@@ -717,17 +716,7 @@ document.querySelectorAll(".navtab").forEach(b=>b.addEventListener("click",()=>s
 
 toggleInstallments();
 $("logoutBtn").addEventListener("click",async()=>{await supabaseClient.auth.signOut();currentUser=null;entries=[];$("financeApp").style.display="none";$("authGate").style.display="grid";$("authPassword").value="";$("authMessage").textContent="Sessão encerrada."});
-$("forgotPasswordBtn").addEventListener("click",async()=>{
- const email=$("authEmail").value.trim(),msg=$("authMessage"),btn=$("forgotPasswordBtn");
- if(!email){msg.textContent="Informe seu e-mail acima para receber o link de redefinição."; $("authEmail").focus();return}
- btn.disabled=true;btn.textContent="Enviando link…";msg.textContent="Solicitando link de redefinição…";
- try{
-  const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+window.location.pathname});
-  if(error)throw error;
-  msg.style.color="#7af0cb";msg.textContent="Se o endereço estiver cadastrado, você receberá um e-mail com as instruções para redefinir a senha.";
- }catch(err){msg.style.color="#ffb5a8";msg.textContent="Não foi possível solicitar a redefinição. Verifique a configuração de URLs de redirecionamento no Supabase."}
- finally{btn.disabled=false;btn.textContent="Esqueci minha senha / Redefinir por e-mail"}
-});
+
 $("changePasswordBtn").addEventListener("click",()=>{
  $("changePasswordForm").reset();$("passwordChangeMessage").textContent="";$("passwordChangeMessage").style.color="#ffb5a8";$("passwordModal").style.display="grid";$("newPassword").focus();
 });
