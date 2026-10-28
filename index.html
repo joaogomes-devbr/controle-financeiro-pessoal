@@ -310,7 +310,8 @@ function brandLogoHTML(name,fallback,category){
   [/academia|esporte/,"🏋️"],[/saude|hospital|medico|dentista/,"❤️"],[/farmacia|remedio/,"💊"],[/pet|veterinario|racao/,"🐾"],[/estudos|curso|escola|faculdade/,"🎓"],[/livro/,"📚"],
   [/viagem|passagem|aviao/,"✈️"],[/hotel|hospedagem/,"🧳"],[/presente/,"🎁"],[/assinatura|streaming/,"📺"],[/parcela|compra|loja|shopping/,"🛍️"],[/salario|salário|renda|receita/,"💰"],[/banco|cartao|cartão|tarifa/,"💳"],[/doacao|doação/,"💝"],[/imposto|taxa/,"🧾"]
  ];
- if(/plano\\s*saf|saf\\s*assist/.test(n)){const alt=esc(String(name||"Plano SAF"));return '<img class="brand-logo-img brand-logo-saf" src="./assets/plano-saf.svg" alt="'+alt+'" title="'+alt+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" role="img" aria-label="'+alt+'" title="'+alt+'">❤️</span>';}\n const brand=brands.find(([re])=>re.test(n));
+ if(/plano\\s*saf|saf\\s*assist/.test(n)){const alt=esc(String(name||"Plano SAF"));return '<img class="brand-logo-img brand-logo-saf" src="./assets/plano-saf.svg" alt="'+alt+'" title="'+alt+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" role="img" aria-label="'+alt+'" title="'+alt+'">❤️</span>';}
+ const brand=brands.find(([re])=>re.test(n));
  const emoji=(brand&&brand[3])||(generic.find(([re])=>re.test(n))||generic.find(([re])=>re.test(cat))||[])[1]||"✨";
  const alt=esc(String(name||"Lançamento"));
  const fallbackHTML='<span class="brand-logo-fallback brand-emoji-only" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
