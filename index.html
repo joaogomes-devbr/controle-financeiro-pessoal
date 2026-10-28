@@ -151,6 +151,14 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .brand-logo-fallback{align-items:center;justify-content:center;width:100%;height:100%;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:23px;line-height:1}
 .brand-logo-fallback.brand-emoji-only{display:inline-flex}
 
+
+/* Cartões de marca: ícones locais, centralizados e proporcionais */
+.logo{width:42px!important;height:42px!important;min-width:42px!important;display:grid!important;place-items:center!important;align-items:center!important;justify-content:center!important;background:#fff!important;border:1px solid #e3eaf2!important;border-radius:11px!important;padding:5px!important;box-sizing:border-box!important;overflow:hidden!important}
+.brand-logo-img{width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center center!important;display:block;margin:auto}
+.brand-logo-fallback{display:none;align-items:center;justify-content:center;width:100%;height:100%;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:25px;line-height:1}
+.brand-logo-fallback.brand-emoji-only{display:inline-flex}
+@media(max-width:700px){.logo{width:38px!important;height:38px!important;min-width:38px!important;padding:4px!important}.brand-logo-fallback{font-size:23px}}
+
 </style>
 </head>
 <body>
@@ -288,64 +296,43 @@ let cats={};rows.filter(e=>e.type==="expense").forEach(e=>cats[e.category]=(cats
 function brandLogoHTML(name,fallback,category){
  const n=String(name||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("pt-BR");
  const cat=String(category||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("pt-BR");
- const brands=[
-  [/tiktok/, "tiktok","111111","🎵"],
-  [/youtube music/,"youtubemusic","FF0033","🎵"],
-  [/prime\s*video|amazon\s*prime/,"primevideo","00A8E0","▶️"],
-  [/mercado\s*livre|mercadolivre/,"mercadolivre","3483FA","🤝"],
-  [/spotify/,"spotify","1ED760","🎵"],
-  [/youtube/,"youtube","FF0033","▶️"],
-  [/netflix/,"netflix","E50914","🎬"],
-  [/disney\s*\+|disneyplus/,"disneyplus","113CCF","✨"],
-  [/paramount\+|paramount plus/,"paramountplus","0064FF","🎬"],
-  [/globoplay/,"globoplay","FB003F","📺"],
-  [/hbo|max/,"hbo","5822B4","🎬"],
-  [/amazon/,"amazon","FF9900","📦"],
-  [/apple|icloud/,"apple","111111","🍎"],
-  [/mercado\s*pago/,"mercadopago","009EE3","💳"],
-  [/google\s*one/,"googleone","4285F4","☁️"],
-  [/google/,"google","4285F4","🔎"],
-  [/microsoft\s*365|office/,"microsoftoffice","D83B01","🪟"],
-  [/microsoft|xbox/,"microsoft","5E5E5E","🎮"],
-  [/nubank/,"nubank","8A05BE","💜"],
-  [/ifood/,"ifood","EA1D2C","🍔"],
-  [/uber\s*eats/,"ubereats","06C167","🍔"],
-  [/uber/,"uber","111111","🚗"],
-  [/99\s*(pop|app)?/,"99","FFCC00","🚕"],
-  [/steam/,"steam","171A21","🎮"],
-  [/playstation/,"playstation","003791","🎮"],
-  [/deezer/,"deezer","FEAA2D","🎵"],
-  [/twitch/,"twitch","9146FF","🎮"],
-  [/adobe/,"adobe","FF0000","🎨"],
-  [/canva/,"canva","00C4CC","🎨"],
-  [/chatgpt|openai/,"openai","111111","🤖"],
-  [/visa/,"visa","1A1F71","💳"],
-  [/mastercard/,"mastercard","EB001B","💳"],
-  [/shein/,"shein","111111","🛍️"],
-  [/shopee/,"shopee","EE4D2D","🛍️"],
-  [/aliexpress/,"aliexpress","E43225","📦"],
-  [/magalu|magazine luiza/,"magalu","0086FF","🛍️"],
-  [/rappi/,"rappi","FF441F","🛵"],
-  [/tim/,"tim","004691","📱"],[/vivo/,"vivo","660099","📱"],[/claro/,"claro","DA291C","📱"],[/enel/,"enel","E60000","⚡"]
+ const alt=esc(String(name||"Lançamento"));
+ const local=[
+  [/plano\s*saf|saf\s*assist/,"./assets/plano-saf.svg","❤️"],
+  [/prime\s*video|amazon\s*prime/,"./assets/brand-prime-video.svg","▶️"],
+  [/amazon/,"./assets/brand-amazon.svg","📦"],
+  [/spotify/,"./assets/brand-spotify.svg","🎵"],
+  [/youtube/,"./assets/brand-youtube.svg","▶️"],
+  [/apple|icloud/,"./assets/brand-apple.svg","🍎"],
+  [/tiktok/,"./assets/brand-tiktok.svg","🎵"],
+  [/shopee/,"./assets/brand-shopee.svg","🛍️"],
+  [/mercado\s*livre|mercadolivre/,"./assets/brand-mercado-livre.svg","🤝"],
+  [/netflix/,"./assets/brand-netflix.svg","🎬"],
+  [/disney\s*\+|disneyplus/,"./assets/brand-disney-plus.svg","✨"],
+  [/hbo|max/,"./assets/brand-hbo-max.svg","🎬"],
+  [/paramount\+|paramount plus/,"./assets/brand-paramount-plus.svg","🎬"]
  ];
  const generic=[
-  [/ar condicionado|climatizacao|refrigeracao/,"❄️"],[/ventilador|exaustor/,"🌀"],[/geladeira|freezer/,"🧊"],[/tv|televisao/,"📺"],[/internet|wifi|wi-fi|banda larga/,"📶"],
-  [/energia|eletricidade|luz/,"⚡"],[/agua|saneamento/,"💧"],[/gas/,"🔥"],[/aluguel|imovel|casa|iptu|condominio/,"🏠"],[/manutencao|conserto|reparo/,"🛠️"],
-  [/limpeza|faxina/,"🧹"],[/seguranca|alarme/,"🛡️"],[/lixo|coleta/,"🗑️"],[/moveis|sofa/,"🛋️"],[/eletrodomesticos/,"🔌"],[/carro|automovel|oficina/,"🚗"],
-  [/combustivel|gasolina|etanol/,"⛽"],[/estacionamento|garagem/,"🅿️"],[/pedagio/,"🛣️"],[/ipva|licenciamento|multa/,"📄"],[/seguro/,"🛡️"],[/transporte publico|onibus|metro/,"🚌"],
-  [/taxi/,"🚕"],[/moto/,"🏍️"],[/supermercado|mercado|mercearia/,"🛒"],[/restaurante|alimentacao|lanche|lanchonete/,"🍽️"],[/cafe|cafeteria/,"☕"],[/lazer|cinema|parque/,"🎟️"],
-  [/academia|esporte/,"🏋️"],[/saude|hospital|medico|dentista/,"❤️"],[/farmacia|remedio/,"💊"],[/pet|veterinario|racao/,"🐾"],[/estudos|curso|escola|faculdade/,"🎓"],[/livro/,"📚"],
-  [/viagem|passagem|aviao/,"✈️"],[/hotel|hospedagem/,"🧳"],[/presente/,"🎁"],[/assinatura|streaming/,"📺"],[/parcela|compra|loja|shopping/,"🛍️"],[/salario|renda|receita/,"💰"],[/banco|cartao|tarifa/,"💳"],[/doacao/,"💝"],[/imposto|taxa/,"🧾"]
+  [/ar[\s-]*condicionado|instalacao[\s-]*ar|climatizacao|refrigeracao/,"❄️"],
+  [/ventilador|exaustor/,"🌀"],[/geladeira|freezer/,"🧊"],[/tv|televisao/,"📺"],
+  [/internet|wifi|wi-fi|banda larga/,"📶"],[/energia|eletricidade|luz/,"⚡"],[/agua|saneamento/,"💧"],[/gas/,"🔥"],
+  [/aluguel|imovel|casa|iptu|condominio/,"🏠"],[/manutencao|conserto|reparo/,"🛠️"],[/limpeza|faxina/,"🧹"],
+  [/seguranca|alarme/,"🛡️"],[/lixo|coleta/,"🗑️"],[/moveis|sofa/,"🛋️"],[/eletrodomesticos/,"🔌"],
+  [/carro|automovel|oficina/,"🚗"],[/combustivel|gasolina|etanol/,"⛽"],[/estacionamento|garagem/,"🅿️"],[/pedagio/,"🛣️"],
+  [/ipva|licenciamento|multa/,"📄"],[/seguro/,"🛡️"],[/transporte publico|onibus|metro/,"🚌"],[/taxi/,"🚕"],[/moto/,"🏍️"],
+  [/supermercado|mercado|mercearia/,"🛒"],[/restaurante|alimentacao|lanche|lanchonete/,"🍽️"],[/cafe|cafeteria/,"☕"],
+  [/lazer|cinema|parque/,"🎟️"],[/academia|esporte/,"🏋️"],[/saude|hospital|medico|dentista/,"❤️"],[/farmacia|remedio/,"💊"],
+  [/pet|veterinario|racao/,"🐾"],[/estudos|curso|escola|faculdade/,"🎓"],[/livro/,"📚"],[/viagem|passagem|aviao/,"✈️"],
+  [/hotel|hospedagem/,"🧳"],[/presente/,"🎁"],[/assinatura|streaming/,"📺"],[/parcela|compra|loja|shopping/,"🛍️"],
+  [/salario|renda|receita/,"💰"],[/banco|cartao|tarifa/,"💳"],[/doacao/,"💝"],[/imposto|taxa/,"🧾"]
  ];
- const alt=esc(String(name||"Lançamento"));
- const emoji=(brands.find(([re])=>re.test(n))||[])[3]||(generic.find(([re])=>re.test(n))||generic.find(([re])=>re.test(cat))||[])[1]||"✨";
+ const localMatch=local.find(([re])=>re.test(n));
+ const emoji=(localMatch&&localMatch[2])||(generic.find(([re])=>re.test(n))||generic.find(([re])=>re.test(cat))||[])[1]||"✨";
  const fallbackHTML='<span class="brand-logo-fallback brand-emoji-only" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
- if(/plano\s*saf|saf\s*assist/.test(n)){
-  return '<img class="brand-logo-img brand-logo-saf" src="./assets/plano-saf.svg" alt="'+alt+'" title="'+alt+'" loading="eager" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" style="display:none" role="img" aria-label="'+alt+'" title="'+alt+'">❤️</span>';
+ if(localMatch){
+  return '<img class="brand-logo-img" src="'+localMatch[1]+'" alt="'+alt+'" title="'+alt+'" loading="eager" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" style="display:none" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
  }
- const brand=brands.find(([re])=>re.test(n));
- if(!brand)return fallbackHTML;
- return '<img class="brand-logo-img" src="https://cdn.simpleicons.org/'+brand[1]+'/'+brand[2]+'" alt="'+alt+'" title="'+alt+'" loading="eager" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" style="display:none" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
+ return fallbackHTML;
 }
 
 let data=filtered();$("transactionsBody").innerHTML=data.map(e=>`<tr><td><div class="merchant"><div class="logo">${brandLogoHTML(e.name,e.logo||e.name.slice(0,2).toUpperCase(),e.category)}</div><div><div class="merchant-name">${esc(e.name)}</div><div class="merchant-sub">${esc(e.note||"")}</div></div></div></td><td>${esc(e.category)}</td><td><span class="pill ${e.type==="income"?"recurring":""}">${e.type==="income"?"Receita":"Despesa"}</span></td><td><span class="pill ${e.kind==="installment"?"installment":e.kind==="recurring"?"recurring":""}">${installmentLabel(e)}</span></td><td class="amount ${e.type==="income"?"income":"expense"}">${e.type==="income"?"+ ":"− "}${money(e.amount)}</td><td>${esc(e.payment||"—")}</td><td><div class="row-actions"><button class="icon-btn" title="Editar" onclick="editEntry('${e.id}')">Editar</button><button class="icon-btn" title="Excluir" onclick="deleteEntry('${e.id}')">Excluir</button></div></td></tr>`).join("");$("emptyState").classList.toggle("hide",data.length>0);
