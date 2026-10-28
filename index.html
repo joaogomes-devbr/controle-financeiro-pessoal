@@ -437,6 +437,16 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 
 /* Ocultar também o cartão de dica removido, caso reste alguma cópia de estilo */
 .sidebar-review-card{display:none!important}
+
+/* Mensagem motivacional compacta: ocupa a largura da barra, sem criar rolagem horizontal */
+.sidebar-motivation{position:relative;display:block;box-sizing:border-box;flex:0 0 auto;align-self:stretch;width:100%;min-width:0;max-width:100%;margin:12px 0 0;padding:13px;border:1px solid #244454;border-radius:14px;background:radial-gradient(ellipse at 100% 0%,rgba(49,190,218,.09),transparent 52%),linear-gradient(145deg,#0e2032,#091522);overflow-wrap:anywhere;overflow:hidden}
+.sidebar-motivation:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,#35d8b7,#4baeff)}
+.motivation-icon{display:grid;place-items:center;width:27px;height:27px;margin-bottom:9px;border-radius:8px;background:rgba(55,216,183,.12);color:#6ae8ce;font-size:16px}
+.motivation-eyebrow{margin-bottom:7px;color:#65dec6;font-size:8px;font-weight:850;letter-spacing:.12em}
+.sidebar-motivation p{margin:0;color:#eff6ff;font-size:12px;font-weight:750;line-height:1.5;overflow-wrap:anywhere}
+.sidebar-motivation span{display:block;margin-top:7px;color:#9eb3cb;font-size:10px;line-height:1.45;overflow-wrap:anywhere}
+@media(max-width:760px){.navbar{overflow-x:hidden!important}.sidebar-motivation{width:100%;min-width:0;max-width:100%;margin-top:12px;padding:12px}.sidebar-motivation p{font-size:12px}}
+
 </style>
 </head>
 <body>
@@ -475,6 +485,12 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
   <div class="budget-guide-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>É uma referência, não uma regra. Ajuste à sua realidade.</span></div>
  </section>
  <section class="sidebar-tip-card" aria-label="Dica financeira prática"><div class="sidebar-tip-head"><span class="sidebar-tip-icon">↗</span><span class="sidebar-tip-label">DICA DA SEMANA</span></div><h3>Pague-se primeiro</h3><p>Ao receber, separe um valor para sua reserva antes de começar a gastar. Mesmo pequenas quantias, com constância, ajudam a criar o hábito de poupar.</p><div class="sidebar-tip-footer">Comece com um valor que caiba no seu orçamento.</div></section>
+ <section class="sidebar-motivation" aria-label="Mensagem de motivação">
+  <div class="motivation-icon" aria-hidden="true">✦</div>
+  <div class="motivation-eyebrow">LEMBRETE PARA VOCÊ</div>
+  <p>“Pequenos passos todos os dias constroem grandes conquistas.”</p>
+  <span>Continue avançando no seu ritmo.</span>
+ </section>
 
 </nav>
 
