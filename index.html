@@ -359,6 +359,28 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .sidebar-mini-stats i{width:5px;height:5px;display:inline-block;border-radius:50%;background:#36dfb7;box-shadow:0 0 8px rgba(54,223,183,.35)}
 @media(max-width:700px){.sidebar-inspiration{grid-column:1/-1;margin-top:0;display:grid;grid-template-columns:82px minmax(0,1fr);align-items:center;gap:10px;padding:11px}.sidebar-art{height:82px;margin:0}.sidebar-art svg{width:90px;height:78px}.sidebar-inspiration-copy h3{font-size:15px}.sidebar-inspiration-copy p{font-size:10px}.sidebar-kicker{font-size:8px}.sidebar-mini-stats{grid-column:1/-1;margin-top:1px;padding-top:8px}}
 
+
+/* Painel intermediário para aproveitar o espaço vazio da barra lateral */
+.sidebar-routine{position:relative;margin-top:clamp(34px,9vh,108px);margin-bottom:18px;padding:15px 13px 13px;border:1px solid #203a50;border-radius:16px;background:linear-gradient(150deg,rgba(17,37,57,.95),rgba(9,23,37,.94));box-shadow:0 12px 28px rgba(0,0,0,.14);overflow:hidden}
+.sidebar-routine:before{content:"";position:absolute;top:0;left:0;width:78px;height:2px;background:linear-gradient(90deg,#31e0b7,transparent)}
+.routine-head{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+.routine-icon{width:35px;height:35px;display:grid;place-items:center;flex:none;border-radius:11px;background:rgba(43,220,179,.12);color:#42e5bf}
+.routine-icon svg{width:20px;height:20px}
+.routine-kicker{display:block;color:#51e4c2;font-size:8px;font-weight:850;letter-spacing:.12em;margin-bottom:4px}
+.routine-head h3{margin:0;color:#f0f6ff;font-size:12px;font-weight:800;letter-spacing:-.015em}
+.routine-steps{display:grid;gap:0}
+.routine-step{display:grid;grid-template-columns:27px 1px minmax(0,1fr) 20px;align-items:center;gap:9px;min-height:48px;position:relative}
+.routine-number{width:26px;height:26px;display:grid;place-items:center;border:1px solid #28516a;border-radius:8px;background:#122b40;color:#63dcca;font-size:9px;font-weight:850}
+.routine-line{height:100%;min-height:30px;width:1px;background:linear-gradient(180deg,#2d786e,#284158)}
+.routine-step>div{display:grid;gap:3px}
+.routine-step strong{color:#e5effb;font-size:11px;font-weight:750}
+.routine-step small{color:#8fa8c2;font-size:9px;line-height:1.35}
+.routine-step-icon{color:#4bdbc0;font-size:17px;text-align:center}
+.routine-cta{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:12px;padding:10px 11px;border:1px solid rgba(49,224,183,.26);border-radius:10px;background:linear-gradient(100deg,rgba(26,91,82,.38),rgba(18,47,64,.6));color:#71e9ce;font-size:10px;font-weight:800;transition:background .18s,border-color .18s}
+.routine-cta:hover{background:rgba(37,135,112,.25);border-color:#36dcb8}
+.routine-cta span{font-size:17px}
+@media(max-width:700px){.sidebar-routine{grid-column:1/-1;margin:2px 0 0;padding:12px}.routine-head{margin-bottom:9px}.routine-steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.routine-step{grid-template-columns:1fr;align-content:start;gap:5px;min-height:0;padding:8px;border:1px solid #203b50;border-radius:10px;background:rgba(255,255,255,.02)}.routine-line{display:none}.routine-number{width:23px;height:23px}.routine-step-icon{display:none}.routine-step small{font-size:9px}.routine-cta{margin-top:9px}}
+
 </style>
 </head>
 <body>
@@ -386,6 +408,15 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
  <button class="navtab" data-view="addView"><span class="navico">＋</span> Adicionar lançamento</button>
  <button class="navtab" data-view="incomeView"><span class="navico">↗</span> Receitas</button>
  <button class="navtab" data-view="expenseView"><span class="navico">↘</span> Despesas</button>
+ <section class="sidebar-routine" aria-label="Rotina financeira">
+  <div class="routine-head"><span class="routine-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 14.7 8.5 21 9.4l-4.5 4.4 1.1 6.2L12 17l-5.6 3 1.1-6.2L3 9.4l6.3-.9L12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span><div><span class="routine-kicker">ROTINA FINANCEIRA</span><h3>Seu dinheiro, no controle</h3></div></div>
+  <div class="routine-steps">
+   <div class="routine-step"><span class="routine-number">01</span><span class="routine-line"></span><div><strong>Registre</strong><small>Anote o que entra e sai</small></div><span class="routine-step-icon">＋</span></div>
+   <div class="routine-step"><span class="routine-number">02</span><span class="routine-line"></span><div><strong>Analise</strong><small>Veja onde está gastando</small></div><span class="routine-step-icon">⌕</span></div>
+   <div class="routine-step"><span class="routine-number">03</span><div><strong>Ajuste</strong><small>Planeje o próximo passo</small></div><span class="routine-step-icon">↗</span></div>
+  </div>
+  <button type="button" class="routine-cta" id="routineAddButton">+ Registrar lançamento <span>→</span></button>
+ </section>
  <section class="sidebar-inspiration" aria-label="Inspiração financeira">
   <div class="sidebar-art" aria-hidden="true">
    <span class="sidebar-orbit orbit-one"></span><span class="sidebar-orbit orbit-two"></span>
