@@ -221,6 +221,10 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 @media(max-width:700px){.finance-analysis{gap:18px;min-height:0}.comparison-chart{gap:20px}.analysis-footer{gap:9px}.analysis-footer>div{align-items:flex-start;flex-direction:column;gap:6px}.comparison-meta>strong{font-size:12px}}
 
 
+/* Correção: permitir que o calendário de referência apareça completo */
+#formPanel{overflow:visible!important}
+#formPanel .panel-body{overflow:visible!important}
+#entryMonthPickerPanel{max-height:min(360px,calc(100vh - 24px));overflow-y:auto;overscroll-behavior:contain}
 /* Seletor de mês personalizado */
 .monthbar{gap:16px;position:relative;z-index:20}
 .month-control{display:flex;flex-direction:column;gap:7px}
