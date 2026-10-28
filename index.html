@@ -137,13 +137,12 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 
 
 
-/* Correção: mostrar apenas o logotipo OU o emoji de reserva */
-.logo{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;position:relative!important;padding:6px!important;box-sizing:border-box!important;overflow:hidden!important}
-.brand-logo-img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center center;margin:auto;position:relative;z-index:1}
-.brand-logo-fallback{display:none;align-items:center;justify-content:center;text-align:center;width:100%;height:100%;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:23px;line-height:1}
+
+/* Logotipo: nunca mostrar imagem e emoji ao mesmo tempo */
+.brand-logo-img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center;margin:auto}
+.brand-logo-fallback{display:none;align-items:center;justify-content:center;width:100%;height:100%;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:23px;line-height:1}
 .brand-logo-fallback.brand-emoji-only{display:inline-flex}
 
-.brand-logo-saf{object-fit:contain;object-position:center center;background:#fff;border-radius:7px;padding:2px;box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -314,8 +313,8 @@ function brandLogoHTML(name,fallback,category){
  const brand=brands.find(([re])=>re.test(n));
  const emoji=(brand&&brand[3])||(generic.find(([re])=>re.test(n))||generic.find(([re])=>re.test(cat))||[])[1]||"✨";
  const alt=esc(String(name||"Lançamento"));
- const fallbackHTML='<span class="brand-logo-fallback brand-emoji-only" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
- if(!brand)return fallbackHTML;
+ const fallbackHTML='<span class="brand-logo-fallback" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
+ if(!brand)return fallbackHTML.replace('class="brand-logo-fallback"','class="brand-logo-fallback brand-emoji-only"');
  return '<img class="brand-logo-img" src="https://cdn.simpleicons.org/'+brand[1]+'/'+brand[2]+'" alt="'+alt+'" title="'+alt+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'">'+fallbackHTML;
 }
 
