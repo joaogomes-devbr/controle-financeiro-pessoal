@@ -143,6 +143,14 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .brand-logo-fallback{display:none;align-items:center;justify-content:center;width:100%;height:100%;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:23px;line-height:1}
 .brand-logo-fallback.brand-emoji-only{display:inline-flex}
 
+
+/* Regras definitivas: imagem visível sozinha; reserva só após erro */
+.logo{display:grid!important;place-items:center!important;overflow:hidden!important;position:relative!important}
+.brand-logo-img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center center;margin:auto}
+.brand-logo-saf{background:#fff;border-radius:6px;padding:1px;box-sizing:border-box}
+.brand-logo-fallback{align-items:center;justify-content:center;width:100%;height:100%;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:23px;line-height:1}
+.brand-logo-fallback.brand-emoji-only{display:inline-flex}
+
 </style>
 </head>
 <body>
@@ -281,23 +289,43 @@ function brandLogoHTML(name,fallback,category){
  const n=String(name||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("pt-BR");
  const cat=String(category||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("pt-BR");
  const brands=[
-  [/tiktok/,"tiktok","111111","🎵"],[/youtube music/,"youtubemusic","FF0033","🎵"],
+  [/tiktok/, "tiktok","111111","🎵"],
+  [/youtube music/,"youtubemusic","FF0033","🎵"],
   [/prime\s*video|amazon\s*prime/,"primevideo","00A8E0","▶️"],
   [/mercado\s*livre|mercadolivre/,"mercadolivre","3483FA","🤝"],
-  [/spotify/,"spotify","1ED760","🎵"],[/youtube/,"youtube","FF0033","▶️"],
-  [/netflix/,"netflix","E50914","🎬"],[/disney\s*\+|disneyplus/,"disneyplus","113CCF","✨"],
-  [/paramount\+|paramount plus/,"paramountplus","0064FF","🎬"],[/globoplay/,"globoplay","FB003F","📺"],
-  [/max|hbo/,"hbo","5822B4","🎬"],[/amazon/,"amazon","FF9900","📦"],
-  [/apple|icloud/,"apple","111111","🍎"],[/mercado\s*pago/,"mercadopago","009EE3","💳"],
-  [/google\s*one/,"googleone","4285F4","☁️"],[/google/,"google","4285F4","🔎"],
-  [/microsoft\s*365|office/,"microsoftoffice","D83B01","🪟"],[/microsoft|xbox/,"microsoft","5E5E5E","🎮"],
-  [/nubank/,"nubank","8A05BE","💜"],[/ifood/,"ifood","EA1D2C","🍔"],[/uber\s*eats/,"ubereats","06C167","🍔"],
-  [/uber/,"uber","111111","🚗"],[/99\s*(pop|app)?/,"99","FFCC00","🚕"],[/steam/,"steam","171A21","🎮"],
-  [/playstation/,"playstation","003791","🎮"],[/deezer/,"deezer","FEAA2D","🎵"],[/twitch/,"twitch","9146FF","🎮"],
-  [/adobe/,"adobe","FF0000","🎨"],[/canva/,"canva","00C4CC","🎨"],[/chatgpt|openai/,"openai","111111","🤖"],
-  [/visa/,"visa","1A1F71","💳"],[/mastercard/,"mastercard","EB001B","💳"],
-  [/shein/,"shein","111111","🛍️"],[/shopee/,"shopee","EE4D2D","🛍️"],[/aliexpress/,"aliexpress","E43225","📦"],
-  [/magalu|magazine luiza/,"magalu","0086FF","🛍️"],[/rappi/,"rappi","FF441F","🛵"],
+  [/spotify/,"spotify","1ED760","🎵"],
+  [/youtube/,"youtube","FF0033","▶️"],
+  [/netflix/,"netflix","E50914","🎬"],
+  [/disney\s*\+|disneyplus/,"disneyplus","113CCF","✨"],
+  [/paramount\+|paramount plus/,"paramountplus","0064FF","🎬"],
+  [/globoplay/,"globoplay","FB003F","📺"],
+  [/hbo|max/,"hbo","5822B4","🎬"],
+  [/amazon/,"amazon","FF9900","📦"],
+  [/apple|icloud/,"apple","111111","🍎"],
+  [/mercado\s*pago/,"mercadopago","009EE3","💳"],
+  [/google\s*one/,"googleone","4285F4","☁️"],
+  [/google/,"google","4285F4","🔎"],
+  [/microsoft\s*365|office/,"microsoftoffice","D83B01","🪟"],
+  [/microsoft|xbox/,"microsoft","5E5E5E","🎮"],
+  [/nubank/,"nubank","8A05BE","💜"],
+  [/ifood/,"ifood","EA1D2C","🍔"],
+  [/uber\s*eats/,"ubereats","06C167","🍔"],
+  [/uber/,"uber","111111","🚗"],
+  [/99\s*(pop|app)?/,"99","FFCC00","🚕"],
+  [/steam/,"steam","171A21","🎮"],
+  [/playstation/,"playstation","003791","🎮"],
+  [/deezer/,"deezer","FEAA2D","🎵"],
+  [/twitch/,"twitch","9146FF","🎮"],
+  [/adobe/,"adobe","FF0000","🎨"],
+  [/canva/,"canva","00C4CC","🎨"],
+  [/chatgpt|openai/,"openai","111111","🤖"],
+  [/visa/,"visa","1A1F71","💳"],
+  [/mastercard/,"mastercard","EB001B","💳"],
+  [/shein/,"shein","111111","🛍️"],
+  [/shopee/,"shopee","EE4D2D","🛍️"],
+  [/aliexpress/,"aliexpress","E43225","📦"],
+  [/magalu|magazine luiza/,"magalu","0086FF","🛍️"],
+  [/rappi/,"rappi","FF441F","🛵"],
   [/tim/,"tim","004691","📱"],[/vivo/,"vivo","660099","📱"],[/claro/,"claro","DA291C","📱"],[/enel/,"enel","E60000","⚡"]
  ];
  const generic=[
@@ -307,15 +335,17 @@ function brandLogoHTML(name,fallback,category){
   [/combustivel|gasolina|etanol/,"⛽"],[/estacionamento|garagem/,"🅿️"],[/pedagio/,"🛣️"],[/ipva|licenciamento|multa/,"📄"],[/seguro/,"🛡️"],[/transporte publico|onibus|metro/,"🚌"],
   [/taxi/,"🚕"],[/moto/,"🏍️"],[/supermercado|mercado|mercearia/,"🛒"],[/restaurante|alimentacao|lanche|lanchonete/,"🍽️"],[/cafe|cafeteria/,"☕"],[/lazer|cinema|parque/,"🎟️"],
   [/academia|esporte/,"🏋️"],[/saude|hospital|medico|dentista/,"❤️"],[/farmacia|remedio/,"💊"],[/pet|veterinario|racao/,"🐾"],[/estudos|curso|escola|faculdade/,"🎓"],[/livro/,"📚"],
-  [/viagem|passagem|aviao/,"✈️"],[/hotel|hospedagem/,"🧳"],[/presente/,"🎁"],[/assinatura|streaming/,"📺"],[/parcela|compra|loja|shopping/,"🛍️"],[/salario|salário|renda|receita/,"💰"],[/banco|cartao|cartão|tarifa/,"💳"],[/doacao|doação/,"💝"],[/imposto|taxa/,"🧾"]
+  [/viagem|passagem|aviao/,"✈️"],[/hotel|hospedagem/,"🧳"],[/presente/,"🎁"],[/assinatura|streaming/,"📺"],[/parcela|compra|loja|shopping/,"🛍️"],[/salario|renda|receita/,"💰"],[/banco|cartao|tarifa/,"💳"],[/doacao/,"💝"],[/imposto|taxa/,"🧾"]
  ];
- if(/plano\s*saf|saf\s*assist/.test(n)){const alt=esc(String(name||"Plano SAF"));return '<img class="brand-logo-img brand-logo-saf" src="./assets/plano-saf.svg" alt="'+alt+'" title="'+alt+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" role="img" aria-label="'+alt+'" title="'+alt+'">❤️</span>';}
- const brand=brands.find(([re])=>re.test(n));
- const emoji=(brand&&brand[3])||(generic.find(([re])=>re.test(n))||generic.find(([re])=>re.test(cat))||[])[1]||"✨";
  const alt=esc(String(name||"Lançamento"));
- const fallbackHTML='<span class="brand-logo-fallback" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
- if(!brand)return fallbackHTML.replace('class="brand-logo-fallback"','class="brand-logo-fallback brand-emoji-only"');
- return '<img class="brand-logo-img" src="https://cdn.simpleicons.org/'+brand[1]+'/'+brand[2]+'" alt="'+alt+'" title="'+alt+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'">'+fallbackHTML;
+ const emoji=(brands.find(([re])=>re.test(n))||[])[3]||(generic.find(([re])=>re.test(n))||generic.find(([re])=>re.test(cat))||[])[1]||"✨";
+ const fallbackHTML='<span class="brand-logo-fallback brand-emoji-only" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
+ if(/plano\s*saf|saf\s*assist/.test(n)){
+  return '<img class="brand-logo-img brand-logo-saf" src="./assets/plano-saf.svg" alt="'+alt+'" title="'+alt+'" loading="eager" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" style="display:none" role="img" aria-label="'+alt+'" title="'+alt+'">❤️</span>';
+ }
+ const brand=brands.find(([re])=>re.test(n));
+ if(!brand)return fallbackHTML;
+ return '<img class="brand-logo-img" src="https://cdn.simpleicons.org/'+brand[1]+'/'+brand[2]+'" alt="'+alt+'" title="'+alt+'" loading="eager" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" style="display:none" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
 }
 
 let data=filtered();$("transactionsBody").innerHTML=data.map(e=>`<tr><td><div class="merchant"><div class="logo">${brandLogoHTML(e.name,e.logo||e.name.slice(0,2).toUpperCase(),e.category)}</div><div><div class="merchant-name">${esc(e.name)}</div><div class="merchant-sub">${esc(e.note||"")}</div></div></div></td><td>${esc(e.category)}</td><td><span class="pill ${e.type==="income"?"recurring":""}">${e.type==="income"?"Receita":"Despesa"}</span></td><td><span class="pill ${e.kind==="installment"?"installment":e.kind==="recurring"?"recurring":""}">${installmentLabel(e)}</span></td><td class="amount ${e.type==="income"?"income":"expense"}">${e.type==="income"?"+ ":"− "}${money(e.amount)}</td><td>${esc(e.payment||"—")}</td><td><div class="row-actions"><button class="icon-btn" title="Editar" onclick="editEntry('${e.id}')">Editar</button><button class="icon-btn" title="Excluir" onclick="deleteEntry('${e.id}')">Excluir</button></div></td></tr>`).join("");$("emptyState").classList.toggle("hide",data.length>0);
