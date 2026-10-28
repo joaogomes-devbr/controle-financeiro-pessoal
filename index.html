@@ -592,10 +592,10 @@ async function syncFromCloud(user){
  const {data,error}=await supabaseClient.from("financial_entries").select("*").eq("user_id",user.id).order("created_at");
  if(error) throw error;
  if(data.length){entries=data.map(fromDb);persist();return}
- let local=loadLocal();
- const rows=local.map(e=>toDb(e,user.id));
- if(rows.length){const {data:inserted,error:insertError}=await supabaseClient.from("financial_entries").insert(rows).select("*");if(insertError)throw insertError;entries=(inserted||[]).map(fromDb);persist();return}
+ // Cada conta começa vazia. Nunca copiar automaticamente dados do localStorage
+ // para um usuário novo, pois o navegador pode conter lançamentos de outra pessoa.
  entries=[];
+ persist();
 }
 function monthLabel(m){let [y,mm]=m.split("-");return monthNames[Number(mm)-1].toUpperCase()+" "+y}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
