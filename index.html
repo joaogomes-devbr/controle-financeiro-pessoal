@@ -135,6 +135,12 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .brand-logo-fallback{align-items:center;justify-content:center;width:100%;height:100%;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:22px;line-height:1;display:inline-flex}
 .logo{background:linear-gradient(145deg,#fff,#edf4fa)!important;box-shadow:inset 0 1px 0 #fff,0 2px 7px #00000012}
 
+
+/* Centralização consistente dos logotipos e fallback */
+.logo{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:6px!important;box-sizing:border-box!important;overflow:hidden!important}
+.brand-logo-img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center center;margin:auto}
+.brand-logo-fallback{display:inline-flex;align-items:center;justify-content:center;text-align:center;width:100%;height:100%;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:22px;line-height:1}
+
 </style>
 </head>
 <body>
@@ -273,7 +279,7 @@ function brandLogoHTML(name,fallback,category){
  const n=String(name||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("pt-BR");
  const cat=String(category||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("pt-BR");
  const brands=[
-  [/youtube music/,"youtubemusic","FF0033","🎵"],
+  [/tiktok/,"tiktok","111111","🎵"],[/youtube music/,"youtubemusic","FF0033","🎵"],
   [/prime\s*video|amazon\s*prime/,"primevideo","00A8E0","▶️"],
   [/mercado\s*livre|mercadolivre/,"mercadolivre","3483FA","🤝"],
   [/spotify/,"spotify","1ED760","🎵"],[/youtube/,"youtube","FF0033","▶️"],
@@ -290,33 +296,23 @@ function brandLogoHTML(name,fallback,category){
   [/visa/,"visa","1A1F71","💳"],[/mastercard/,"mastercard","EB001B","💳"],
   [/shein/,"shein","111111","🛍️"],[/shopee/,"shopee","EE4D2D","🛍️"],[/aliexpress/,"aliexpress","E43225","📦"],
   [/magalu|magazine luiza/,"magalu","0086FF","🛍️"],[/rappi/,"rappi","FF441F","🛵"],
-  [/tim/,"tim","004691","📱"],[/vivo/,"vivo","660099","📱"],[/claro/,"claro","DA291C","📱"],
-  [/enel/,"enel","E60000","⚡"]
+  [/tim/,"tim","004691","📱"],[/vivo/,"vivo","660099","📱"],[/claro/,"claro","DA291C","📱"],[/enel/,"enel","E60000","⚡"]
  ];
  const generic=[
-  [/ar condicionado|climatizacao|refrigeracao/,"❄️"],[/ventilador|exaustor/,"🌀"],
-  [/geladeira|freezer/,"🧊"],[/tv|televisao/,"📺"],[/internet|wifi|wi-fi|banda larga/,"📶"],
-  [/energia|eletricidade|luz/,"⚡"],[/agua|saneamento/,"💧"],[/gas/,"🔥"],
-  [/aluguel|imovel|casa|iptu|condominio/,"🏠"],[/manutencao|conserto|reparo/,"🛠️"],
-  [/limpeza|faxina/,"🧹"],[/seguranca|alarme/,"🛡️"],[/lixo|coleta/,"🗑️"],
-  [/moveis|sofa/,"🛋️"],[/eletrodomesticos/,"🔌"],[/carro|automovel|oficina/,"🚗"],
-  [/combustivel|gasolina|etanol/,"⛽"],[/estacionamento|garagem/,"🅿️"],[/pedagio/,"🛣️"],
-  [/ipva|licenciamento|multa/,"📄"],[/seguro/,"🛡️"],[/transporte publico|onibus|metro/,"🚌"],
-  [/taxi/,"🚕"],[/moto/,"🏍️"],[/supermercado|mercado|mercearia/,"🛒"],
-  [/restaurante|alimentacao|lanche|lanchonete/,"🍽️"],[/cafe|cafeteria/,"☕"],[/lazer|cinema|parque/,"🎟️"],
-  [/academia|esporte/,"🏋️"],[/saude|hospital|medico|dentista/,"❤️"],[/farmacia|remedio/,"💊"],
-  [/pet|veterinario|racao/,"🐾"],[/estudos|curso|escola|faculdade/,"🎓"],[/livro/,"📚"],
-  [/viagem|passagem|aviao/,"✈️"],[/hotel|hospedagem/,"🧳"],[/presente/,"🎁"],
-  [/assinatura|streaming/,"📺"],[/parcela|compra|loja|shopping/,"🛍️"],
-  [/salario|salário|renda|receita/,"💰"],[/banco|cartao|cartão|tarifa/,"💳"],
-  [/doacao|doação/,"💝"],[/imposto|taxa/,"🧾"]
+  [/ar condicionado|climatizacao|refrigeracao/,"❄️"],[/ventilador|exaustor/,"🌀"],[/geladeira|freezer/,"🧊"],[/tv|televisao/,"📺"],[/internet|wifi|wi-fi|banda larga/,"📶"],
+  [/energia|eletricidade|luz/,"⚡"],[/agua|saneamento/,"💧"],[/gas/,"🔥"],[/aluguel|imovel|casa|iptu|condominio/,"🏠"],[/manutencao|conserto|reparo/,"🛠️"],
+  [/limpeza|faxina/,"🧹"],[/seguranca|alarme/,"🛡️"],[/lixo|coleta/,"🗑️"],[/moveis|sofa/,"🛋️"],[/eletrodomesticos/,"🔌"],[/carro|automovel|oficina/,"🚗"],
+  [/combustivel|gasolina|etanol/,"⛽"],[/estacionamento|garagem/,"🅿️"],[/pedagio/,"🛣️"],[/ipva|licenciamento|multa/,"📄"],[/seguro/,"🛡️"],[/transporte publico|onibus|metro/,"🚌"],
+  [/taxi/,"🚕"],[/moto/,"🏍️"],[/supermercado|mercado|mercearia/,"🛒"],[/restaurante|alimentacao|lanche|lanchonete/,"🍽️"],[/cafe|cafeteria/,"☕"],[/lazer|cinema|parque/,"🎟️"],
+  [/academia|esporte/,"🏋️"],[/saude|hospital|medico|dentista/,"❤️"],[/farmacia|remedio/,"💊"],[/pet|veterinario|racao/,"🐾"],[/estudos|curso|escola|faculdade/,"🎓"],[/livro/,"📚"],
+  [/viagem|passagem|aviao/,"✈️"],[/hotel|hospedagem/,"🧳"],[/presente/,"🎁"],[/assinatura|streaming/,"📺"],[/parcela|compra|loja|shopping/,"🛍️"],[/salario|salário|renda|receita/,"💰"],[/banco|cartao|cartão|tarifa/,"💳"],[/doacao|doação/,"💝"],[/imposto|taxa/,"🧾"]
  ];
  const brand=brands.find(([re])=>re.test(n));
  const emoji=(brand&&brand[3])||(generic.find(([re])=>re.test(n))||generic.find(([re])=>re.test(cat))||[])[1]||"✨";
  const alt=esc(String(name||"Lançamento"));
- const emojiFallback='<span class="brand-logo-fallback" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
- if(!brand)return emojiFallback;
- return '<img class="brand-logo-img" src="https://cdn.simpleicons.org/'+brand[1]+'/'+brand[2]+'" alt="'+alt+'" title="'+alt+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'">'+emojiFallback;
+ const fallbackHTML='<span class="brand-logo-fallback" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
+ if(!brand)return fallbackHTML;
+ return '<img class="brand-logo-img" src="https://cdn.simpleicons.org/'+brand[1]+'/'+brand[2]+'" alt="'+alt+'" title="'+alt+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'">'+fallbackHTML;
 }
 
 let data=filtered();$("transactionsBody").innerHTML=data.map(e=>`<tr><td><div class="merchant"><div class="logo">${brandLogoHTML(e.name,e.logo||e.name.slice(0,2).toUpperCase(),e.category)}</div><div><div class="merchant-name">${esc(e.name)}</div><div class="merchant-sub">${esc(e.note||"")}</div></div></div></td><td>${esc(e.category)}</td><td><span class="pill ${e.type==="income"?"recurring":""}">${e.type==="income"?"Receita":"Despesa"}</span></td><td><span class="pill ${e.kind==="installment"?"installment":e.kind==="recurring"?"recurring":""}">${installmentLabel(e)}</span></td><td class="amount ${e.type==="income"?"income":"expense"}">${e.type==="income"?"+ ":"− "}${money(e.amount)}</td><td>${esc(e.payment||"—")}</td><td><div class="row-actions"><button class="icon-btn" title="Editar" onclick="editEntry('${e.id}')">Editar</button><button class="icon-btn" title="Excluir" onclick="deleteEntry('${e.id}')">Excluir</button></div></td></tr>`).join("");$("emptyState").classList.toggle("hide",data.length>0);
