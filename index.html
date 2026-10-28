@@ -192,6 +192,34 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 @media(max-width:700px){.main-grid{gap:13px}.main-grid>.panel{min-height:0;border-radius:15px}.main-grid>.panel>.panel-head{padding:16px;min-height:66px}.main-grid>.panel>.panel-body{padding:17px 15px 20px}.chart{grid-template-columns:112px minmax(0,1fr);gap:16px;min-height:0}.donut{width:108px;height:108px}.donut-center strong{font-size:21px}.donut-center span{font-size:8px;max-width:76px}.legend-row{grid-template-columns:8px minmax(40px,1fr);gap:7px;padding:10px 0;font-size:11px}.legend-row strong{grid-column:2;text-align:left;font-size:11px}.legend-row .dot{width:8px;height:8px}.bar-label{font-size:11px}.bar-label strong{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.main-grid>.panel,.bar span{transition:none}}
 
+
+/* Comparativo financeiro analítico: sem gráfico circular truncado */
+.finance-analysis{display:grid;grid-template-columns:minmax(155px,.72fr) minmax(0,1.5fr);gap:24px 30px;align-items:center;min-height:208px}
+.analysis-summary{padding:20px 18px;border:1px solid #24435a;border-radius:14px;background:linear-gradient(145deg,rgba(32,63,86,.58),rgba(12,27,43,.75));display:flex;flex-direction:column;gap:9px;min-width:0}
+.analysis-summary-label{font-size:11px;color:#9cb4ce;font-weight:700;letter-spacing:.045em;text-transform:uppercase}
+.analysis-summary>strong{font-size:clamp(20px,2.1vw,28px);line-height:1.2;letter-spacing:-.04em;color:#eaf3ff;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.analysis-summary>strong.negative{color:#ff7c8b}.analysis-summary>strong.positive{color:#32e0b3}
+#analysisStatus{font-size:11px;line-height:1.45;color:#a8bdd3}
+#analysisStatus.negative{color:#ff8c98}#analysisStatus.positive{color:#50e7c0}
+.comparison-chart{display:grid;gap:24px;min-width:0}
+.comparison-row{display:grid;gap:10px;min-width:0}
+.comparison-meta{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.comparison-label{display:flex;align-items:center;gap:9px;color:#d4e2f1;font-size:12px;font-weight:700}
+.comparison-meta>strong{color:#f5f8ff;font-size:13px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.comparison-dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+.income-dot{background:#2ddbb5;box-shadow:0 0 0 4px rgba(45,219,181,.10)}
+.expense-dot{background:#ff7587;box-shadow:0 0 0 4px rgba(255,117,135,.10)}
+.comparison-track{height:13px;border-radius:99px;background:#1b2c40;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.24)}
+.comparison-fill{display:block;height:100%;min-width:0;border-radius:99px;transition:width .35s ease}
+.income-fill{background:linear-gradient(90deg,#1bd4a9,#59edc8);box-shadow:0 0 14px rgba(45,219,181,.14)}
+.expense-fill{background:linear-gradient(90deg,#f05d78,#ff9b82);box-shadow:0 0 14px rgba(255,117,135,.12)}
+.comparison-row>small{font-size:10px;color:#8fa8c2}
+.analysis-footer{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:15px;border-top:1px solid #20364c}
+.analysis-footer>div{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:11px;color:#91a8c2}
+.analysis-footer strong{font-size:12px;color:#eaf3ff;font-weight:800;font-variant-numeric:tabular-nums;text-align:right}
+@media(max-width:900px){.finance-analysis{grid-template-columns:1fr;gap:22px}.analysis-summary{padding:15px 17px}.analysis-footer{grid-column:auto}}
+@media(max-width:700px){.finance-analysis{gap:18px;min-height:0}.comparison-chart{gap:20px}.analysis-footer{gap:9px}.analysis-footer>div{align-items:flex-start;flex-direction:column;gap:6px}.comparison-meta>strong{font-size:12px}}
+
 </style>
 </head>
 <body>
@@ -229,7 +257,7 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
  <article class="metric"><div class="metric-head">Comprometido no cartão <span class="metric-icon">▤</span></div><div class="metric-value" id="cardTotal">R$ 0,00</div><div class="metric-foot" id="cardFoot">Despesas de cartão no período</div></article>
 </section>
 <div class="main-grid">
- <section class="panel"><div class="panel-head"><div><h2>Visão geral do mês</h2><div class="sub">Distribuição entre receitas, despesas e saldo</div></div><span class="pill" id="monthLabel">OUTUBRO 2026</span></div><div class="panel-body"><div class="chart"><div class="donut" id="donut"><div class="donut-center"><strong id="expenseShare">0%</strong><span>da receita em gastos</span></div></div><div class="legend"><div class="legend-row"><span class="dot" style="background:var(--accent)"></span>Receitas <strong id="legendIncome">R$ 0,00</strong></div><div class="legend-row"><span class="dot" style="background:#d7dee0"></span>Despesas <strong id="legendExpense">R$ 0,00</strong></div><div class="legend-row"><span class="dot" style="background:#d9e9df"></span>Saldo <strong id="legendBalance">R$ 0,00</strong></div></div></div></div></section>
+ <section class="panel"><div class="panel-head"><div><h2>Visão geral do mês</h2><div class="sub">Distribuição entre receitas, despesas e saldo</div></div><span class="pill" id="monthLabel">OUTUBRO 2026</span></div><div class="panel-body"><div class="finance-analysis"><div class="analysis-summary"><div class="analysis-summary-label">Resultado do mês</div><strong id="analysisBalance">R$ 0,00</strong><span id="analysisStatus">Aguardando lançamentos</span></div><div class="comparison-chart" role="img" aria-label="Comparação entre receitas e despesas"><div class="comparison-row"><div class="comparison-meta"><span class="comparison-label"><i class="comparison-dot income-dot"></i>Receitas</span><strong id="legendIncome">R$ 0,00</strong></div><div class="comparison-track"><span class="comparison-fill income-fill" id="incomeBar" style="width:0%"></span></div><small id="incomeShareLabel">0% da movimentação</small></div><div class="comparison-row"><div class="comparison-meta"><span class="comparison-label"><i class="comparison-dot expense-dot"></i>Despesas</span><strong id="legendExpense">R$ 0,00</strong></div><div class="comparison-track"><span class="comparison-fill expense-fill" id="expenseBar" style="width:0%"></span></div><small id="expenseShareLabel">0% da movimentação</small></div></div><div class="analysis-footer"><div><span>Despesas sobre receitas</span><strong id="expenseShare">0%</strong></div><div><span>Saldo após despesas</span><strong id="legendBalance">R$ 0,00</strong></div></div></div></div></section>
  <section class="panel"><div class="panel-head"><div><h2>Despesas por categoria</h2><div class="sub">Principais destinos do seu dinheiro</div></div></div><div class="panel-body"><div class="bar-wrap" id="categoryBars"></div></div></section>
 </div>
 <div class="section-head"><div><h2>Lançamentos do período</h2><div class="sub">Gerencie compras, assinaturas, parcelas e pagamentos recorrentes.</div></div><div class="filters"><input id="searchInput" placeholder="Buscar estabelecimento..." aria-label="Buscar estabelecimento"><select id="typeFilter"><option value="all">Todos os tipos</option><option value="expense">Despesas</option><option value="income">Receitas</option></select><select id="statusFilter"><option value="all">Todas as situações</option><option value="active">Ativos no mês</option><option value="recurring">Recorrentes</option><option value="installment">Parcelados</option></select></div></div>
@@ -321,8 +349,8 @@ function render(){selectedMonth=$("monthSelect").value||"2026-10";$("entryDate")
 let rows=entries.filter(e=>activeFor(e,selectedMonth)),inc=rows.filter(e=>e.type==="income").reduce((s,e)=>s+Number(e.amount),0),exp=rows.filter(e=>e.type==="expense").reduce((s,e)=>s+Number(e.amount),0),card=rows.filter(e=>e.type==="expense"&&e.payment==="Cartão de crédito").reduce((s,e)=>s+Number(e.amount),0),bal=inc-exp;
 $("incomeTotal").textContent=money(inc);$("expenseTotal").textContent=money(exp);$("balanceTotal").textContent=money(bal);$("cardTotal").textContent=money(card);$("balanceTotal").style.color=bal<0?"var(--red)":"var(--ink)";
 $("incomeFoot").textContent=rows.filter(e=>e.type==="income").length+" receita(s) registrada(s)";$("expenseFoot").textContent=rows.filter(e=>e.type==="expense").length+" despesa(s) no período";$("cardFoot").textContent="Cartão de crédito · "+(exp?Math.round(card/exp*100):0)+"% das despesas";
-let share=inc?Math.min(100,exp/inc*100):0;$("expenseShare").textContent=Math.round(share)+"%";$("donut").style.background=`conic-gradient(var(--accent) 0 ${share}%, #e1e7e4 ${share}% 100%)`;
-$("legendIncome").textContent=money(inc);$("legendExpense").textContent=money(exp);$("legendBalance").textContent=money(bal);
+const movement=inc+exp;const incomePct=movement?inc/movement*100:0;const expensePct=movement?exp/movement*100:0;const expenseRatio=inc?exp/inc*100:0;const scale=Math.max(inc,exp,1);$("legendIncome").textContent=money(inc);$("legendExpense").textContent=money(exp);$("legendBalance").textContent=money(bal);
+$("incomeBar").style.width=(inc/scale*100)+"%";$("expenseBar").style.width=(exp/scale*100)+"%";$("incomeShareLabel").textContent=Math.round(incomePct)+"% da movimentação total";$("expenseShareLabel").textContent=Math.round(expensePct)+"% da movimentação total";$("expenseShare").textContent=(inc?Math.round(expenseRatio):0)+"%";$("analysisBalance").textContent=money(bal);$("analysisBalance").classList.toggle("negative",bal<0);$("analysisBalance").classList.toggle("positive",bal>=0);$("analysisStatus").textContent=bal<0?"Despesas acima das receitas":bal>0?"Saldo positivo no período":"Receitas e despesas equilibradas";$("analysisStatus").classList.toggle("negative",bal<0);$("analysisStatus").classList.toggle("positive",bal>0);
 let cats={};rows.filter(e=>e.type==="expense").forEach(e=>cats[e.category]=(cats[e.category]||0)+Number(e.amount));let top=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,5),max=top[0]?.[1]||1;$("categoryBars").innerHTML=top.length?top.map(([n,v])=>`<div><div class="bar-label"><span>${esc(n)}</span><strong>${money(v)}</strong></div><div class="bar"><span style="width:${Math.max(2,v/max*100)}%"></span></div></div>`).join(""):'<div class="empty">Sem despesas no período.</div>';
 
 /* Logotipos de marcas nas movimentações */
