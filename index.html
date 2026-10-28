@@ -385,6 +385,32 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 /* Oculta os antigos painéis laterais extras solicitados para remoção */
 .sidebar-routine,.sidebar-inspiration{display:none!important}
 
+
+/* Guia financeiro discreto para ocupar o espaço livre sem alterar os dados */
+.sidebar-budget-guide{position:relative;margin-top:auto;padding:15px 13px 13px;border:1px solid #233c53;border-radius:16px;background:radial-gradient(ellipse at 100% 0%,rgba(39,217,174,.09),transparent 46%),linear-gradient(155deg,#102238 0%,#0b1929 68%,#091522 100%);box-shadow:0 12px 28px rgba(0,0,0,.16);overflow:hidden}
+.sidebar-budget-guide:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#2be0b7,#3aa7f7,#a67bff)}
+.budget-guide-top{display:flex;align-items:center;gap:8px;margin-bottom:11px}
+.budget-guide-icon{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:rgba(43,220,179,.12);color:#42e5bf}
+.budget-guide-icon svg{width:17px;height:17px}
+.budget-guide-label{font-size:8px;font-weight:850;letter-spacing:.12em;color:#51e4c2}
+.budget-guide-spark{margin-left:auto;color:#ffcf73;font-size:14px}
+.sidebar-budget-guide h3{font-size:13px;line-height:1.35;letter-spacing:-.02em;color:#f0f6ff;margin:0 0 5px;font-weight:800}
+.budget-guide-desc{font-size:10px;line-height:1.45;color:#9eb3cb;margin:0 0 12px}
+.budget-split{margin-top:9px}
+.budget-split-line{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px;color:#b9cde1;font-size:10px}
+.budget-split-line>span{display:flex;align-items:center;gap:6px}
+.budget-split-line strong{font-size:10px;color:#edf4ff;font-variant-numeric:tabular-nums}
+.split-dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.split-dot.needs{background:#2ddbb6}.split-dot.wants{background:#55b9ff}.split-dot.future{background:#b58aff}
+.split-track{height:5px;border-radius:99px;background:#1a2d42;overflow:hidden}
+.split-track span{display:block;height:100%;border-radius:99px}
+.needs-fill{width:50%;background:linear-gradient(90deg,#20d6ad,#3bdcc0)}
+.wants-fill{width:30%;background:linear-gradient(90deg,#278fea,#55b9ff)}
+.future-fill{width:20%;background:linear-gradient(90deg,#8556e8,#b58aff)}
+.budget-guide-note{display:flex;align-items:flex-start;gap:7px;margin-top:13px;padding-top:10px;border-top:1px solid #20364a;color:#8fa8c2;font-size:9px;line-height:1.45}
+.budget-guide-note svg{width:14px;height:14px;flex:none;color:#56cdb8}
+@media(max-height:650px){.sidebar-budget-guide{padding:10px 11px}.budget-guide-desc{margin-bottom:7px}.budget-split{margin-top:6px}.budget-guide-note{margin-top:8px;padding-top:7px}}
+
 </style>
 </head>
 <body>
@@ -413,6 +439,15 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
  <button class="navtab" data-view="incomeView"><span class="navico">↗</span> Receitas</button>
  <button class="navtab" data-view="expenseView"><span class="navico">↘</span> Despesas</button>
 
+ <section class="sidebar-budget-guide" aria-label="Guia de organização financeira">
+  <div class="budget-guide-top"><span class="budget-guide-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18m7-14H8a3 3 0 0 0 0 6h8a3 3 0 0 1 0 6H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="budget-guide-label">GUIA FINANCEIRO</span><span class="budget-guide-spark">✦</span></div>
+  <h3>Uma ideia para organizar seu dinheiro</h3>
+  <p class="budget-guide-desc">A regra 50 · 30 · 20 pode ajudar a distribuir sua renda.</p>
+  <div class="budget-split"><div class="budget-split-line"><span><i class="split-dot needs"></i> Necessidades</span><strong>50%</strong></div><div class="split-track"><span class="needs-fill"></span></div></div>
+  <div class="budget-split"><div class="budget-split-line"><span><i class="split-dot wants"></i> Desejos</span><strong>30%</strong></div><div class="split-track"><span class="wants-fill"></span></div></div>
+  <div class="budget-split"><div class="budget-split-line"><span><i class="split-dot future"></i> Futuro e reserva</span><strong>20%</strong></div><div class="split-track"><span class="future-fill"></span></div></div>
+  <div class="budget-guide-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>É uma referência, não uma regra. Ajuste à sua realidade.</span></div>
+ </section>
 </nav>
 
 <div class="monthbar"><div class="month-control"><label for="monthPickerButton">PERÍODO DE ANÁLISE</label><div class="month-picker-wrap"><input type="month" id="monthSelect" value="2026-10" aria-hidden="true" tabindex="-1"><button type="button" class="month-picker-button" id="monthPickerButton" aria-expanded="false" aria-controls="monthPickerPanel"><span class="calendar-icon">▦</span><span id="monthPickerText">Outubro de 2026</span><span class="calendar-chevron">⌄</span></button><div class="month-picker-panel" id="monthPickerPanel" hidden><div class="month-picker-head"><button type="button" id="monthYearPrev" aria-label="Ano anterior">‹</button><strong id="monthYearLabel">2026</strong><button type="button" id="monthYearNext" aria-label="Próximo ano">›</button></div><div class="month-picker-grid" id="monthPickerGrid"></div><div class="month-picker-foot"><button type="button" id="monthClear">Limpar</button><button type="button" id="monthToday">Este mês</button></div></div></div></div><span class="note">Seus dados são sincronizados com sua conta.</span></div>
