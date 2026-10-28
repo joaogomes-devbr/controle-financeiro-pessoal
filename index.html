@@ -584,8 +584,9 @@ const $=id=>document.getElementById(id);
 const money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 const monthNames=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 let entries=[];let selectedMonth=new Date().toISOString().slice(0,7);
-function loadLocal(){try{let d=JSON.parse(localStorage.getItem("painelFinanceiroEntries"));return Array.isArray(d)?d:initial}catch(e){return initial}}
-function persist(){localStorage.setItem("painelFinanceiroEntries",JSON.stringify(entries))}
+function financeStorageKey(){return currentUser?"painelFinanceiroEntries:"+currentUser.id:"painelFinanceiroEntries:guest"}
+function loadLocal(){try{let d=JSON.parse(localStorage.getItem(financeStorageKey()));return Array.isArray(d)?d:[]}catch(e){return []}}
+function persist(){localStorage.setItem(financeStorageKey(),JSON.stringify(entries))}
 function toDb(e,userId){return {user_id:userId,description:e.name,entry_type:e.type,amount:Number(e.amount),category:e.category||"Outros",payment_method:e.payment||"Outro",frequency:e.kind||"once",month_reference:(e.month||selectedMonth)+"-01",start_month:(e.startMonth||e.month||selectedMonth)+"-01",installment_current:e.kind==="installment"?Number(e.current||1):null,installment_total:e.kind==="installment"?Number(e.total||1):null,notes:[e.note||"",e.logo?"__logo:"+e.logo:""] .filter(Boolean).join("\n")}}
 function fromDb(r){let note=r.notes||"",logo="";const match=note.match(/(?:^|\n)__logo:(.*)$/);if(match){logo=match[1];note=note.replace(/(?:^|\n)__logo:.*$/,'').trim()}return {id:r.id,name:r.description,type:r.entry_type,amount:Number(r.amount),category:r.category,payment:r.payment_method,kind:r.frequency,month:String(r.month_reference).slice(0,7),startMonth:String(r.start_month||r.month_reference).slice(0,7),current:r.installment_current,total:r.installment_total,note,logo,active:true}}
 async function syncFromCloud(user){
