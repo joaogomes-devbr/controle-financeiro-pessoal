@@ -342,6 +342,23 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .card-ring strong{font-size:15px;line-height:1;color:#f1e8ff;font-weight:800}
 @media(max-width:760px){.metric{min-height:170px}.metric-card{padding-bottom:82px}.card-ring{width:60px;height:60px;right:13px;bottom:8px}.metric-card .metric-value,.metric-card .metric-foot{max-width:100%}}
 
+
+/* Card de inspiração para preencher a área livre da navegação lateral */
+.sidebar-inspiration{position:relative;isolation:isolate;overflow:hidden;margin-top:auto;margin-bottom:5px;padding:14px 13px 13px;border:1px solid #263e55;border-radius:17px;background:radial-gradient(ellipse at 75% 8%,rgba(41,210,174,.13),transparent 44%),linear-gradient(155deg,#102238 0%,#0b1929 64%,#091522 100%);box-shadow:0 12px 30px rgba(0,0,0,.2)}
+.sidebar-inspiration:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,#2be0b7,#3aa7f7,#a67bff)}
+.sidebar-art{height:105px;display:grid;place-items:center;position:relative;margin:-2px 0 6px}
+.sidebar-art svg{width:130px;height:100px;position:relative;z-index:1;filter:drop-shadow(0 7px 13px rgba(0,0,0,.18))}
+.sidebar-orbit{position:absolute;border:1px solid rgba(68,210,195,.13);border-radius:50%;transform:rotate(-18deg)}
+.orbit-one{width:115px;height:53px}.orbit-two{width:88px;height:75px;transform:rotate(35deg);border-color:rgba(111,149,255,.12)}
+.sidebar-inspiration-copy{text-align:left}
+.sidebar-kicker{display:block;color:#51e4c2;font-size:9px;font-weight:850;letter-spacing:.12em;line-height:1.5;margin-bottom:7px}
+.sidebar-inspiration-copy h3{margin:0 0 7px;color:#f0f6ff;font-size:17px;line-height:1.27;font-weight:800;letter-spacing:-.035em}
+.sidebar-inspiration-copy p{margin:0;color:#9eb3cb;font-size:11px;line-height:1.5}
+.sidebar-mini-stats{display:flex;justify-content:space-between;gap:5px;margin-top:13px;padding-top:11px;border-top:1px solid #20364a}
+.sidebar-mini-stats span{display:flex;align-items:center;gap:5px;color:#b9cde1;font-size:9px;font-weight:700;white-space:nowrap}
+.sidebar-mini-stats i{width:5px;height:5px;display:inline-block;border-radius:50%;background:#36dfb7;box-shadow:0 0 8px rgba(54,223,183,.35)}
+@media(max-width:700px){.sidebar-inspiration{grid-column:1/-1;margin-top:0;display:grid;grid-template-columns:82px minmax(0,1fr);align-items:center;gap:10px;padding:11px}.sidebar-art{height:82px;margin:0}.sidebar-art svg{width:90px;height:78px}.sidebar-inspiration-copy h3{font-size:15px}.sidebar-inspiration-copy p{font-size:10px}.sidebar-kicker{font-size:8px}.sidebar-mini-stats{grid-column:1/-1;margin-top:1px;padding-top:8px}}
+
 </style>
 </head>
 <body>
@@ -369,6 +386,14 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
  <button class="navtab" data-view="addView"><span class="navico">＋</span> Adicionar lançamento</button>
  <button class="navtab" data-view="incomeView"><span class="navico">↗</span> Receitas</button>
  <button class="navtab" data-view="expenseView"><span class="navico">↘</span> Despesas</button>
+ <section class="sidebar-inspiration" aria-label="Inspiração financeira">
+  <div class="sidebar-art" aria-hidden="true">
+   <span class="sidebar-orbit orbit-one"></span><span class="sidebar-orbit orbit-two"></span>
+   <svg viewBox="0 0 120 90" role="img" aria-label=""><defs><linearGradient id="sideCoin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0a5"/><stop offset=".55" stop-color="#ffc44f"/><stop offset="1" stop-color="#e58a24"/></linearGradient><linearGradient id="sidePlant" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#42e7bd"/><stop offset="1" stop-color="#148f83"/></linearGradient></defs><ellipse cx="61" cy="78" rx="37" ry="6" fill="#020914" opacity=".42"/><path d="M33 68h57l-5 10H38z" fill="#17334a" stroke="#2d5066"/><path d="M39 56h46l5 12H34z" fill="#20445a" stroke="#34718a"/><path d="M45 45h34l6 11H39z" fill="#2c5b6d" stroke="#41869a"/><ellipse cx="62" cy="45" rx="17" ry="5" fill="#48d8b2"/><path d="M62 45V23m0 12c-16 0-18-11-18-11s13-4 18 11m0-4c0-13 13-18 13-18s4 13-13 18" fill="none" stroke="url(#sidePlant)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="87" cy="28" r="13" fill="url(#sideCoin)" stroke="#ffe6a0" stroke-width="2"/><path d="M84 21h6q4 0 3 4t-8 3h-2m4-10v18" fill="none" stroke="#ad6a1b" stroke-width="1.8" stroke-linecap="round"/><circle cx="30" cy="40" r="8" fill="url(#sideCoin)" stroke="#ffe6a0" stroke-width="1.5"/><path d="M28 36h4q3 0 2 3t-5 2h-1m3-7v12" fill="none" stroke="#ad6a1b" stroke-width="1.2"/></svg>
+  </div>
+  <div class="sidebar-inspiration-copy"><span class="sidebar-kicker">SEU FUTURO, SUAS ESCOLHAS</span><h3>Disciplina hoje.<br>Liberdade amanhã.</h3><p>Pequenos passos consistentes constroem grandes conquistas.</p></div>
+  <div class="sidebar-mini-stats"><span><i></i> Planeje</span><span><i></i> Acompanhe</span><span><i></i> Evolua</span></div>
+ </section>
 </nav>
 
 <div class="monthbar"><div class="month-control"><label for="monthPickerButton">PERÍODO DE ANÁLISE</label><div class="month-picker-wrap"><input type="month" id="monthSelect" value="2026-10" aria-hidden="true" tabindex="-1"><button type="button" class="month-picker-button" id="monthPickerButton" aria-expanded="false" aria-controls="monthPickerPanel"><span class="calendar-icon">▦</span><span id="monthPickerText">Outubro de 2026</span><span class="calendar-chevron">⌄</span></button><div class="month-picker-panel" id="monthPickerPanel" hidden><div class="month-picker-head"><button type="button" id="monthYearPrev" aria-label="Ano anterior">‹</button><strong id="monthYearLabel">2026</strong><button type="button" id="monthYearNext" aria-label="Próximo ano">›</button></div><div class="month-picker-grid" id="monthPickerGrid"></div><div class="month-picker-foot"><button type="button" id="monthClear">Limpar</button><button type="button" id="monthToday">Este mês</button></div></div></div></div><span class="note">Seus dados são sincronizados com sua conta.</span></div>
