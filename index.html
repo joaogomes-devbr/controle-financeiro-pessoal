@@ -472,7 +472,7 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
   </form>
  </section>
 </div>
-<div id="passwordModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(2,8,16,.78);padding:20px;place-items:center"><section style="width:min(430px,100%);box-sizing:border-box;background:#0d1b2b;border:1px solid #2b435b;border-radius:18px;padding:24px;color:#f4f8ff;box-shadow:0 24px 70px #0008"><h2 style="margin:0 0 8px;font-size:22px">Alterar senha</h2><p style="margin:0 0 18px;color:#a9bfd8;font-size:13px;line-height:1.6">Escolha uma senha nova e exclusiva. Use pelo menos 8 caracteres.</p><form id="changePasswordForm" style="display:grid;gap:12px"><label style="font-size:13px">Nova senha<input id="newPassword" type="password" minlength="8" required autocomplete="new-password" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #35506b;border-radius:10px;background:#081523;color:#fff"></label><label style="font-size:13px">Confirmar nova senha<input id="confirmNewPassword" type="password" minlength="8" required autocomplete="new-password" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #35506b;border-radius:10px;background:#081523;color:#fff"></label><div id="passwordChangeMessage" role="status" style="font-size:13px;color:#ffb5a8"></div><div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap"><button id="cancelPasswordChange" type="button" class="btn">Cancelar</button><button id="savePasswordChange" type="submit" class="btn primary">Salvar nova senha</button></div></form></section></div>
+<div id="passwordModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(2,8,16,.78);padding:20px;place-items:center"><section style="width:min(430px,100%);box-sizing:border-box;background:#0d1b2b;border:1px solid #2b435b;border-radius:18px;padding:24px;color:#f4f8ff;box-shadow:0 24px 70px #0008"><h2 style="margin:0 0 8px;font-size:22px">Alterar senha</h2><p style="margin:0 0 18px;color:#a9bfd8;font-size:13px;line-height:1.6">Escolha uma senha nova e exclusiva. Use pelo menos 8 caracteres.</p><form id="changePasswordForm" style="display:grid;gap:12px"><label style="font-size:13px">Senha atual<input id="currentPassword" type="password" required autocomplete="current-password" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #35506b;border-radius:10px;background:#081523;color:#fff"></label><label style="font-size:13px">Nova senha<input id="newPassword" type="password" minlength="8" required autocomplete="new-password" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #35506b;border-radius:10px;background:#081523;color:#fff"></label><label style="font-size:13px">Confirmar nova senha<input id="confirmNewPassword" type="password" minlength="8" required autocomplete="new-password" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #35506b;border-radius:10px;background:#081523;color:#fff"></label><div id="passwordChangeMessage" role="status" style="font-size:13px;color:#ffb5a8"></div><div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap"><button id="cancelPasswordChange" type="button" class="btn">Cancelar</button><button id="savePasswordChange" type="submit" class="btn primary">Salvar nova senha</button></div></form></section></div>
 <div class="app" id="financeApp" style="display:none">
 <header class="top">
  <div class="brand"><div class="brandmark" aria-label="Logotipo Finance"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 39V12L39 4 34 14 19 18V23L32 19 27 28 19 31V36L9 40Z" fill="currentColor"/><path d="M9 39V12L39 4" fill="none" stroke="#7AF0CB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="eyebrow">FINANCE · CONTROLE PESSOAL</div><h1>Painel financeiro</h1></div></div>
@@ -735,16 +735,23 @@ $("cancelPasswordChange").addEventListener("click",()=>$("passwordModal").style.
 $("passwordModal").addEventListener("click",ev=>{if(ev.target===$("passwordModal"))$("passwordModal").style.display="none"});
 $("changePasswordForm").addEventListener("submit",async ev=>{
  ev.preventDefault();
- const password=$("newPassword").value,confirm=$("confirmNewPassword").value,msg=$("passwordChangeMessage"),btn=$("savePasswordChange");
+ const currentPassword=$("currentPassword").value,password=$("newPassword").value,confirm=$("confirmNewPassword").value,msg=$("passwordChangeMessage"),btn=$("savePasswordChange");
+ msg.style.color="#ffb5a8";
+ if(!currentUser||!currentUser.email){msg.textContent="Sua sessão expirou. Entre novamente.";return}
+ if(!currentPassword){msg.textContent="Informe sua senha atual.";return}
  if(password.length<8){msg.textContent="Use uma senha com pelo menos 8 caracteres.";return}
- if(password!==confirm){msg.textContent="As senhas não coincidem.";return}
- btn.disabled=true;btn.textContent="Salvando…";msg.textContent="Atualizando sua senha…";
+ if(password!==confirm){msg.textContent="A nova senha e a confirmação não coincidem.";return}
+ if(password===currentPassword){msg.textContent="Escolha uma senha diferente da atual.";return}
+ btn.disabled=true;btn.textContent="Verificando…";msg.textContent="Verificando a senha atual…";
  try{
+  const {error:verifyError}=await supabaseClient.auth.signInWithPassword({email:currentUser.email,password:currentPassword});
+  if(verifyError){msg.textContent="A senha atual está incorreta. Confira e tente novamente.";return}
+  btn.textContent="Salvando…";msg.textContent="Atualizando sua senha…";
   const {error}=await supabaseClient.auth.updateUser({password});
   if(error)throw error;
-  msg.style.color="#7af0cb";msg.textContent="Senha alterada com sucesso. Use a nova senha no próximo acesso.";
-  $("newPassword").value="";$("confirmNewPassword").value="";
- }catch(err){msg.style.color="#ffb5a8";msg.textContent="Não foi possível alterar a senha. Entre novamente ou use o link de redefinição por e-mail."}
+  msg.style.color="#7af0cb";msg.textContent="Senha alterada com sucesso.";
+  $("currentPassword").value="";$("newPassword").value="";$("confirmNewPassword").value="";
+ }catch(err){msg.style.color="#ffb5a8";msg.textContent="Não foi possível alterar a senha. Verifique a conexão e tente novamente."}
  finally{btn.disabled=false;btn.textContent="Salvar nova senha"}
 });
 
