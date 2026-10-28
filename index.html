@@ -46,6 +46,45 @@ th{background:#102033;color:#93a9c3;border-bottom-color:#23374e}td{border-bottom
 @media(max-width:1000px){.app{padding-left:290px;padding-right:16px}.navbar{width:266px}.brand{left:17px;width:232px}.main-grid{grid-template-columns:1fr}.top-actions .btn{padding:8px 10px}}
 @media(max-width:700px){.app{padding:16px 12px 28px}.brand{position:static;width:auto;margin-bottom:14px}.top{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-bottom:15px}.top-actions{justify-content:flex-start}.navbar{position:static;width:auto;height:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:7px;margin:0 0 18px;border:1px solid #20344b;border-radius:13px;overflow:visible}.navtab{padding:9px 10px;min-height:45px;font-size:12px;gap:7px}.navtab .navico{width:25px;height:25px}.monthbar{margin-bottom:15px}.monthbar .note{width:100%;margin-left:0}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.metric{padding:12px;min-height:116px}.metric-value{font-size:20px;overflow-wrap:anywhere}.metric-head{font-size:11px}.metric-icon{width:32px;height:32px}.panel-head,.panel-body{padding:14px}.chart{gap:12px;flex-wrap:wrap}.donut{width:112px;height:112px}.donut:after{width:76px;height:76px}.legend{min-width:145px}.legend-row{font-size:11px}.section-head{align-items:flex-start;flex-direction:column}.filters{width:100%;flex-wrap:wrap}.filters input,.filters select{width:100%}.form-grid{grid-template-columns:1fr}.form-field.full{grid-column:auto}.bottom-grid,.add-layout{grid-template-columns:1fr}.footer{flex-direction:column}}
 
+
+/* POLIMENTO VISUAL — tipografia e acesso */
+body,button,input,select,textarea{font-family:Inter,"Aptos", "Segoe UI",system-ui,-apple-system,sans-serif;letter-spacing:-.01em}
+h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
+#authGate{padding:clamp(18px,4vw,36px)!important;isolation:isolate}
+#authGate section{
+ position:relative!important;overflow:hidden!important;width:min(460px,100%)!important;
+ padding:clamp(28px,5vw,40px)!important;border-radius:24px!important;
+ background:linear-gradient(155deg,rgba(17,37,54,.98),rgba(8,20,34,.99))!important;
+ border:1px solid rgba(93,130,158,.34)!important;
+ box-shadow:0 28px 90px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.045)!important;
+}
+#authGate section:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#35e4b9,#3d9dff,#9d7bff);opacity:.95}
+#authGate section>div:first-child{font-size:11px!important;letter-spacing:.18em!important;color:#65e8c7!important;display:flex;align-items:center;gap:9px}
+#authGate section>div:first-child:before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;background:#35e4b9;box-shadow:0 0 18px #35e4b966;transform:rotate(45deg)}
+#authGate h1{font-size:clamp(28px,4vw,34px)!important;line-height:1.15!important;letter-spacing:-.055em!important;font-weight:760!important;margin:18px 0 10px!important;color:#f4f8ff!important}
+#authGate p{font-size:14px!important;line-height:1.75!important;color:#a8bbcf!important;margin:0!important;max-width:36ch}
+#authForm{gap:16px!important;margin-top:27px!important}
+#authGate label{display:block!important;font-size:12px!important;font-weight:650!important;letter-spacing:.025em!important;color:#dce8f6!important}
+#authGate input{
+ display:block!important;width:100%!important;box-sizing:border-box!important;margin-top:8px!important;
+ padding:14px 15px!important;min-height:49px!important;border:1px solid #2b435b!important;
+ border-radius:12px!important;background:#081523!important;color:#f4f8ff!important;
+ font-size:14px!important;letter-spacing:0!important;transition:border-color .18s,box-shadow .18s,background .18s!important;
+}
+#authGate input::placeholder{color:#7189a4!important}
+#authGate input:hover{border-color:#3d5a75!important}
+#authGate input:focus{outline:none!important;border-color:#35dcb5!important;background:#0a1928!important;box-shadow:0 0 0 4px rgba(53,228,185,.12)!important}
+#authGate button{
+ min-height:49px!important;margin-top:3px!important;padding:13px 18px!important;border:1px solid #55edc8!important;
+ border-radius:12px!important;background:linear-gradient(135deg,#5af0c7,#27d4aa)!important;
+ color:#05261f!important;font-size:14px!important;font-weight:750!important;letter-spacing:.01em!important;
+ box-shadow:0 8px 24px rgba(39,217,174,.14)!important;transition:transform .18s,filter .18s,box-shadow .18s!important;
+}
+#authGate button:hover{filter:brightness(1.06)!important;transform:translateY(-1px)!important;box-shadow:0 11px 28px rgba(39,217,174,.22)!important}
+#authGate button:disabled{opacity:.7;cursor:wait;transform:none!important}
+#authMessage{min-height:18px!important;line-height:1.5!important}
+@media(max-width:480px){#authGate section{padding:27px 22px!important;border-radius:20px!important}#authGate h1{font-size:28px!important}}
+
 </style>
 </head>
 <body>
