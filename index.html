@@ -143,6 +143,7 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .brand-logo-fallback{display:none;align-items:center;justify-content:center;text-align:center;width:100%;height:100%;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:23px;line-height:1}
 .brand-logo-fallback.brand-emoji-only{display:inline-flex}
 
+.brand-logo-saf{object-fit:contain;object-position:center center;background:#fff;border-radius:7px;padding:2px;box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -309,7 +310,7 @@ function brandLogoHTML(name,fallback,category){
   [/academia|esporte/,"🏋️"],[/saude|hospital|medico|dentista/,"❤️"],[/farmacia|remedio/,"💊"],[/pet|veterinario|racao/,"🐾"],[/estudos|curso|escola|faculdade/,"🎓"],[/livro/,"📚"],
   [/viagem|passagem|aviao/,"✈️"],[/hotel|hospedagem/,"🧳"],[/presente/,"🎁"],[/assinatura|streaming/,"📺"],[/parcela|compra|loja|shopping/,"🛍️"],[/salario|salário|renda|receita/,"💰"],[/banco|cartao|cartão|tarifa/,"💳"],[/doacao|doação/,"💝"],[/imposto|taxa/,"🧾"]
  ];
- const brand=brands.find(([re])=>re.test(n));
+ if(/plano\\s*saf|saf\\s*assist/.test(n)){const alt=esc(String(name||"Plano SAF"));return '<img class="brand-logo-img brand-logo-saf" src="./assets/plano-saf.svg" alt="'+alt+'" title="'+alt+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" role="img" aria-label="'+alt+'" title="'+alt+'">❤️</span>';}\n const brand=brands.find(([re])=>re.test(n));
  const emoji=(brand&&brand[3])||(generic.find(([re])=>re.test(n))||generic.find(([re])=>re.test(cat))||[])[1]||"✨";
  const alt=esc(String(name||"Lançamento"));
  const fallbackHTML='<span class="brand-logo-fallback brand-emoji-only" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
