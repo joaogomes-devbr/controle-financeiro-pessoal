@@ -601,7 +601,7 @@ async function syncFromCloud(user){
 }
 function monthLabel(m){let [y,mm]=m.split("-");return monthNames[Number(mm)-1].toUpperCase()+" "+y}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function activeFor(e,m){if(e.type==="income"||e.kind==="once")return e.month===m;if(e.kind==="recurring")return m>= (e.startMonth||e.month);if(e.kind==="installment"){let [sy,sm]= (e.startMonth||e.month).split("-").map(Number),[y,mm]=m.split("-").map(Number);let offset=(y-sy)*12+(mm-sm);return offset>=0&&offset<(Number(e.total)||1)}return e.month===m}
+function activeFor(e,m){if(e.type==="income"||e.kind==="once")return e.month===m;if(e.kind==="recurring")return m>= (e.startMonth||e.month);if(e.kind==="installment"){let [sy,sm]=(e.startMonth||e.month).split("-").map(Number),[y,mm]=m.split("-").map(Number);let offset=(y-sy)*12+(mm-sm),total=Number(e.total)||1,current=Number(e.current)||1,remaining=total-current+1;return offset>=0&&offset<remaining}return e.month===m}
 function installmentLabel(e){if(e.kind==="recurring")return "Mensal";if(e.kind==="installment")return `${e.current||1}/${e.total||"?"}`;return "Único"}
 function filtered(){let q=$("searchInput").value.toLowerCase(),type=$("typeFilter").value,status=$("statusFilter").value;return entries.filter(e=>activeFor(e,selectedMonth)&&(!q||e.name.toLowerCase().includes(q)||String(e.category).toLowerCase().includes(q))&&(type==="all"||e.type===type)&&(status==="all"||(status==="active")||(status==="recurring"&&e.kind==="recurring")||(status==="installment"&&e.kind==="installment")))}
 const monthPickerNames=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
