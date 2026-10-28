@@ -130,6 +130,11 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .brand-logo-fallback{align-items:center;justify-content:center;width:100%;height:100%;font-size:10px;font-weight:800;color:#34424c}
 @media(max-width:700px){.table-wrap{max-height:360px}.table-wrap table{min-width:790px}}
 
+
+/* Ícones de fallback para marcas e despesas sem logotipo */
+.brand-logo-fallback{align-items:center;justify-content:center;width:100%;height:100%;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:22px;line-height:1;display:inline-flex}
+.logo{background:linear-gradient(145deg,#fff,#edf4fa)!important;box-shadow:inset 0 1px 0 #fff,0 2px 7px #00000012}
+
 </style>
 </head>
 <body>
@@ -264,58 +269,57 @@ $("legendIncome").textContent=money(inc);$("legendExpense").textContent=money(ex
 let cats={};rows.filter(e=>e.type==="expense").forEach(e=>cats[e.category]=(cats[e.category]||0)+Number(e.amount));let top=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,5),max=top[0]?.[1]||1;$("categoryBars").innerHTML=top.length?top.map(([n,v])=>`<div><div class="bar-label"><span>${esc(n)}</span><strong>${money(v)}</strong></div><div class="bar"><span style="width:${Math.max(2,v/max*100)}%"></span></div></div>`).join(""):'<div class="empty">Sem despesas no período.</div>';
 
 /* Logotipos de marcas nas movimentações */
-function brandLogoHTML(name,fallback){
+function brandLogoHTML(name,fallback,category){
  const n=String(name||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("pt-BR");
+ const cat=String(category||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("pt-BR");
  const brands=[
-  [/youtube music/,"youtubemusic","FF0033"],
-  [/prime\s*video|amazon\s*prime/,"primevideo","00A8E0"],
-  [/mercado\s*livre|mercadolivre/,"mercadolivre","3483FA"],
-  [/spotify/,"spotify","1ED760"],
-  [/youtube/,"youtube","FF0033"],
-  [/netflix/,"netflix","E50914"],
-  [/disney\s*\+|disneyplus/,"disneyplus","113CCF"],
-  [/paramount\+|paramount plus/,"paramountplus","0064FF"],
-  [/globoplay/,"globoplay","FB003F"],
-  [/max|hbo/,"hbo","5822B4"],
-  [/amazon/,"amazon","FF9900"],
-  [/apple|icloud/,"apple","111111"],
-  [/mercado\s*pago/,"mercadopago","009EE3"],
-  [/google\s*one/,"googleone","4285F4"],
-  [/google/,"google","4285F4"],
-  [/microsoft\s*365|office/,"microsoftoffice","D83B01"],
-  [/microsoft|xbox/,"microsoft","5E5E5E"],
-  [/nubank/,"nubank","8A05BE"],
-  [/ifood/,"ifood","EA1D2C"],
-  [/uber\s*eats/,"ubereats","06C167"],
-  [/uber/,"uber","111111"],
-  [/99\s*(pop|app)?/,"99","FFCC00"],
-  [/steam/,"steam","171A21"],
-  [/playstation/,"playstation","003791"],
-  [/deezer/,"deezer","FEAA2D"],
-  [/twitch/,"twitch","9146FF"],
-  [/adobe/,"adobe","FF0000"],
-  [/canva/,"canva","00C4CC"],
-  [/chatgpt|openai/,"openai","111111"],
-  [/visa/,"visa","1A1F71"],
-  [/mastercard/,"mastercard","EB001B"],
-  [/shein/,"shein","111111"],
-  [/shopee/,"shopee","EE4D2D"],
-  [/aliexpress/,"aliexpress","E43225"],
-  [/magalu|magazine luiza/,"magalu","0086FF"],
-  [/rappi/,"rappi","FF441F"],
-  [/tim/,"tim","004691"],
-  [/vivo/,"vivo","660099"],
-  [/claro/,"claro","DA291C"],
-  [/enel/,"enel","E60000"]
+  [/youtube music/,"youtubemusic","FF0033","🎵"],
+  [/prime\s*video|amazon\s*prime/,"primevideo","00A8E0","▶️"],
+  [/mercado\s*livre|mercadolivre/,"mercadolivre","3483FA","🤝"],
+  [/spotify/,"spotify","1ED760","🎵"],[/youtube/,"youtube","FF0033","▶️"],
+  [/netflix/,"netflix","E50914","🎬"],[/disney\s*\+|disneyplus/,"disneyplus","113CCF","✨"],
+  [/paramount\+|paramount plus/,"paramountplus","0064FF","🎬"],[/globoplay/,"globoplay","FB003F","📺"],
+  [/max|hbo/,"hbo","5822B4","🎬"],[/amazon/,"amazon","FF9900","📦"],
+  [/apple|icloud/,"apple","111111","🍎"],[/mercado\s*pago/,"mercadopago","009EE3","💳"],
+  [/google\s*one/,"googleone","4285F4","☁️"],[/google/,"google","4285F4","🔎"],
+  [/microsoft\s*365|office/,"microsoftoffice","D83B01","🪟"],[/microsoft|xbox/,"microsoft","5E5E5E","🎮"],
+  [/nubank/,"nubank","8A05BE","💜"],[/ifood/,"ifood","EA1D2C","🍔"],[/uber\s*eats/,"ubereats","06C167","🍔"],
+  [/uber/,"uber","111111","🚗"],[/99\s*(pop|app)?/,"99","FFCC00","🚕"],[/steam/,"steam","171A21","🎮"],
+  [/playstation/,"playstation","003791","🎮"],[/deezer/,"deezer","FEAA2D","🎵"],[/twitch/,"twitch","9146FF","🎮"],
+  [/adobe/,"adobe","FF0000","🎨"],[/canva/,"canva","00C4CC","🎨"],[/chatgpt|openai/,"openai","111111","🤖"],
+  [/visa/,"visa","1A1F71","💳"],[/mastercard/,"mastercard","EB001B","💳"],
+  [/shein/,"shein","111111","🛍️"],[/shopee/,"shopee","EE4D2D","🛍️"],[/aliexpress/,"aliexpress","E43225","📦"],
+  [/magalu|magazine luiza/,"magalu","0086FF","🛍️"],[/rappi/,"rappi","FF441F","🛵"],
+  [/tim/,"tim","004691","📱"],[/vivo/,"vivo","660099","📱"],[/claro/,"claro","DA291C","📱"],
+  [/enel/,"enel","E60000","⚡"]
+ ];
+ const generic=[
+  [/ar condicionado|climatizacao|refrigeracao/,"❄️"],[/ventilador|exaustor/,"🌀"],
+  [/geladeira|freezer/,"🧊"],[/tv|televisao/,"📺"],[/internet|wifi|wi-fi|banda larga/,"📶"],
+  [/energia|eletricidade|luz/,"⚡"],[/agua|saneamento/,"💧"],[/gas/,"🔥"],
+  [/aluguel|imovel|casa|iptu|condominio/,"🏠"],[/manutencao|conserto|reparo/,"🛠️"],
+  [/limpeza|faxina/,"🧹"],[/seguranca|alarme/,"🛡️"],[/lixo|coleta/,"🗑️"],
+  [/moveis|sofa/,"🛋️"],[/eletrodomesticos/,"🔌"],[/carro|automovel|oficina/,"🚗"],
+  [/combustivel|gasolina|etanol/,"⛽"],[/estacionamento|garagem/,"🅿️"],[/pedagio/,"🛣️"],
+  [/ipva|licenciamento|multa/,"📄"],[/seguro/,"🛡️"],[/transporte publico|onibus|metro/,"🚌"],
+  [/taxi/,"🚕"],[/moto/,"🏍️"],[/supermercado|mercado|mercearia/,"🛒"],
+  [/restaurante|alimentacao|lanche|lanchonete/,"🍽️"],[/cafe|cafeteria/,"☕"],[/lazer|cinema|parque/,"🎟️"],
+  [/academia|esporte/,"🏋️"],[/saude|hospital|medico|dentista/,"❤️"],[/farmacia|remedio/,"💊"],
+  [/pet|veterinario|racao/,"🐾"],[/estudos|curso|escola|faculdade/,"🎓"],[/livro/,"📚"],
+  [/viagem|passagem|aviao/,"✈️"],[/hotel|hospedagem/,"🧳"],[/presente/,"🎁"],
+  [/assinatura|streaming/,"📺"],[/parcela|compra|loja|shopping/,"🛍️"],
+  [/salario|salário|renda|receita/,"💰"],[/banco|cartao|cartão|tarifa/,"💳"],
+  [/doacao|doação/,"💝"],[/imposto|taxa/,"🧾"]
  ];
  const brand=brands.find(([re])=>re.test(n));
- if(!brand)return esc(fallback||String(name||"").slice(0,2).toUpperCase());
- const alt=esc(String(name||brand[1]));
- const textFallback=esc(fallback||String(name||"").slice(0,2).toUpperCase());
- return '<img class="brand-logo-img" src="https://cdn.simpleicons.org/'+brand[1]+'/'+brand[2]+'" alt="'+alt+'" title="'+alt+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'"><span class="brand-logo-fallback" style="display:none">'+textFallback+'</span>';
+ const emoji=(brand&&brand[3])||(generic.find(([re])=>re.test(n))||generic.find(([re])=>re.test(cat))||[])[1]||"✨";
+ const alt=esc(String(name||"Lançamento"));
+ const emojiFallback='<span class="brand-logo-fallback" role="img" aria-label="'+alt+'" title="'+alt+'">'+emoji+'</span>';
+ if(!brand)return emojiFallback;
+ return '<img class="brand-logo-img" src="https://cdn.simpleicons.org/'+brand[1]+'/'+brand[2]+'" alt="'+alt+'" title="'+alt+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'">'+emojiFallback;
 }
 
-let data=filtered();$("transactionsBody").innerHTML=data.map(e=>`<tr><td><div class="merchant"><div class="logo">${brandLogoHTML(e.name,e.logo||e.name.slice(0,2).toUpperCase())}</div><div><div class="merchant-name">${esc(e.name)}</div><div class="merchant-sub">${esc(e.note||"")}</div></div></div></td><td>${esc(e.category)}</td><td><span class="pill ${e.type==="income"?"recurring":""}">${e.type==="income"?"Receita":"Despesa"}</span></td><td><span class="pill ${e.kind==="installment"?"installment":e.kind==="recurring"?"recurring":""}">${installmentLabel(e)}</span></td><td class="amount ${e.type==="income"?"income":"expense"}">${e.type==="income"?"+ ":"− "}${money(e.amount)}</td><td>${esc(e.payment||"—")}</td><td><div class="row-actions"><button class="icon-btn" title="Editar" onclick="editEntry('${e.id}')">Editar</button><button class="icon-btn" title="Excluir" onclick="deleteEntry('${e.id}')">Excluir</button></div></td></tr>`).join("");$("emptyState").classList.toggle("hide",data.length>0);
+let data=filtered();$("transactionsBody").innerHTML=data.map(e=>`<tr><td><div class="merchant"><div class="logo">${brandLogoHTML(e.name,e.logo||e.name.slice(0,2).toUpperCase(),e.category)}</div><div><div class="merchant-name">${esc(e.name)}</div><div class="merchant-sub">${esc(e.note||"")}</div></div></div></td><td>${esc(e.category)}</td><td><span class="pill ${e.type==="income"?"recurring":""}">${e.type==="income"?"Receita":"Despesa"}</span></td><td><span class="pill ${e.kind==="installment"?"installment":e.kind==="recurring"?"recurring":""}">${installmentLabel(e)}</span></td><td class="amount ${e.type==="income"?"income":"expense"}">${e.type==="income"?"+ ":"− "}${money(e.amount)}</td><td>${esc(e.payment||"—")}</td><td><div class="row-actions"><button class="icon-btn" title="Editar" onclick="editEntry('${e.id}')">Editar</button><button class="icon-btn" title="Excluir" onclick="deleteEntry('${e.id}')">Excluir</button></div></td></tr>`).join("");$("emptyState").classList.toggle("hide",data.length>0);
 let recurring=rows.filter(e=>e.kind==="recurring"&&e.type==="expense").reduce((s,e)=>s+Number(e.amount),0),inst=rows.filter(e=>e.kind==="installment"&&e.type==="expense").reduce((s,e)=>s+Number(e.amount),0),once=rows.filter(e=>e.kind==="once"&&e.type==="expense").reduce((s,e)=>s+Number(e.amount),0);
 $("commitments").innerHTML=[["Assinaturas e fixos",recurring,"Mensal recorrente","↻"],["Parcelas em andamento",inst,"Compras parceladas","▤"],["Gastos pontuais",once,"Lançamentos únicos","•"]].map(([n,v,d,s])=>`<div class="cashflow-item"><div class="cashflow-label"><div class="cashflow-symbol">${s}</div><div><strong>${n}</strong><small>${d}</small></div></div><strong>${money(v)}</strong></div>`).join("");
 if(typeof renderLedgerViews==="function")renderLedgerViews();
