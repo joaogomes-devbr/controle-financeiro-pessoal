@@ -486,6 +486,17 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .expense-legend-row strong{color:#f0f5ff;font-size:14px;font-weight:750;font-variant-numeric:tabular-nums}
 @media(max-width:1200px){.main-grid>.panel:has(.expense-category-chart)>.panel-body{padding:24px}.expense-category-chart{grid-template-columns:minmax(175px,.85fr) minmax(0,1fr);gap:22px;min-height:260px}.expense-donut{width:min(100%,220px)}.expense-category-legend{gap:15px}}
 @media(max-width:700px){.main-grid>.panel:has(.expense-category-chart)>.panel-body{padding:18px 15px}.expense-category-chart{grid-template-columns:minmax(112px, .8fr) minmax(0,1.2fr);gap:15px;min-height:190px}.expense-donut{width:100%;max-width:150px}.expense-category-legend{gap:13px}.expense-legend-row{grid-template-columns:8px minmax(0,1fr) auto;gap:7px;font-size:11px}.expense-legend-dot{width:8px;height:8px}.expense-legend-row strong{font-size:11px}.expense-donut-hole strong{font-size:clamp(9px,2.6vw,13px)}.expense-donut-hole span{font-size:9px}}
+
+/* Identificação da conta conectada no espaço livre da barra lateral */
+.sidebar-user-card{display:flex;align-items:center;gap:11px;margin-top:14px;padding:13px 12px;border:1px solid #20384e;border-radius:14px;background:linear-gradient(135deg,#102338,#0a1827);box-shadow:0 8px 22px #0002}
+.sidebar-user-avatar{width:38px;height:38px;display:grid;place-items:center;flex:none;border-radius:12px;background:linear-gradient(145deg,#174a4a,#17324b);border:1px solid #2a5c61;color:#62e5c5;font-size:12px;font-weight:850;letter-spacing:.03em}
+.sidebar-user-copy{min-width:0;flex:1}
+.sidebar-user-copy span{display:block;margin-bottom:4px;color:#5bdcc0;font-size:8px;font-weight:850;letter-spacing:.12em}
+.sidebar-user-copy strong{display:block;color:#f0f6ff;font-size:12px;font-weight:800;line-height:1.35;overflow-wrap:anywhere}
+.sidebar-user-copy small{display:block;margin-top:3px;color:#839bb5;font-size:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sidebar-user-status{width:7px;height:7px;flex:none;border-radius:50%;background:#39d6a9;box-shadow:0 0 8px #39d6a966}
+@media(max-width:700px){.sidebar-user-card{margin-top:4px}}
+
 </style>
 </head>
 <body>
@@ -536,6 +547,11 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
   <div class="budget-guide-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>É uma referência, não uma regra. Ajuste à sua realidade.</span></div>
  </section>
  <section class="sidebar-tip-card" aria-label="Dica financeira prática"><div class="sidebar-tip-head"><span class="sidebar-tip-icon">↗</span><span class="sidebar-tip-label">DICA DA SEMANA</span></div><h3>Pague-se primeiro</h3><p>Ao receber, separe um valor para sua reserva antes de começar a gastar. Mesmo pequenas quantias, com constância, ajudam a criar o hábito de poupar.</p><div class="sidebar-tip-footer">Comece com um valor que caiba no seu orçamento.</div></section>
+ <section class="sidebar-user-card" aria-label="Usuário conectado">
+  <div class="sidebar-user-avatar" id="sidebarUserAvatar">SV</div>
+  <div class="sidebar-user-copy"><span>USUÁRIO CONECTADO</span><strong id="sidebarUserName">Sua conta</strong><small id="sidebarUserEmail">Sessão ativa</small></div>
+  <span class="sidebar-user-status" title="Conectado"></span>
+</section>
 </nav>
 
 <div class="monthbar"><div class="month-control"><label for="monthPickerButton">PERÍODO DE ANÁLISE</label><div class="month-picker-wrap"><input type="month" id="monthSelect" value="2026-10" aria-hidden="true" tabindex="-1"><button type="button" class="month-picker-button" id="monthPickerButton" aria-expanded="false" aria-controls="monthPickerPanel"><span class="calendar-icon">▦</span><span id="monthPickerText">Outubro de 2026</span><span class="calendar-chevron">⌄</span></button><div class="month-picker-panel" id="monthPickerPanel" hidden><div class="month-picker-head"><button type="button" id="monthYearPrev" aria-label="Ano anterior">‹</button><strong id="monthYearLabel">2026</strong><button type="button" id="monthYearNext" aria-label="Próximo ano">›</button></div><div class="month-picker-grid" id="monthPickerGrid"></div><div class="month-picker-foot"><button type="button" id="monthClear">Limpar</button><button type="button" id="monthToday">Este mês</button></div></div></div></div><span class="note">Seus dados são sincronizados com sua conta.</span></div>
@@ -788,8 +804,20 @@ $("changePasswordForm").addEventListener("submit",async ev=>{
 });
 
 let currentUser=null;
+function formatSidebarUser(user){
+ const email=String(user?.email||"").trim();
+ const metadataName=String(user?.user_metadata?.full_name||user?.user_metadata?.name||"").trim();
+ const raw=metadataName||email.split("@")[0]||"Usuário";
+ const name=raw.replace(/[._-]+/g," ").replace(/\s+/g," ").trim().split(" ").map(part=>part?part.charAt(0).toLocaleUpperCase("pt-BR")+part.slice(1):"").join(" ");
+ const initials=name.split(" ").filter(Boolean).slice(0,2).map(part=>part[0]).join("").toLocaleUpperCase("pt-BR")||"SV";
+ const nameEl=$("sidebarUserName"),emailEl=$("sidebarUserEmail"),avatarEl=$("sidebarUserAvatar");
+ if(nameEl)nameEl.textContent=name;
+ if(emailEl)emailEl.textContent=email||"Sessão ativa";
+ if(avatarEl)avatarEl.textContent=initials;
+}
 async function startFinanceSession(session){
  currentUser=session.user;
+ formatSidebarUser(currentUser);
  $("authGate").style.display="none";$("financeApp").style.display="block";
  try{await syncFromCloud(currentUser);$("monthSelect").value=selectedMonth;render();toast("Dados sincronizados com o Supabase.")}
  catch(err){$("authGate").style.display="grid";$("financeApp").style.display="none";$("authMessage").textContent="Falha ao carregar dados: "+(err.message||"verifique a configuração do banco.");console.error(err)}
