@@ -529,6 +529,79 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
  .sidebar-tip-footer{margin-top:8px;padding:8px 10px}
 }
 
+
+/* Barra lateral Minimalista Plus: indicadores reais, sem valores fictícios */
+.navbar.sidebar-minimal{position:fixed;z-index:25;left:0;top:0;bottom:0;width:292px;box-sizing:border-box;overflow-y:auto;overflow-x:hidden;margin:0;padding:18px 13px 14px;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:11px;background:linear-gradient(180deg,#091626 0%,#07111f 100%);border:0;border-right:1px solid #1b3047;border-radius:0;box-shadow:12px 0 35px #0002;scrollbar-width:thin;scrollbar-color:#29445e transparent}
+.sidebar-brand-mini{display:flex;align-items:center;gap:11px;padding:5px 7px 14px;border-bottom:1px solid #1b3047;margin-bottom:1px}
+.sidebar-brand-mark{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#153d3b,#102b34);border:1px solid #24544f;color:#48e2bf;font-size:25px;font-weight:800}
+.sidebar-brand-mini strong{display:block;color:#f1f6ff;font-size:17px;letter-spacing:-.03em}
+.sidebar-brand-mini small{display:block;color:#8098b4;font-size:10px;margin-top:3px}
+.sidebar-nav-group{display:flex;flex-direction:column;gap:5px}
+.sidebar-section-label{display:block;padding:2px 10px 3px;color:#7088a4;font-size:9px;font-weight:850;letter-spacing:.14em}
+.navbar.sidebar-minimal .navtab{width:100%;min-height:42px;box-sizing:border-box;padding:8px 10px;gap:10px;border:1px solid transparent;border-radius:11px;font-size:12px;color:#b8c9dc;background:transparent}
+.navbar.sidebar-minimal .navtab .navico{width:28px;height:28px;border-radius:9px;background:#10253a;color:#4bdcb9;font-size:15px;flex:none}
+.navbar.sidebar-minimal .navtab:hover{background:#10243a;color:#fff}
+.navbar.sidebar-minimal .navtab.active{background:linear-gradient(100deg,#123147,#10243a);border-color:#1d4657;box-shadow:inset 2px 0 #37dfb7;color:#f7fbff}
+.navbar.sidebar-minimal .navtab.active .navico{background:#17434d;color:#5be7c5}
+.side-widget{position:relative;flex:none;min-width:0;padding:13px;border:1px solid #20374e;border-radius:15px;background:linear-gradient(145deg,#102237 0%,#0b1929 100%);box-shadow:0 8px 20px #00000012}
+.side-widget:before{content:"";position:absolute;top:0;left:13px;right:13px;height:2px;border-radius:0 0 5px 5px;background:linear-gradient(90deg,#32d9b2,#348fe8);opacity:.8}
+.side-widget-heading{display:flex;align-items:center;gap:9px;min-width:0;margin-bottom:11px}
+.side-widget-heading>div{min-width:0;flex:1}
+.side-widget-icon{width:30px;height:30px;display:grid;place-items:center;flex:none;border-radius:10px;background:rgba(48,217,177,.12);color:#50e1bf;font-size:18px}
+.side-widget-icon.blue{background:#12344c;color:#6bbfff}.side-widget-icon.purple{background:#2b234b;color:#bba3ff}.side-widget-icon.gold{background:#3a3022;color:#ffcf75}
+.side-widget-heading small{display:block;color:#7f9bb7;font-size:8px;letter-spacing:.11em;font-weight:850;margin-bottom:4px}
+.side-widget-heading strong{display:block;color:#edf4ff;font-size:11px;line-height:1.3;font-weight:750}
+.side-balance-label{font-size:10px;color:#91a8c1;margin-bottom:3px}
+.side-balance-value{font-size:23px;line-height:1.25;font-weight:850;letter-spacing:-.04em;color:#eff8ff;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.side-mini-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.side-mini-metrics>div{min-width:0;padding:8px;border-radius:10px;background:#091827;border:1px solid #1a3046}
+.side-mini-metrics span{display:block;color:#8198b2;font-size:9px;margin-bottom:5px}
+.side-mini-metrics strong{display:block;color:#e5effb;font-size:11px;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.side-budget-track{height:5px;margin-top:11px;border-radius:99px;background:#1c3044;overflow:hidden}
+.side-budget-track span{display:block;width:0;height:100%;border-radius:99px;background:linear-gradient(90deg,#2edbb3,#56b9ff);transition:width .2s}
+.side-budget-caption,.side-widget-foot{margin-top:7px;color:#8fa7c0;font-size:9px;line-height:1.45}
+.side-card-total{font-size:20px;font-weight:800;letter-spacing:-.03em;color:#f0f6ff;font-variant-numeric:tabular-nums}
+.side-goal-summary{font-size:10px;line-height:1.5;color:#9db2c9;margin-bottom:10px}
+.side-goal-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.side-goal-fields label{display:block;min-width:0;color:#91a8c1;font-size:9px;line-height:1.4}
+.side-goal-fields input{display:block;box-sizing:border-box;width:100%;min-width:0;margin-top:5px;padding:8px 7px;border:1px solid #2a4158;border-radius:8px;background:#081727;color:#edf4ff;font:inherit;font-size:10px;outline:none}
+.side-goal-fields input:focus{border-color:#39d9b4;box-shadow:0 0 0 2px #39d9b41a}
+.side-small-button{margin-top:9px;width:100%;border:1px solid #285a57;border-radius:9px;background:#123936;color:#70e5c9;padding:8px 10px;font-size:10px;font-weight:800;cursor:pointer}
+.side-small-button:hover{background:#174b45}
+.side-goal-progress{margin-top:10px}.side-goal-progress>div:first-child{display:flex;justify-content:space-between;gap:8px;color:#9db2c9;font-size:9px}
+.side-goal-progress strong{color:#d9ccff}
+.side-goal-progress .side-budget-track span{background:linear-gradient(90deg,#8c6bff,#4bd7bb)}
+.side-bills-list{display:flex;flex-direction:column;gap:7px}
+.side-bill-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;align-items:center;padding:7px 0;border-bottom:1px solid #1b3045}
+.side-bill-row:last-child{border-bottom:0;padding-bottom:0}
+.side-bill-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#dbe7f5;font-size:10px}
+.side-bill-kind{display:block;color:#7f98b3;font-size:8px;margin-top:3px}
+.side-bill-amount{font-size:10px;font-weight:750;color:#dbe7f5;white-space:nowrap;font-variant-numeric:tabular-nums}
+.side-empty{font-size:10px;color:#8298b1;line-height:1.5}
+.side-reminder-note{border-top:1px solid #1c3044;padding-top:8px}
+.side-tip-next{flex:none;width:25px;height:25px;border:1px solid #29465c;border-radius:8px;background:#10283b;color:#63d9bd;cursor:pointer}
+.side-tip-widget p{margin:0;color:#a9bbcf;font-size:10px;line-height:1.55}
+.side-shortcuts{display:flex;flex-direction:column;gap:5px;padding:1px 0}
+.side-shortcut{display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid transparent;border-radius:10px;background:transparent;color:#aebfd3;text-align:left;font-size:10px;cursor:pointer}
+.side-shortcut>span{width:24px;height:24px;display:grid;place-items:center;border-radius:8px;background:#10263a;color:#5ddfc1;font-size:14px}
+.side-shortcut b{margin-left:auto;color:#6f8aa7;font-weight:500}
+.side-shortcut:hover{background:#10243a;border-color:#203a50;color:#fff}
+.side-profile{display:flex;align-items:center;gap:9px;padding:11px 7px 3px;margin-top:2px;border-top:1px solid #1b3047}
+.side-profile-avatar{width:31px;height:31px;display:grid;place-items:center;flex:none;border-radius:50%;background:#163b4b;color:#70e2c8;font-size:10px;font-weight:850}
+.side-profile>div{min-width:0;flex:1}.side-profile strong{display:block;color:#dfeaf7;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.side-profile small{display:block;color:#7189a4;font-size:8px;margin-top:3px}.side-profile-status{width:7px;height:7px;border-radius:50%;background:#35d6aa;box-shadow:0 0 8px #35d6aa66}
+@media(max-width:1000px){.app{padding-left:306px}.navbar.sidebar-minimal{width:282px}}
+@media(max-width:700px){
+ .app{padding:16px 12px 28px}
+ .navbar.sidebar-minimal{position:static;width:100%;height:auto;max-height:none;overflow:visible;box-sizing:border-box;padding:12px;margin:0 0 18px;border:1px solid #20344b;border-radius:16px;display:flex!important;flex-direction:column!important;gap:10px}
+ .sidebar-brand-mini{padding-bottom:10px}
+ .sidebar-nav-group{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+ .sidebar-nav-group .sidebar-section-label{grid-column:1/-1}
+ .navbar.sidebar-minimal .navtab{font-size:11px;min-height:40px;padding:7px}
+ .side-widget{width:100%;box-sizing:border-box}
+ .side-goal-fields{grid-template-columns:1fr 1fr}
+ .side-profile{margin-top:0}
+}
+
 </style>
 </head>
 <body>
@@ -558,27 +631,45 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
  <div class="top-actions"><button class="btn" id="importInvoiceBtn" type="button">Importar fatura</button><input id="invoiceFileInput" type="file" accept=".csv,text/csv,.txt" hidden><button class="btn" id="exportBtn">Exportar CSV</button><button class="btn" id="backupBtn">Backup JSON</button><button class="btn primary" id="newExpenseTop">+ Novo lançamento</button><button class="btn" id="changePasswordBtn" type="button">Alterar senha</button><button class="btn" id="logoutBtn" type="button">Sair</button></div>
 </header>
 
-<nav class="navbar" aria-label="Navegação principal">
- <button class="navtab active" data-view="dashboardView"><span class="navico">▦</span> Dashboard</button>
- <button class="navtab" data-view="addView"><span class="navico">＋</span> Adicionar lançamento</button>
- <button class="navtab" data-view="incomeView"><span class="navico">↗</span> Receitas</button>
- <button class="navtab" data-view="expenseView"><span class="navico">↘</span> Despesas</button>
-
-
-
-
-
-
- <section class="sidebar-budget-guide" aria-label="Guia de organização financeira">
-  <div class="budget-guide-top"><span class="budget-guide-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18m7-14H8a3 3 0 0 0 0 6h8a3 3 0 0 1 0 6H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="budget-guide-label">GUIA FINANCEIRO</span><span class="budget-guide-spark">✦</span></div>
-  <h3>Uma ideia para organizar seu dinheiro</h3>
-  <p class="budget-guide-desc">A regra 50 · 30 · 20 pode ajudar a distribuir sua renda.</p>
-  <div class="budget-split"><div class="budget-split-line"><span><i class="split-dot needs"></i> Necessidades</span><strong>50%</strong></div><div class="split-track"><span class="needs-fill"></span></div></div>
-  <div class="budget-split"><div class="budget-split-line"><span><i class="split-dot wants"></i> Desejos</span><strong>30%</strong></div><div class="split-track"><span class="wants-fill"></span></div></div>
-  <div class="budget-split"><div class="budget-split-line"><span><i class="split-dot future"></i> Futuro e reserva</span><strong>20%</strong></div><div class="split-track"><span class="future-fill"></span></div></div>
-  <div class="budget-guide-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>É uma referência, não uma regra. Ajuste à sua realidade.</span></div>
+<nav class="navbar sidebar-minimal" aria-label="Navegação principal">
+ <div class="sidebar-brand-mini"><span class="sidebar-brand-mark">↗</span><div><strong>SaldoVero</strong><small>Seu controle financeiro</small></div></div>
+ <div class="sidebar-nav-group">
+  <span class="sidebar-section-label">MENU</span>
+  <button class="navtab active" data-view="dashboardView"><span class="navico">▦</span> Dashboard</button>
+  <button class="navtab" data-view="addView"><span class="navico">＋</span> Adicionar lançamento</button>
+  <button class="navtab" data-view="incomeView"><span class="navico">↗</span> Receitas</button>
+  <button class="navtab" data-view="expenseView"><span class="navico">↘</span> Despesas</button>
+ </div>
+ <section class="side-widget side-overview" aria-label="Resumo financeiro do mês">
+  <div class="side-widget-heading"><span class="side-widget-icon">◒</span><div><small>SEU MÊS</small><strong id="sideMonthLabel">Resumo financeiro</strong></div></div>
+  <div class="side-balance-label">Saldo após lançamentos</div><div class="side-balance-value" id="sideBalanceValue">—</div>
+  <div class="side-mini-metrics"><div><span>Receitas</span><strong id="sideIncomeValue">—</strong></div><div><span>Despesas</span><strong id="sideExpenseValue">—</strong></div></div>
+  <div class="side-budget-track"><span id="sideExpenseProgress"></span></div>
+  <div class="side-budget-caption" id="sideBudgetCaption">Calculado pelos lançamentos do período.</div>
  </section>
- <section class="sidebar-tip-card" aria-label="Dica financeira prática"><div class="sidebar-tip-head"><span class="sidebar-tip-icon">↗</span><span class="sidebar-tip-label">DICA DA SEMANA</span></div><h3>Pague-se primeiro</h3><p>Ao receber, separe um valor para sua reserva antes de começar a gastar. Mesmo pequenas quantias, com constância, ajudam a criar o hábito de poupar.</p><div class="sidebar-tip-footer">Comece com um valor que caiba no seu orçamento.</div></section>
+ <section class="side-widget side-card-widget" aria-label="Cartão de crédito">
+  <div class="side-widget-heading"><span class="side-widget-icon blue">▣</span><div><small>CARTÃO DE CRÉDITO</small><strong>Gastos no período</strong></div></div>
+  <div class="side-card-total" id="sideCardTotal">—</div>
+  <div class="side-widget-foot" id="sideCardFoot">Sem lançamentos de cartão neste período.</div>
+ </section>
+ <section class="side-widget side-goal-widget" aria-label="Meta de reserva configurável">
+  <div class="side-widget-heading"><span class="side-widget-icon purple">◎</span><div><small>OBJETIVO PESSOAL</small><strong>Reserva de emergência</strong></div></div>
+  <div id="sideGoalSummary" class="side-goal-summary">Informe o valor que já guardou e sua meta. Nada será estimado automaticamente.</div>
+  <div class="side-goal-fields"><label>Já guardado (R$)<input id="sideSavedAmount" type="number" min="0" step="0.01" placeholder="0,00" inputmode="decimal"></label><label>Meta desejada (R$)<input id="sideGoalAmount" type="number" min="0.01" step="0.01" placeholder="Ex.: 5000,00" inputmode="decimal"></label></div>
+  <button type="button" class="side-small-button" id="sideSaveGoal">Salvar meta</button>
+  <div class="side-goal-progress" id="sideGoalProgressWrap" hidden><div><span>Progresso</span><strong id="sideGoalPercent">0%</strong></div><div class="side-budget-track"><span id="sideGoalProgress"></span></div></div>
+ </section>
+ <section class="side-widget side-reminders" aria-label="Contas para acompanhar">
+  <div class="side-widget-heading"><span class="side-widget-icon gold">◷</span><div><small>ACOMPANHAMENTO</small><strong>Contas do período</strong></div></div>
+  <div id="sideBillsList" class="side-bills-list"><span class="side-empty">Seus lançamentos aparecerão aqui.</span></div>
+  <div class="side-widget-foot side-reminder-note">Datas de vencimento não são cadastradas nos lançamentos atuais.</div>
+ </section>
+ <section class="side-widget side-tip-widget" aria-label="Dica financeira">
+  <div class="side-widget-heading"><span class="side-widget-icon">✦</span><div><small>DICA FINANCEIRA</small><strong id="sideTipTitle">Pague-se primeiro</strong></div><button type="button" id="sideNextTip" class="side-tip-next" aria-label="Ver outra dica">↻</button></div>
+  <p id="sideTipText">Separe uma quantia para seus objetivos assim que receber, dentro do que seu orçamento permitir.</p>
+ </section>
+ <div class="side-shortcuts"><span class="sidebar-section-label">ATALHOS</span><button type="button" class="side-shortcut" data-side-action="reports"><span>▥</span> Resumo e relatórios <b>↗</b></button><button type="button" class="side-shortcut" data-side-action="categories"><span>◉</span> Categorias de gastos <b>↗</b></button></div>
+ <div class="side-profile"><span class="side-profile-avatar" id="sideProfileAvatar">SV</span><div><strong id="sideProfileName">Sua conta</strong><small>Dados da sua sessão</small></div><span class="side-profile-status" title="Sessão ativa"></span></div>
 </nav>
 
 <div class="monthbar"><div class="month-control"><label for="monthPickerButton">PERÍODO DE ANÁLISE</label><div class="month-picker-wrap"><input type="month" id="monthSelect" value="2026-10" aria-hidden="true" tabindex="-1"><button type="button" class="month-picker-button" id="monthPickerButton" aria-expanded="false" aria-controls="monthPickerPanel"><span class="calendar-icon">▦</span><span id="monthPickerText">Outubro de 2026</span><span class="calendar-chevron">⌄</span></button><div class="month-picker-panel" id="monthPickerPanel" hidden><div class="month-picker-head"><button type="button" id="monthYearPrev" aria-label="Ano anterior">‹</button><strong id="monthYearLabel">2026</strong><button type="button" id="monthYearNext" aria-label="Próximo ano">›</button></div><div class="month-picker-grid" id="monthPickerGrid"></div><div class="month-picker-foot"><button type="button" id="monthClear">Limpar</button><button type="button" id="monthToday">Este mês</button></div></div></div></div><span class="note">Seus dados são sincronizados com sua conta.</span></div>
@@ -731,6 +822,48 @@ window.brandLogoHTML = function brandLogoHTML(name,fallback,category){
 };
 
 
+function sidebarGoalKey(){return "saldoVeroSidebarGoal:"+(currentUser?.id||"guest")}
+function readSidebarGoal(){try{return JSON.parse(localStorage.getItem(sidebarGoalKey())||"{}")}catch(e){return {}}}
+function renderSidebar(rows,inc,exp,card,bal){
+ const month=$("monthSelect").value||selectedMonth||"";
+ const label=$("monthPickerText")?.textContent||month;
+ $("sideMonthLabel").textContent=label;
+ $("sideBalanceValue").textContent=money(bal);
+ $("sideBalanceValue").style.color=bal<0?"#ff8190":"#eaf8f3";
+ $("sideIncomeValue").textContent=money(inc);
+ $("sideExpenseValue").textContent=money(exp);
+ const ratio=inc>0?Math.min(100,Math.round(exp/inc*100)):0;
+ $("sideExpenseProgress").style.width=ratio+"%";
+ $("sideExpenseProgress").style.background=ratio>100?"linear-gradient(90deg,#ff6474,#ff9b79)":"linear-gradient(90deg,#2edbb3,#56b9ff)";
+ $("sideBudgetCaption").textContent=inc>0?(exp>inc?"Despesas superam as receitas em "+money(exp-inc)+".":ratio+"% das receitas registradas foram comprometidas."):"Cadastre receitas para comparar o orçamento.";
+ $("sideCardTotal").textContent=money(card);
+ const cardRows=rows.filter(e=>e.type==="expense"&&e.payment==="Cartão de crédito");
+ $("sideCardFoot").textContent=cardRows.length?cardRows.length+" lançamento(s) no cartão neste período.":"Nenhum lançamento de cartão neste período.";
+ const goal=readSidebarGoal();
+ $("sideSavedAmount").value=goal.saved??"";
+ $("sideGoalAmount").value=goal.target??"";
+ const saved=Number(goal.saved),target=Number(goal.target);
+ if(goal.saved!==undefined&&goal.target!==undefined&&Number.isFinite(saved)&&Number.isFinite(target)&&target>0){
+  const pct=Math.min(100,Math.round(saved/target*100));
+  $("sideGoalSummary").textContent="Faltam "+money(Math.max(0,target-saved))+" para atingir sua meta.";
+  $("sideGoalProgressWrap").hidden=false;$("sideGoalPercent").textContent=pct+"%";$("sideGoalProgress").style.width=pct+"%";
+ }else{$("sideGoalSummary").textContent="Informe quanto já guardou e o valor desejado. A barra será calculada com esses valores."; $("sideGoalProgressWrap").hidden=true}
+ const bills=rows.filter(e=>e.type==="expense"&&(e.kind==="recurring"||e.kind==="installment")).sort((a,b)=>Number(b.amount)-Number(a.amount)).slice(0,3);
+ $("sideBillsList").innerHTML=bills.length?bills.map(e=>'<div class="side-bill-row"><div><span class="side-bill-name" title="'+esc(e.name)+'">'+esc(e.name)+'</span><span class="side-bill-kind">'+(e.kind==="installment"?"Parcela "+Number(e.current||1)+"/"+Number(e.total||1):"Recorrente")+'</span></div><span class="side-bill-amount">'+esc(money(e.amount))+'</span></div>').join(""):'<span class="side-empty">Nenhuma despesa recorrente ou parcelada registrada neste período.</span>';
+ const first=(currentUser?.email||currentUser?.user_metadata?.full_name||"Sua conta").toString();
+ const displayName=currentUser?.user_metadata?.full_name||currentUser?.user_metadata?.name||first.split("@")[0]||"Sua conta";
+ $("sideProfileName").textContent=displayName;
+ $("sideProfileAvatar").textContent=displayName.trim().split(/\s+/).slice(0,2).map(s=>s[0]||"").join("").toUpperCase()||"SV";
+}
+const sidebarTips=[
+ {title:"Pague-se primeiro",text:"Separe uma quantia para seus objetivos assim que receber, dentro do que seu orçamento permitir."},
+ {title:"Revise os gastos recorrentes",text:"Confira assinaturas e despesas fixas periodicamente e mantenha apenas o que faz sentido para você."},
+ {title:"Defina uma meta clara",text:"Escolha um objetivo e registre o valor que já guardou e quanto deseja alcançar."},
+ {title:"Acompanhe seu cartão",text:"Compare os lançamentos do cartão com a fatura para identificar diferenças antes do pagamento."},
+ {title:"Crie uma margem",text:"Quando possível, deixe espaço no orçamento para despesas inesperadas sem comprometer contas essenciais."}
+];
+let sidebarTipIndex=0;
+function showSidebarTip(){const tip=sidebarTips[sidebarTipIndex%sidebarTips.length];$("sideTipTitle").textContent=tip.title;$("sideTipText").textContent=tip.text}
 function render(){selectedMonth=$("monthSelect").value||"2026-10";$("entryDate").value=selectedMonth;$("monthLabel").textContent=monthLabel(selectedMonth);
 let rows=entries.filter(e=>activeFor(e,selectedMonth)),inc=rows.filter(e=>e.type==="income").reduce((s,e)=>s+Number(e.amount),0),exp=rows.filter(e=>e.type==="expense").reduce((s,e)=>s+Number(e.amount),0),card=rows.filter(e=>e.type==="expense"&&e.payment==="Cartão de crédito").reduce((s,e)=>s+Number(e.amount),0),bal=inc-exp;
 $("incomeTotal").textContent=money(inc);$("expenseTotal").textContent=money(exp);$("balanceTotal").textContent=money(bal);$("cardTotal").textContent=money(card);$("balanceTotal").style.color=bal<0?"var(--red)":"var(--ink)";
@@ -744,6 +877,7 @@ let data=filtered();$("transactionsBody").innerHTML=data.map(e=>`<tr><td><div cl
 let recurring=rows.filter(e=>e.kind==="recurring"&&e.type==="expense").reduce((s,e)=>s+Number(e.amount),0),inst=rows.filter(e=>e.kind==="installment"&&e.type==="expense").reduce((s,e)=>s+Number(e.amount),0),once=rows.filter(e=>e.kind==="once"&&e.type==="expense").reduce((s,e)=>s+Number(e.amount),0);
 $("commitments").innerHTML=[["Assinaturas e fixos",recurring,"Mensal recorrente","↻"],["Parcelas em andamento",inst,"Compras parceladas","▤"],["Gastos pontuais",once,"Lançamentos únicos","•"]].map(([n,v,d,s])=>`<div class="cashflow-item"><div class="cashflow-label"><div class="cashflow-symbol">${s}</div><div><strong>${n}</strong><small>${d}</small></div></div><strong>${money(v)}</strong></div>`).join("");
 if(typeof renderLedgerViews==="function")renderLedgerViews();
+renderSidebar(rows,inc,exp,card,bal);
 }
 function toast(msg){$("toast").textContent=msg;$("toast").style.display="block";setTimeout(()=>$("toast").style.display="none",2600)}
 function resetForm(){ $("entryForm").reset();$("editId").value="";$("entryDate").value=selectedMonth;drawEntryMonthPicker();$("formTitle").textContent="Adicionar lançamento";$("saveEntry").textContent="Salvar lançamento";$("entryType").value="expense";toggleInstallments()}
@@ -799,6 +933,19 @@ function renderLedgerViews(){
 }
 function editFromLedger(id){editEntry(id);showView("addView");}
 document.querySelectorAll(".navtab").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
+$("sideSaveGoal").addEventListener("click",()=>{
+ const saved=Number($("sideSavedAmount").value),target=Number($("sideGoalAmount").value);
+ if($("sideSavedAmount").value.trim()===""||$("sideGoalAmount").value.trim()===""||!Number.isFinite(saved)||!Number.isFinite(target)||saved<0||target<=0){toast("Informe valores válidos para a reserva e a meta.");return}
+ localStorage.setItem(sidebarGoalKey(),JSON.stringify({saved,target}));
+ render();toast("Meta de reserva salva neste navegador.");
+});
+$("sideNextTip").addEventListener("click",()=>{sidebarTipIndex=(sidebarTipIndex+1)%sidebarTips.length;showSidebarTip()});
+document.querySelectorAll("[data-side-action]").forEach(btn=>btn.addEventListener("click",()=>{
+ showView("dashboardView");
+ const target=btn.dataset.sideAction==="categories"?$("categoryDonut"):$("insightBanner");
+ setTimeout(()=>target?.scrollIntoView({behavior:"smooth",block:"center"}),80);
+}));
+showSidebarTip();
 
 toggleInstallments();
 $("logoutBtn").addEventListener("click",async()=>{await supabaseClient.auth.signOut();currentUser=null;entries=[];$("financeApp").style.display="none";$("authGate").style.display="grid";$("authPassword").value="";$("authMessage").textContent="Sessão encerrada."});
