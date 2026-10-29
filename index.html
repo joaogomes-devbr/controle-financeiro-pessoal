@@ -536,6 +536,28 @@ nav.navbar .sidebar-profile-popover{position:fixed!important;z-index:100!importa
  nav.navbar .sidebar-user-card{margin-top:10px!important}
 }
 
+
+/* Força o perfil a ocupar o espaço vazio visível no fim da barra lateral */
+nav.navbar .sidebar-user-card{
+ display:flex!important;visibility:visible!important;opacity:1!important;
+ position:fixed!important;z-index:35!important;
+ left:12px!important;bottom:12px!important;
+ width:calc(300px - 24px)!important;box-sizing:border-box!important;
+ margin:0!important;padding:10px 9px!important;
+ background:#0c1b2c!important;border:1px solid #29445e!important;
+ border-radius:12px!important;box-shadow:0 8px 24px #0005!important;
+}
+@media(max-width:1000px) and (min-width:701px){
+ nav.navbar .sidebar-user-card{width:calc(266px - 24px)!important}
+}
+@media(max-width:700px){
+ nav.navbar .sidebar-user-card{
+  position:fixed!important;left:10px!important;right:10px!important;bottom:10px!important;
+  width:auto!important;margin:0!important;z-index:100!important;
+  background:linear-gradient(100deg,#10243a,#0b192a)!important;
+ }
+}
+
 </style>
 </head>
 <body>
