@@ -923,15 +923,7 @@ document.querySelectorAll(".navtab").forEach(b=>b.addEventListener("click",()=>s
 $("futureAddButton").addEventListener("click",()=>{showView("addView");resetForm();$("entryFutureToggle").checked=true;$("entryFutureDateWrap").classList.remove("hide");const d=new Date();d.setDate(d.getDate()+1);$("entryFutureDate").value=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");$("entryName").focus()});
 $("futureStatusFilter").addEventListener("change",renderFutureView);
 $("futureTransactionsBody").addEventListener("click",async ev=>{const b=ev.target.closest("[data-future-action]");if(!b)return;const id=b.dataset.id,action=b.dataset.futureAction,e=entries.find(x=>String(x.id)===String(id));if(!e)return;if(action==="edit"){editEntry(id);showView("addView")}else if(action==="complete"){await updateScheduledEntry(id,{scheduledStatus:"received"})}else if(action==="delete"){await deleteEntry(id);renderFutureView()}});
-$("sidebarViewProfile").addEventListener("click",()=>{
- $("sidebarProfilePopover").hidden=false;
- $("sidebarProfileModalName").textContent=$("sidebarUserName").textContent;
- $("sidebarProfileModalEmail").textContent=String(currentUser?.email||"");
-});
-$("sidebarProfileClose").addEventListener("click",()=>$("sidebarProfilePopover").hidden=true);
-$("sidebarUserSettings").addEventListener("click",()=>{$("changePasswordBtn").click()});
-$("sidebarProfileChangePassword").addEventListener("click",()=>{$("sidebarProfilePopover").hidden=true;$("changePasswordBtn").click()});
-document.addEventListener("click",ev=>{const panel=$("sidebarProfilePopover");if(panel&&!panel.hidden&&!panel.contains(ev.target)&&!$("sidebarViewProfile").contains(ev.target))panel.hidden=true;});
+
 
 
 toggleInstallments();
