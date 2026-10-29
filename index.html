@@ -504,9 +504,15 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 </div>
 <div id="passwordModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(2,8,16,.78);padding:20px;place-items:center"><section style="width:min(430px,100%);box-sizing:border-box;background:#0d1b2b;border:1px solid #2b435b;border-radius:18px;padding:24px;color:#f4f8ff;box-shadow:0 24px 70px #0008"><h2 style="margin:0 0 8px;font-size:22px">Alterar senha</h2><p style="margin:0 0 18px;color:#a9bfd8;font-size:13px;line-height:1.6">Escolha uma senha nova e exclusiva. Use pelo menos 8 caracteres.</p><form id="changePasswordForm" style="display:grid;gap:12px"><label style="font-size:13px">Senha atual<input id="currentPassword" type="password" required autocomplete="current-password" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #35506b;border-radius:10px;background:#081523;color:#fff"></label><label style="font-size:13px">Nova senha<input id="newPassword" type="password" minlength="8" required autocomplete="new-password" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #35506b;border-radius:10px;background:#081523;color:#fff"></label><label style="font-size:13px">Confirmar nova senha<input id="confirmNewPassword" type="password" minlength="8" required autocomplete="new-password" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border:1px solid #35506b;border-radius:10px;background:#081523;color:#fff"></label><div id="passwordChangeMessage" role="status" style="font-size:13px;color:#ffb5a8"></div><div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap"><button id="cancelPasswordChange" type="button" class="btn">Cancelar</button><button id="savePasswordChange" type="submit" class="btn primary">Salvar nova senha</button></div></form></section></div>
 <div class="app" id="financeApp" style="display:none">
-<header class="top">
+<section id="invoiceImportPanel" hidden style="margin:0 0 22px;padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)">
+ <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><div class="eyebrow">IMPORTAÇÃO DE DADOS</div><h2 style="margin:3px 0 5px;font-size:19px">Importar fatura do Nubank</h2><p style="margin:0;color:var(--muted)">Selecione o CSV exportado pelo Nubank. Confira a prévia antes de salvar.</p></div><button type="button" class="btn" id="closeInvoiceImport">Fechar</button></div>
+ <div style="margin:16px 0;padding:13px;border-radius:10px;background:var(--bg);font-size:13px"><strong>Como obter o arquivo:</strong> exporte a fatura ou o histórico de compras do Nubank em CSV. O arquivo é processado neste navegador; não informe senhas ou credenciais.</div>
+ <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button type="button" class="btn primary" id="chooseInvoiceFile">Selecionar arquivo CSV</button><span id="invoiceFileName" style="color:var(--muted);font-size:12px">Nenhum arquivo selecionado</span></div>
+ <div id="invoiceImportMessage" role="status" style="margin-top:12px;font-size:13px"></div>
+ <div id="invoicePreviewWrap" hidden style="margin-top:14px"><div id="invoiceImportSummary" style="font-weight:700;margin-bottom:10px"></div><div style="overflow:auto;max-height:300px;border:1px solid var(--line);border-radius:10px"><table style="width:100%;border-collapse:collapse;font-size:12px;min-width:520px"><thead><tr><th style="padding:9px;text-align:left">Data</th><th style="padding:9px;text-align:left">Descrição</th><th style="padding:9px;text-align:right">Valor</th><th style="padding:9px;text-align:left">Situação</th></tr></thead><tbody id="invoicePreviewBody"></tbody></table></div><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px;flex-wrap:wrap"><button type="button" class="btn" id="cancelInvoiceImport">Cancelar</button><button type="button" class="btn primary" id="confirmInvoiceImport">Importar lançamentos novos</button></div></div>
+</section>\n<header class="top">
  <div class="brand"><div class="brandmark" role="img" aria-label="Logotipo SaldoVero"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="saldoVeroGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6AF5D0"/><stop offset="1" stop-color="#00B98B"/></linearGradient></defs><path d="M47 5 14 19a7 7 0 0 0-4 6v11l26-11v9L10 45v12l17-7V39l11-5v14l9-4V25l-26 11v-8l19-8 7-15Z" fill="url(#saldoVeroGradient)"/><path d="M10 57V45l16-7v11L10 57Z" fill="#20D9AA"/><path d="M38 48V34l9-4v14l-9 4Z" fill="#5DF0C7"/></svg></div><div><div class="eyebrow">FINANÇAS PESSOAIS</div><h1>SaldoVero</h1></div></div>
- <div class="top-actions"><button class="btn" id="exportBtn">Exportar CSV</button><button class="btn" id="backupBtn">Backup JSON</button><button class="btn primary" id="newExpenseTop">+ Novo lançamento</button><button class="btn" id="changePasswordBtn" type="button">Alterar senha</button><button class="btn" id="logoutBtn" type="button">Sair</button></div>
+ <div class="top-actions"><button class="btn" id="importInvoiceBtn" type="button">Importar fatura</button><input id="invoiceFileInput" type="file" accept=".csv,text/csv,.txt" hidden><button class="btn" id="exportBtn">Exportar CSV</button><button class="btn" id="backupBtn">Backup JSON</button><button class="btn primary" id="newExpenseTop">+ Novo lançamento</button><button class="btn" id="changePasswordBtn" type="button">Alterar senha</button><button class="btn" id="logoutBtn" type="button">Sair</button></div>
 </header>
 
 <nav class="navbar" aria-label="Navegação principal">
@@ -811,5 +817,53 @@ $("authForm").addEventListener("submit",async ev=>{
  }
 });
 (async()=>{const {data,error}=await supabaseClient.auth.getSession();if(error){$("authMessage").textContent="Erro de autenticação: "+error.message;return}if(data.session)await startFinanceSession(data.session)})();
+
+/* Importação local de CSV de fatura: não usa API externa nem credenciais bancárias. */
+let invoiceImportRows=[];
+function parseCsvText(text){
+ const first=(text.split(/\r?\n/).find(x=>x.trim())||"");let delimiter=",",max=-1;
+ for(const d of [",",";","\t"]){const n=first.split(d).length-1;if(n>max){max=n;delimiter=d}}
+ const rows=[];let row=[],field="",quoted=false;
+ for(let i=0;i<text.length;i++){const c=text[i];if(c==='"'){if(quoted&&text[i+1]==='"'){field+='"';i++}else quoted=!quoted}else if(c===delimiter&&!quoted){row.push(field);field=""}else if((c==="\n"||c==="\r")&&!quoted){if(c==="\r"&&text[i+1]==="\n")i++;row.push(field);if(row.some(v=>v.trim()))rows.push(row);row=[];field=""}else field+=c}
+ if(field.length||row.length){row.push(field);if(row.some(v=>v.trim()))rows.push(row)}return rows;
+}
+function normImp(v){return String(v??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()}
+function impDate(v){const x=String(v??"").trim();let m;if((m=x.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})$/))){let y=+m[3];if(y<100)y+=2000;return {date:y+"-"+String(+m[2]).padStart(2,"0")+"-"+String(+m[1]).padStart(2,"0"),month:y+"-"+String(+m[2]).padStart(2,"0")}}if((m=x.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/)))return {date:m[1]+"-"+String(+m[2]).padStart(2,"0")+"-"+String(+m[3]).padStart(2,"0"),month:m[1]+"-"+String(+m[2]).padStart(2,"0")};return null}
+function impAmount(v){let x=String(v??"").trim().replace(/R\$|\s/gi,"").replace(/[()]/g,"");if(!x)return NaN;if(x.includes(",")&&x.includes("."))x=x.lastIndexOf(",")>x.lastIndexOf(".")?x.replace(/\./g,"").replace(",","."):x.replace(/,/g,"");else if(x.includes(","))x=x.replace(",",".");const n=Number(x);return Number.isFinite(n)?Math.abs(n):NaN}
+function impCategory(name){const n=normImp(name);if(/mercado|supermercado|hortifruti|padaria|restaurante|ifood|lanche|burger|pizza|cafe/.test(n))return "Alimentação";if(/uber|99|posto|combustivel|gasolina|estacionamento|pedagio/.test(n))return "Transporte";if(/netflix|spotify|youtube|prime video|disney|hbo|apple com|icloud/.test(n))return "Assinaturas";if(/farmacia|drogaria|hospital|clinica/.test(n))return "Saúde";if(/steam|playstation|xbox|game|cinema/.test(n))return "Lazer";if(/amazon|mercado livre|magalu|shopee|loja/.test(n))return "Compras";return "Outros"}
+function parseInvoice(text){
+ const matrix=parseCsvText(text.replace(/^\uFEFF/,""));if(matrix.length<2)throw Error("CSV vazio ou sem linhas de transações.");
+ const h=matrix[0].map(normImp),find=terms=>h.findIndex(x=>terms.some(t=>x===t||x.includes(t)));
+ const di=find(["data","date"]),ni=find(["descricao","description","estabelecimento","merchant","titulo","title","lancamento"]),ai=find(["valor","amount","value"]);
+ if(di<0||ni<0||ai<0)throw Error("Não reconheci as colunas de data, descrição e valor. Use o CSV da fatura com cabeçalho.");
+ const out=[],dedupe=new Set();
+ for(const cells of matrix.slice(1)){const d=impDate(cells[di]),name=String(cells[ni]||"").trim(),amount=impAmount(cells[ai]);if(!d||!name||!Number.isFinite(amount)||amount<=0)continue;
+ const full=normImp(name+" "+cells.join(" ")),income=/estorno|pagamento recebido|credito de pagamento|cashback|reembolso/.test(full);
+ const fp="nubankcsv:"+[d.date,normImp(name),amount.toFixed(2)].join("|");if(dedupe.has(fp))continue;dedupe.add(fp);
+ out.push({date:d.date,month:d.month,name,amount,type:income?"income":"expense",category:impCategory(name),payment:"Cartão de crédito",kind:"once",startMonth:d.month,current:null,total:null,note:"Importado de fatura Nubank CSV • "+d.date+"\n"+fp,logo:name.slice(0,2).toUpperCase(),fingerprint:fp});
+ }if(!out.length)throw Error("Nenhuma transação válida encontrada. Confira o formato do CSV.");return out;
+}
+function invoiceMsg(msg,error=false){$("invoiceImportMessage").textContent=msg;$("invoiceImportMessage").style.color=error?"var(--red)":"var(--muted)"}
+function renderInvoicePreview(){
+ const existing=new Set(entries.map(e=>[e.month,normImp(e.name),Number(e.amount).toFixed(2)].join("|"))),seen=new Set();
+ invoiceImportRows=invoiceImportRows.map(r=>{const key=[r.month,normImp(r.name),Number(r.amount).toFixed(2)].join("|"),duplicate=existing.has(key)||seen.has(key);seen.add(key);return {...r,duplicate}});
+ $("invoicePreviewBody").innerHTML=invoiceImportRows.map(r=>'<tr style="border-top:1px solid var(--line)"><td style="padding:8px 9px;white-space:nowrap">'+esc(r.date.split("-").reverse().join("/"))+'</td><td style="padding:8px 9px">'+esc(r.name)+'</td><td style="padding:8px 9px;text-align:right;white-space:nowrap">'+esc(money(r.amount))+'</td><td style="padding:8px 9px;color:'+(r.duplicate?"var(--muted)":"var(--accent)")+'">'+(r.duplicate?"Possível duplicidade":"Novo lançamento")+'</td></tr>').join("");
+ const fresh=invoiceImportRows.filter(r=>!r.duplicate).length;$("invoiceImportSummary").textContent=invoiceImportRows.length+" transação(ões) • "+fresh+" nova(s) • "+(invoiceImportRows.length-fresh)+" possível(is) duplicada(s)";
+ $("invoicePreviewWrap").hidden=false;$("confirmInvoiceImport").disabled=!fresh;$("confirmInvoiceImport").textContent="Importar lançamentos novos";
+}
+$("importInvoiceBtn").addEventListener("click",()=>{$("invoiceImportPanel").hidden=false;$("invoiceImportPanel").scrollIntoView({behavior:"smooth",block:"start"})});
+$("closeInvoiceImport").addEventListener("click",()=>{$("invoiceImportPanel").hidden=true});
+$("cancelInvoiceImport").addEventListener("click",()=>{$("invoicePreviewWrap").hidden=true;invoiceImportRows=[];$("invoiceFileInput").value="";$("invoiceFileName").textContent="Nenhum arquivo selecionado";invoiceMsg("")});
+$("chooseInvoiceFile").addEventListener("click",()=> $("invoiceFileInput").click());
+$("invoiceFileInput").addEventListener("change",async ev=>{const file=ev.target.files?.[0];if(!file)return;$("invoiceFileName").textContent=file.name;$("invoicePreviewWrap").hidden=true;invoiceMsg("Lendo arquivo localmente…");try{invoiceImportRows=parseInvoice(await file.text());renderInvoicePreview();invoiceMsg("Confira os lançamentos e as possíveis duplicidades antes de importar.")}catch(e){invoiceImportRows=[];invoiceMsg(e.message||"Não foi possível ler o arquivo.",true)}});
+$("confirmInvoiceImport").addEventListener("click",async()=>{
+ if(!currentUser){invoiceMsg("Entre na sua conta antes de importar.",true);return}
+ const btn=$("confirmInvoiceImport"),rows=invoiceImportRows.filter(r=>!r.duplicate);if(!rows.length)return;btn.disabled=true;btn.textContent="Importando…";let saved=0,failed=0;
+ try{for(const r of rows){const item={id:"local"+Date.now()+Math.random().toString(36).slice(2,7),type:r.type,name:r.name,amount:r.amount,category:r.category,payment:r.payment,kind:"once",month:r.month,startMonth:r.month,current:null,total:null,note:r.note,logo:r.logo,active:true};const result=await supabaseClient.from("financial_entries").insert(toDb(item,currentUser.id)).select("*").single();if(result.error){failed++;console.error("Falha ao importar transação",result.error.message);continue}entries.push(fromDb(result.data));saved++}
+ persist();if(saved){selectedMonth=rows[0].month;$("monthSelect").value=selectedMonth;drawMonthPicker();render()}
+ invoiceMsg(saved+" lançamento(s) importado(s)"+(failed?"; "+failed+" falha(s).":"." )+(saved===0?" Nenhuma alteração foi feita.":""));$("invoiceImportSummary").textContent=saved+" importado(s) • "+failed+" falha(s)";
+ }catch(e){invoiceMsg("Erro na importação: "+(e.message||e),true)}finally{btn.disabled=true;btn.textContent="Importação concluída"}
+});
+
 </script>
 </body></html>
