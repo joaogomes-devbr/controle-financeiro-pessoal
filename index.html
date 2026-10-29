@@ -589,6 +589,15 @@ nav.navbar .sidebar-user-card{
 .sidebar-user-copy strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(max-width:1000px) and (min-width:701px){.sidebar-user-card{width:242px!important}}
 @media(max-width:700px){.sidebar-user-card{left:10px!important;right:10px!important;bottom:10px!important;width:auto!important}}
+@media(max-width:700px){
+ /* Em telas estreitas, o perfil volta ao fluxo normal abaixo da dica, sem sobreposição */
+ .sidebar-user-card{
+  position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  width:100%!important;max-width:100%!important;box-sizing:border-box!important;
+  margin:12px 0 18px!important;z-index:2!important;
+ }
+ .sidebar-profile-popover{z-index:100!important}
+}
 
 </style>
 </head>
