@@ -962,7 +962,6 @@ $("changePasswordForm").addEventListener("submit",async ev=>{
 let currentUser=null;
 async function startFinanceSession(session){
  currentUser=session.user;
- formatSidebarUser(currentUser);
  $("authGate").style.display="none";$("financeApp").style.display="block";
  try{await syncFromCloud(currentUser);$("monthSelect").value=selectedMonth;render();toast("Dados sincronizados com o Supabase.")}
  catch(err){$("authGate").style.display="grid";$("financeApp").style.display="none";$("authMessage").textContent="Falha ao carregar dados: "+(err.message||"verifique a configuração do banco.");console.error(err)}
