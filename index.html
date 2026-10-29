@@ -602,6 +602,18 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
  .side-profile{margin-top:0}
 }
 
+/* Widget substituto: orçamento mensal configurável */
+.side-budget-kicker{color:#8fa7c0;font-size:10px;margin:1px 0 3px}
+.side-budget-spent{font-size:23px;line-height:1.25;font-weight:850;letter-spacing:-.04em;color:#f0f6ff;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.side-budget-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px}
+.side-budget-stats>div{min-width:0;padding:8px;border-radius:10px;background:#091827;border:1px solid #1a3046}
+.side-budget-stats span{display:block;color:#8198b2;font-size:9px;margin-bottom:5px}
+.side-budget-stats strong{display:block;color:#e5effb;font-size:11px;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.side-budget-editor{margin-top:12px;padding-top:10px;border-top:1px solid #1c3044}
+.side-budget-editor label{display:block;color:#91a8c1;font-size:9px;margin-bottom:6px}
+.side-budget-editor input{display:block;box-sizing:border-box;width:100%;min-width:0;padding:8px 9px;border:1px solid #2a4158;border-radius:8px;background:#081727;color:#edf4ff;font-size:11px;outline:none}
+.side-budget-editor input:focus{border-color:#39d9b4;box-shadow:0 0 0 2px #39d9b41a}
+
 </style>
 </head>
 <body>
@@ -640,12 +652,13 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
   <button class="navtab" data-view="incomeView"><span class="navico">↗</span> Receitas</button>
   <button class="navtab" data-view="expenseView"><span class="navico">↘</span> Despesas</button>
  </div>
- <section class="side-widget side-overview" aria-label="Resumo financeiro do mês">
-  <div class="side-widget-heading"><span class="side-widget-icon">◒</span><div><small>SEU MÊS</small><strong id="sideMonthLabel">Resumo financeiro</strong></div></div>
-  <div class="side-balance-label">Saldo após lançamentos</div><div class="side-balance-value" id="sideBalanceValue">—</div>
-  <div class="side-mini-metrics"><div><span>Receitas</span><strong id="sideIncomeValue">—</strong></div><div><span>Despesas</span><strong id="sideExpenseValue">—</strong></div></div>
+ <section class="side-widget side-overview" aria-label="Controle de orçamento mensal">
+  <div class="side-widget-heading"><span class="side-widget-icon blue">◴</span><div><small>CONTROLE DE ORÇAMENTO</small><strong id="sideBudgetMonthLabel">Orçamento do mês</strong></div></div>
+  <div class="side-budget-kicker">Despesas registradas</div><div class="side-budget-spent" id="sideBudgetSpent">—</div>
+  <div class="side-budget-caption" id="sideBudgetCaption">Defina um limite mensal para acompanhar seus gastos.</div>
   <div class="side-budget-track"><span id="sideExpenseProgress"></span></div>
-  <div class="side-budget-caption" id="sideBudgetCaption">Calculado pelos lançamentos do período.</div>
+  <div class="side-budget-stats"><div><span>Limite mensal</span><strong id="sideBudgetLimitLabel">Não definido</strong></div><div><span>Disponível</span><strong id="sideBudgetRemaining">—</strong></div></div>
+  <div class="side-budget-editor"><label for="sideBudgetLimitInput">Seu limite de gastos (R$)</label><input id="sideBudgetLimitInput" type="number" min="0.01" step="0.01" placeholder="Ex.: 2500,00" inputmode="decimal"><button type="button" class="side-small-button" id="sideSaveBudget">Salvar limite</button></div>
  </section>
  <section class="side-widget side-card-widget" aria-label="Cartão de crédito">
   <div class="side-widget-heading"><span class="side-widget-icon blue">▣</span><div><small>CARTÃO DE CRÉDITO</small><strong>Gastos no período</strong></div></div>
@@ -824,18 +837,22 @@ window.brandLogoHTML = function brandLogoHTML(name,fallback,category){
 
 function sidebarGoalKey(){return "saldoVeroSidebarGoal:"+(currentUser?.id||"guest")}
 function readSidebarGoal(){try{return JSON.parse(localStorage.getItem(sidebarGoalKey())||"{}")}catch(e){return {}}}
+function sidebarBudgetKey(month){return "saldoVeroSidebarBudget:"+(currentUser?.id||"guest")+":"+month}
+function readSidebarBudget(month){try{return JSON.parse(localStorage.getItem(sidebarBudgetKey(month))||"{}")}catch(e){return {}}}
 function renderSidebar(rows,inc,exp,card,bal){
  const month=$("monthSelect").value||selectedMonth||"";
  const label=$("monthPickerText")?.textContent||month;
- $("sideMonthLabel").textContent=label;
- $("sideBalanceValue").textContent=money(bal);
- $("sideBalanceValue").style.color=bal<0?"#ff8190":"#eaf8f3";
- $("sideIncomeValue").textContent=money(inc);
- $("sideExpenseValue").textContent=money(exp);
- const ratio=inc>0?Math.min(100,Math.round(exp/inc*100)):0;
- $("sideExpenseProgress").style.width=ratio+"%";
- $("sideExpenseProgress").style.background=ratio>100?"linear-gradient(90deg,#ff6474,#ff9b79)":"linear-gradient(90deg,#2edbb3,#56b9ff)";
- $("sideBudgetCaption").textContent=inc>0?(exp>inc?"Despesas superam as receitas em "+money(exp-inc)+".":ratio+"% das receitas registradas foram comprometidas."):"Cadastre receitas para comparar o orçamento.";
+ const budget=readSidebarBudget(month),limit=Number(budget.limit),hasLimit=budget.limit!==undefined&&Number.isFinite(limit)&&limit>0;
+ $("sideBudgetMonthLabel").textContent=label;
+ $("sideBudgetSpent").textContent=money(exp);
+ $("sideBudgetLimitLabel").textContent=hasLimit?money(limit):"Não definido";
+ $("sideBudgetLimitInput").value=hasLimit?String(limit):"";
+ const ratio=hasLimit?Math.round(exp/limit*100):0;
+ $("sideExpenseProgress").style.width=(hasLimit?Math.min(100,ratio):0)+"%";
+ $("sideExpenseProgress").style.background=hasLimit&&exp>limit?"linear-gradient(90deg,#ff6474,#ff9b79)":"linear-gradient(90deg,#2edbb3,#56b9ff)";
+ $("sideBudgetRemaining").textContent=hasLimit?money(limit-exp):"—";
+ $("sideBudgetRemaining").style.color=hasLimit&&exp>limit?"#ff8190":"#dff8ef";
+ $("sideBudgetCaption").textContent=hasLimit?(exp>limit?"Você ultrapassou seu limite em "+money(exp-limit)+".":ratio+"% do limite mensal utilizado."):"Defina um limite mensal para acompanhar seus gastos.";
  $("sideCardTotal").textContent=money(card);
  const cardRows=rows.filter(e=>e.type==="expense"&&e.payment==="Cartão de crédito");
  $("sideCardFoot").textContent=cardRows.length?cardRows.length+" lançamento(s) no cartão neste período.":"Nenhum lançamento de cartão neste período.";
@@ -933,6 +950,13 @@ function renderLedgerViews(){
 }
 function editFromLedger(id){editEntry(id);showView("addView");}
 document.querySelectorAll(".navtab").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
+$("sideSaveBudget").addEventListener("click",()=>{
+ const month=$("monthSelect").value||selectedMonth||"";
+ const raw=$("sideBudgetLimitInput").value,limit=Number(raw);
+ if(raw.trim()===""||!Number.isFinite(limit)||limit<=0){toast("Informe um limite mensal maior que zero.");return}
+ localStorage.setItem(sidebarBudgetKey(month),JSON.stringify({limit}));
+ render();toast("Limite de gastos salvo para "+($("monthPickerText")?.textContent||month)+".");
+});
 $("sideSaveGoal").addEventListener("click",()=>{
  const saved=Number($("sideSavedAmount").value),target=Number($("sideGoalAmount").value);
  if($("sideSavedAmount").value.trim()===""||$("sideGoalAmount").value.trim()===""||!Number.isFinite(saved)||!Number.isFinite(target)||saved<0||target<=0){toast("Informe valores válidos para a reserva e a meta.");return}
