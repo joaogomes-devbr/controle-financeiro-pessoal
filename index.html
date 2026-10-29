@@ -617,6 +617,9 @@ nav.navbar>.sidebar-profile-popover{position:fixed!important;z-index:1000!import
 
 /* Perfil lateral removido a pedido do usuário */
 .sidebar-user-card,.sidebar-profile-popover{display:none!important}
+
+/* Remoção definitiva do perfil da barra lateral */
+.sidebar-user-card,.sidebar-profile-popover,#sidebarUserAvatar,#sidebarUserName,#sidebarViewProfile,#sidebarUserSettings,#sidebarProfilePopover,#sidebarProfileModalName,#sidebarProfileModalEmail,#sidebarProfileChangePassword{display:none!important;visibility:hidden!important;width:0!important;height:0!important;margin:0!important;padding:0!important;border:0!important}
 </style>
 </head>
 <body>
@@ -957,18 +960,6 @@ $("changePasswordForm").addEventListener("submit",async ev=>{
 });
 
 let currentUser=null;
-function formatSidebarUser(user){
- const email=String(user?.email||"").trim();
- const metadataName=String(user?.user_metadata?.full_name||user?.user_metadata?.name||"").trim();
- const raw=metadataName||email.split("@")[0]||"Usuário";
- const name=raw.replace(/[._-]+/g," ").replace(/\s+/g," ").trim().split(" ").map(part=>part?part.charAt(0).toLocaleUpperCase("pt-BR")+part.slice(1):"").join(" ");
- const nameEl=$("sidebarUserName"),avatarEl=$("sidebarUserAvatar"),modalName=$("sidebarProfileModalName"),modalEmail=$("sidebarProfileModalEmail");
- if(nameEl)nameEl.textContent=name;
- if(avatarEl)avatarEl.textContent=""; 
- if(avatarEl)avatarEl.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21a8 8 0 0 1 16 0" fill="currentColor"/></svg>';
- if(modalName)modalName.textContent=name;
- if(modalEmail)modalEmail.textContent=email;
-}
 async function startFinanceSession(session){
  currentUser=session.user;
  formatSidebarUser(currentUser);
