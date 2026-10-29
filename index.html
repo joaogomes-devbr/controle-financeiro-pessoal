@@ -983,7 +983,10 @@ $("authForm").addEventListener("submit",async ev=>{
   await startFinanceSession(data.session);
  }catch(err){
   console.error("Falha inesperada no login:",err);
-  msg.textContent="Falha de conexão ao entrar. Verifique sua internet e tente novamente.";
+  const detail=String(err?.message||err||"Erro desconhecido");
+  msg.textContent=/fetch|network|failed to fetch|load failed/i.test(detail)
+   ?"O navegador não conseguiu concluir a conexão com o Supabase. O projeto está ativo; verifique se a Vercel publicou a versão atual e se o navegador não está bloqueando a requisição. Detalhe: "+detail
+   :"Falha ao entrar: "+detail;
  }finally{
   btn.disabled=false;btn.textContent="Entrar";
  }
