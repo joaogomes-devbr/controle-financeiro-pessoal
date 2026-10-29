@@ -837,8 +837,11 @@ function parseInvoice(text){
  const di=find(["data","date"]),ni=find(["descricao","description","estabelecimento","merchant","titulo","title","lancamento"]),ai=find(["valor","amount","value"]);
  if(di<0||ni<0||ai<0)throw Error("Não reconheci as colunas de data, descrição e valor. Use o CSV da fatura com cabeçalho.");
  const out=[],dedupe=new Set();
- for(const cells of matrix.slice(1)){const d=impDate(cells[di]),name=String(cells[ni]||"").trim(),amount=impAmount(cells[ai]);if(!d||!name||!Number.isFinite(amount)||amount<=0)continue;
- const full=normImp(name+" "+cells.join(" ")),income=/estorno|pagamento recebido|credito de pagamento|cashback|reembolso/.test(full);
+ for(const cells of matrix.slice(1)){const d=impDate(cells[di]),name=String(cells[ni]||"").trim();if(!d||!name)continue;
+ const normalizedName=normImp(name);
+ if(/pagamento recebido|pagamento de fatura|pagamento efetuado/.test(normalizedName))continue;
+ const amount=impAmount(cells[ai]);if(!Number.isFinite(amount)||amount<=0)continue;
+ const full=normImp(name+" "+cells.join(" ")),income=/estorno|credito de pagamento|cashback|reembolso/.test(full);
  const fp="nubankcsv:"+[d.date,normImp(name),amount.toFixed(2)].join("|");if(dedupe.has(fp))continue;dedupe.add(fp);
  out.push({date:d.date,month:d.month,name,amount,type:income?"income":"expense",category:impCategory(name),payment:"Cartão de crédito",kind:"once",startMonth:d.month,current:null,total:null,note:"Importado de fatura Nubank CSV • "+d.date+"\n"+fp,logo:name.slice(0,2).toUpperCase(),fingerprint:fp});
  }if(!out.length)throw Error("Nenhuma transação válida encontrada. Confira o formato do CSV.");return out;
