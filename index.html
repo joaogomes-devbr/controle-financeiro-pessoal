@@ -486,6 +486,49 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .expense-legend-row strong{color:#f0f5ff;font-size:14px;font-weight:750;font-variant-numeric:tabular-nums}
 @media(max-width:1200px){.main-grid>.panel:has(.expense-category-chart)>.panel-body{padding:24px}.expense-category-chart{grid-template-columns:minmax(175px,.85fr) minmax(0,1fr);gap:22px;min-height:260px}.expense-donut{width:min(100%,220px)}.expense-category-legend{gap:15px}}
 @media(max-width:700px){.main-grid>.panel:has(.expense-category-chart)>.panel-body{padding:18px 15px}.expense-category-chart{grid-template-columns:minmax(112px, .8fr) minmax(0,1.2fr);gap:15px;min-height:190px}.expense-donut{width:100%;max-width:150px}.expense-category-legend{gap:13px}.expense-legend-row{grid-template-columns:8px minmax(0,1fr) auto;gap:7px;font-size:11px}.expense-legend-dot{width:8px;height:8px}.expense-legend-row strong{font-size:11px}.expense-donut-hole strong{font-size:clamp(9px,2.6vw,13px)}.expense-donut-hole span{font-size:9px}}
+
+/* Refinamento visual da área de apoio da navegação lateral */
+.sidebar-budget-guide,.sidebar-tip-card{
+ position:relative;isolation:isolate;flex-shrink:0;
+ padding:16px 15px 14px;margin-top:14px;
+ border:1px solid #213a50;border-radius:18px;
+ background:linear-gradient(155deg,#102237 0%,#0c1b2b 58%,#0a1725 100%);
+ box-shadow:0 8px 22px rgba(0,0,0,.14);
+}
+.sidebar-budget-guide:before,.sidebar-tip-card:before{
+ content:"";position:absolute;top:0;left:15px;right:15px;height:2px;
+ border-radius:0 0 8px 8px;background:linear-gradient(90deg,#2bd9b1,rgba(43,217,177,.12));
+}
+.budget-guide-top,.sidebar-tip-head{gap:10px;margin-bottom:12px}
+.budget-guide-icon,.sidebar-tip-icon{width:32px;height:32px;border-radius:11px}
+.budget-guide-label,.sidebar-tip-label{font-size:9px;letter-spacing:.11em}
+.budget-guide-spark{color:#8fdcc9;font-size:15px}
+.sidebar-budget-guide h3,.sidebar-tip-card h3{font-size:14px;line-height:1.35;letter-spacing:-.02em;margin:0 0 7px}
+.budget-guide-desc,.sidebar-tip-card p{font-size:11px;line-height:1.55;color:#a9bbcf}
+.budget-guide-desc{margin-bottom:13px}
+.budget-split{margin-top:10px}
+.budget-split-line{font-size:11px;margin-bottom:6px}
+.budget-split-line strong{font-size:11px}
+.split-track{height:6px;background:#1b3044}
+.budget-guide-note{gap:8px;margin-top:14px;padding-top:11px;font-size:10px;line-height:1.5;color:#9fb3c8}
+.sidebar-tip-icon{background:rgba(43,217,177,.11);color:#4be0bb;font-size:19px}
+.sidebar-tip-label{color:#6fe5c7}
+.sidebar-tip-card p{margin:0}
+.sidebar-tip-footer{margin-top:12px;padding:10px 11px;border:1px solid rgba(51,211,177,.12);border-radius:10px;background:rgba(34,205,165,.055);font-size:10px;line-height:1.5;color:#bdd4e0}
+@media(max-width:700px){
+ .navbar{row-gap:8px}
+ .sidebar-budget-guide,.sidebar-tip-card{grid-column:1/-1;width:auto;box-sizing:border-box;margin-top:8px;padding:16px}
+ .sidebar-budget-guide h3,.sidebar-tip-card h3{font-size:15px}
+ .budget-guide-desc,.sidebar-tip-card p{font-size:11px}
+}
+@media(max-height:720px){
+ .sidebar-budget-guide,.sidebar-tip-card{padding:12px 13px}
+ .budget-guide-desc{margin-bottom:8px}
+ .budget-split{margin-top:7px}
+ .budget-guide-note{margin-top:9px;padding-top:8px}
+ .sidebar-tip-footer{margin-top:8px;padding:8px 10px}
+}
+
 </style>
 </head>
 <body>
