@@ -558,6 +558,21 @@ nav.navbar .sidebar-user-card{
  }
 }
 
+
+/* O perfil fica fora do contêiner com overflow da navegação para não ser recortado */
+.sidebar-user-card{
+ display:flex!important;visibility:visible!important;opacity:1!important;
+ position:fixed!important;z-index:90!important;left:12px!important;bottom:12px!important;
+ width:276px!important;box-sizing:border-box!important;margin:0!important;padding:10px 9px!important;
+ border:1px solid #29445e!important;border-radius:12px!important;
+ background:linear-gradient(100deg,#10243a,#0b192a)!important;box-shadow:0 8px 24px #0006!important;
+}
+.sidebar-user-avatar{width:34px!important;height:34px!important;flex:0 0 34px!important;border-radius:50%!important}
+.sidebar-user-copy{min-width:0!important;flex:1!important}
+.sidebar-user-copy strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:1000px) and (min-width:701px){.sidebar-user-card{width:242px!important}}
+@media(max-width:700px){.sidebar-user-card{left:10px!important;right:10px!important;bottom:10px!important;width:auto!important}}
+
 </style>
 </head>
 <body>
@@ -608,7 +623,9 @@ nav.navbar .sidebar-user-card{
   <div class="budget-guide-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>É uma referência, não uma regra. Ajuste à sua realidade.</span></div>
  </section>
  <section class="sidebar-tip-card" aria-label="Dica financeira prática"><div class="sidebar-tip-head"><span class="sidebar-tip-icon">↗</span><span class="sidebar-tip-label">DICA DA SEMANA</span></div><h3>Pague-se primeiro</h3><p>Ao receber, separe um valor para sua reserva antes de começar a gastar. Mesmo pequenas quantias, com constância, ajudam a criar o hábito de poupar.</p><div class="sidebar-tip-footer">Comece com um valor que caiba no seu orçamento.</div></section>
- <section class="sidebar-user-card" aria-label="Perfil do usuário">
+ 
+</nav>
+<section class="sidebar-user-card" aria-label="Perfil do usuário">
   <div class="sidebar-user-avatar" id="sidebarUserAvatar" aria-hidden="true">●</div>
   <div class="sidebar-user-copy"><strong id="sidebarUserName">Sua conta</strong><button type="button" class="sidebar-user-profile-link" id="sidebarViewProfile">Ver perfil</button></div>
   <button type="button" class="sidebar-user-settings" id="sidebarUserSettings" aria-label="Configurações do perfil" title="Configurações">⚙</button>
@@ -618,7 +635,6 @@ nav.navbar .sidebar-user-card{
  <div id="sidebarProfileModalEmail" class="sidebar-profile-modal-email"></div>
  <button type="button" id="sidebarProfileChangePassword" class="sidebar-profile-action">Alterar senha</button>
 </div>
-</nav>
 
 <div class="monthbar"><div class="month-control"><label for="monthPickerButton">PERÍODO DE ANÁLISE</label><div class="month-picker-wrap"><input type="month" id="monthSelect" value="2026-10" aria-hidden="true" tabindex="-1"><button type="button" class="month-picker-button" id="monthPickerButton" aria-expanded="false" aria-controls="monthPickerPanel"><span class="calendar-icon">▦</span><span id="monthPickerText">Outubro de 2026</span><span class="calendar-chevron">⌄</span></button><div class="month-picker-panel" id="monthPickerPanel" hidden><div class="month-picker-head"><button type="button" id="monthYearPrev" aria-label="Ano anterior">‹</button><strong id="monthYearLabel">2026</strong><button type="button" id="monthYearNext" aria-label="Próximo ano">›</button></div><div class="month-picker-grid" id="monthPickerGrid"></div><div class="month-picker-foot"><button type="button" id="monthClear">Limpar</button><button type="button" id="monthToday">Este mês</button></div></div></div></div><span class="note">Seus dados são sincronizados com sua conta.</span></div>
 <div id="dashboardView" class="page-view"><section class="grid">
