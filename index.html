@@ -48,6 +48,8 @@ th{background:#102033;color:#93a9c3;border-bottom-color:#23374e}td{border-bottom
 @media(max-width:700px){.app{padding:16px 12px 28px}.brand{position:static;width:auto;margin-bottom:14px}.top{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-bottom:15px}.top-actions{justify-content:flex-start}.navbar{position:static;width:auto;height:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:7px;margin:0 0 18px;border:1px solid #20344b;border-radius:13px;overflow:visible}.navtab{padding:9px 10px;min-height:45px;font-size:12px;gap:7px}.navtab .navico{width:25px;height:25px}.monthbar{margin-bottom:15px}.monthbar .note{width:100%;margin-left:0}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.metric{padding:12px;min-height:116px}.metric-value{font-size:20px;overflow-wrap:anywhere}.metric-head{font-size:11px}.metric-icon{width:32px;height:32px}.panel-head,.panel-body{padding:14px}.chart{gap:12px;flex-wrap:wrap}.donut{width:112px;height:112px}.donut:after{width:76px;height:76px}.legend{min-width:145px}.legend-row{font-size:11px}.section-head{align-items:flex-start;flex-direction:column}.filters{width:100%;flex-wrap:wrap}.filters input,.filters select{width:100%}.form-grid{grid-template-columns:1fr}.form-field.full{grid-column:auto}.bottom-grid,.add-layout{grid-template-columns:1fr}.footer{flex-direction:column}}
 
 
+/* Tela de lançamentos futuros */
+.future-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:16px}.future-row-actions{display:flex;gap:6px;flex-wrap:wrap}.future-row-actions .icon-btn{font-size:11px}.future-status{display:inline-flex;padding:4px 8px;border-radius:7px;background:#4a321c;color:#ffc66e;font-size:10px;font-weight:700}.future-status.overdue{background:#48212b;color:#ff8491}.future-status.received{background:#10483e;color:#67e5c3}@media(max-width:600px){.future-summary-grid{grid-template-columns:1fr 1fr}.future-summary-grid .metric{min-width:0}}
 /* Agendamento de lançamentos futuros */
 .future-schedule-field{padding:12px 13px;border:1px solid #263b54;border-radius:12px;background:#0b1929}.future-schedule-toggle{display:flex!important;align-items:center;gap:10px;cursor:pointer;color:#dce8f6!important;font-size:12px!important}.future-schedule-toggle input{width:16px;height:16px;margin:0;accent-color:#27d9ae}.future-date-wrap{margin-top:12px}.future-date-wrap label{display:block;font-size:11px;color:#a7bad0;font-weight:700;margin:0 0 6px}.future-date-wrap small{display:block;color:#8ea3bd;font-size:11px;margin-top:6px}.future-date-wrap input{max-width:320px}
 /* POLIMENTO VISUAL — tipografia e acesso */
@@ -610,6 +612,7 @@ nav.navbar .sidebar-user-card{
  <button class="navtab" data-view="addView"><span class="navico">＋</span> Adicionar lançamento</button>
  <button class="navtab" data-view="incomeView"><span class="navico">↗</span> Receitas</button>
  <button class="navtab" data-view="expenseView"><span class="navico">↘</span> Despesas</button>
+ <button class="navtab" data-view="futureView"><span class="navico">◷</span> Lançamentos futuros</button>
 
 
 
@@ -680,6 +683,15 @@ nav.navbar .sidebar-user-card{
  <div class="cashflow-item"><div class="cashflow-label"><div class="cashflow-symbol">▤</div><div><strong>Parcelamentos</strong><small>Informe a parcela atual e o total</small></div></div></div>
  </div><p class="helper" style="line-height:1.8;margin-top:18px">Os lançamentos são sincronizados com sua conta. Exporte um backup JSON regularmente como cópia adicional.</p></div></section></div>
 </div>
+<div id="futureView" class="page-view hide">
+ <div class="section-head"><div><h2>Lançamentos futuros</h2><div class="sub">Acompanhe receitas e despesas com data prevista.</div></div><button class="btn primary" id="futureAddButton">＋ Agendar lançamento</button></div>
+ <div class="grid future-summary-grid">
+  <div class="metric positive"><div class="metric-head">Total a receber <span class="metric-icon">↗</span></div><div class="metric-value" id="futureIncomeTotal">R$ 0,00</div><div class="metric-foot">Receitas ainda não realizadas</div></div>
+  <div class="metric negative"><div class="metric-head">Total a pagar <span class="metric-icon">↘</span></div><div class="metric-value" id="futureExpenseTotal">R$ 0,00</div><div class="metric-foot">Despesas ainda não realizadas</div></div>
+ </div>
+ <section class="panel" style="margin-top:16px"><div class="panel-head"><div><h2>Agenda financeira</h2><div class="sub">Ordenada pela data mais próxima.</div></div><select id="futureStatusFilter" style="max-width:190px"><option value="pending">Pendentes</option><option value="all">Todos os agendados</option></select></div>
+ <div class="table-wrap"><table><thead><tr><th>Data prevista</th><th>Lançamento</th><th>Tipo</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead><tbody id="futureTransactionsBody"></tbody></table><div class="empty hide" id="futureEmpty">Nenhum lançamento futuro cadastrado.</div></div></section>
+ </div>
 <div id="incomeView" class="page-view hide"><div class="section-head"><div><h2>Receitas</h2><div class="sub">Recebimentos ativos no mês selecionado.</div></div><button class="btn primary" onclick="showView('addView','income')">＋ Adicionar receita</button></div><section class="panel"><div class="table-wrap"><table><thead><tr><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Mês</th><th>Ações</th></tr></thead><tbody id="incomeBody"></tbody></table><div class="empty hide" id="incomeEmpty">Nenhuma receita registrada neste mês.</div></div></section></div>
 <div id="expenseView" class="page-view hide"><div class="section-head"><div><h2>Despesas</h2><div class="sub">Despesas ativas no mês selecionado.</div></div><button class="btn primary" onclick="showView('addView','expense')">＋ Adicionar despesa</button></div><section class="panel"><div class="table-wrap"><table><thead><tr><th>Descrição</th><th>Categoria</th><th>Frequência</th><th>Valor</th><th>Pagamento</th><th>Ações</th></tr></thead><tbody id="expenseBody"></tbody></table><div class="empty hide" id="expenseEmpty">Nenhuma despesa registrada neste mês.</div></div></section></div>
 <footer class="footer"><span>FINANCE · CONTROLE PESSOAL</span><span>Sincronização online · Dados protegidos por login</span></footer>
@@ -721,8 +733,8 @@ let entries=[];let selectedMonth=new Date().toISOString().slice(0,7);
 function financeStorageKey(){return currentUser?"painelFinanceiroEntries:"+currentUser.id:"painelFinanceiroEntries:guest"}
 function loadLocal(){try{let d=JSON.parse(localStorage.getItem(financeStorageKey()));return Array.isArray(d)?d:[]}catch(e){return []}}
 function persist(){localStorage.setItem(financeStorageKey(),JSON.stringify(entries))}
-function toDb(e,userId){return {user_id:userId,description:e.name,entry_type:e.type,amount:Number(e.amount),category:e.category||"Outros",payment_method:e.payment||"Outro",frequency:e.kind||"once",month_reference:(e.month||selectedMonth)+"-01",start_month:(e.startMonth||e.month||selectedMonth)+"-01",installment_current:e.kind==="installment"?Number(e.current||1):null,installment_total:e.kind==="installment"?Number(e.total||1):null,notes:[e.note||"",e.logo?"__logo:"+e.logo:"",e.scheduledDate?"__scheduled_date:"+e.scheduledDate:""].filter(Boolean).join("\n")}}
-function fromDb(r){let note=r.notes||"",logo="",scheduledDate="";const match=note.match(/(?:^|\n)__logo:([^\n]*)/),scheduled=note.match(/(?:^|\n)__scheduled_date:(\d{4}-\d{2}-\d{2})/);if(match){logo=match[1];note=note.replace(/(?:^|\n)__logo:[^\n]*/,"").trim()}if(scheduled){scheduledDate=scheduled[1];note=note.replace(/(?:^|\n)__scheduled_date:\d{4}-\d{2}-\d{2}/,"").trim()}return {id:r.id,name:r.description,type:r.entry_type,amount:Number(r.amount),category:r.category,payment:r.payment_method,kind:r.frequency,month:String(r.month_reference).slice(0,7),startMonth:String(r.start_month||r.month_reference).slice(0,7),current:r.installment_current,total:r.installment_total,note,logo,scheduledDate,active:true}}
+function toDb(e,userId){return {user_id:userId,description:e.name,entry_type:e.type,amount:Number(e.amount),category:e.category||"Outros",payment_method:e.payment||"Outro",frequency:e.kind||"once",month_reference:(e.month||selectedMonth)+"-01",start_month:(e.startMonth||e.month||selectedMonth)+"-01",installment_current:e.kind==="installment"?Number(e.current||1):null,installment_total:e.kind==="installment"?Number(e.total||1):null,notes:[e.note||"",e.logo?"__logo:"+e.logo:"",e.scheduledDate?"__scheduled_date:"+e.scheduledDate:"",e.scheduledStatus?"__scheduled_status:"+e.scheduledStatus:""].filter(Boolean).join("\n")}}
+function fromDb(r){let note=r.notes||"",logo="",scheduledDate="";const match=note.match(/(?:^|\n)__logo:([^\n]*)/),scheduled=note.match(/(?:^|\n)__scheduled_date:(\d{4}-\d{2}-\d{2})/),status=note.match(/(?:^|\n)__scheduled_status:(pending|received|cancelled)/);if(match){logo=match[1];note=note.replace(/(?:^|\n)__logo:[^\n]*/,"").trim()}if(scheduled){scheduledDate=scheduled[1];note=note.replace(/(?:^|\n)__scheduled_date:\d{4}-\d{2}-\d{2}/,"").trim()}if(status){note=note.replace(/(?:^|\n)__scheduled_status:(?:pending|received|cancelled)/,"").trim()}return {id:r.id,name:r.description,type:r.entry_type,amount:Number(r.amount),category:r.category,payment:r.payment_method,kind:r.frequency,month:String(r.month_reference).slice(0,7),startMonth:String(r.start_month||r.month_reference).slice(0,7),current:r.installment_current,total:r.installment_total,note,logo,scheduledDate,scheduledStatus:status?status[1]:"pending",active:true}}
 async function syncFromCloud(user){
  const {data,error}=await supabaseClient.from("financial_entries").select("*").eq("user_id",user.id).order("created_at");
  if(error) throw error;
@@ -735,7 +747,7 @@ async function syncFromCloud(user){
 function monthLabel(m){let [y,mm]=m.split("-");return monthNames[Number(mm)-1].toUpperCase()+" "+y}
 function esc(s){return String(s??"").replace(/\\[nr]/g," ").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function activeFor(e,m){if(e.scheduledDate)return e.scheduledDate.slice(0,7)===m;if(e.type==="income"||e.kind==="once")return e.month===m;if(e.kind==="recurring")return m>=(e.startMonth||e.month);if(e.kind==="installment"){let [sy,sm]=(e.startMonth||e.month).split("-").map(Number),[y,mm]=m.split("-").map(Number),offset=(y-sy)*12+(mm-sm),total=Number(e.total)||1,current=Number(e.current)||1,remaining=total-current+1;return offset>=0&&offset<remaining}return e.month===m}
-function isFinanciallyDue(e){return !e.scheduledDate||e.scheduledDate<=new Date().toISOString().slice(0,10)}
+function isFinanciallyDue(e){return !e.scheduledDate||e.scheduledStatus==="received"}
 function installmentLabel(e){if(e.kind==="recurring")return "Mensal";if(e.kind==="installment")return `${e.current||1}/${e.total||"?"}`;return "Único"}
 function filtered(){let q=$("searchInput").value.toLowerCase(),type=$("typeFilter").value,status=$("statusFilter").value;return entries.filter(e=>activeFor(e,selectedMonth)&&(!q||e.name.toLowerCase().includes(q)||String(e.category).toLowerCase().includes(q))&&(type==="all"||e.type===type)&&(status==="all"||(status==="active")||(status==="recurring"&&e.kind==="recurring")||(status==="installment"&&e.kind==="installment")))}
 const monthPickerNames=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
@@ -849,6 +861,7 @@ function showView(viewId, presetType){
    $("entryDate").value=selectedMonth;
  }
   if(viewId==="incomeView"||viewId==="expenseView") renderLedgerViews();
+ if(viewId==="futureView") renderFutureView();
  window.scrollTo({top:0,behavior:"smooth"});
 }
 function renderLedgerViews(){
@@ -858,8 +871,30 @@ function renderLedgerViews(){
  $("expenseBody").innerHTML=outs.map(e=>`<tr><td><div class="merchant"><div class="logo">${window.brandLogoHTML(e.name,e.logo||e.name.slice(0,2),e.category)}</div><span class="merchant-name">${esc(e.name)}</span></div></td><td>${esc(e.category)}</td><td><span class="pill ${e.kind==="installment"?"installment":e.kind==="recurring"?"recurring":""}">${installmentLabel(e)}</span></td><td class="amount expense">${money(e.amount)}</td><td>${esc(e.payment||"—")}</td><td><div class="row-actions"><button class="icon-btn" onclick="editFromLedger('${e.id}')">Editar</button><button class="icon-btn" onclick="deleteEntry('${e.id}')">Excluir</button></div></td></tr>`).join("");
  $("incomeEmpty").classList.toggle("hide",ins.length>0); $("expenseEmpty").classList.toggle("hide",outs.length>0);
 }
+function renderFutureView(){
+ const all=entries.filter(e=>!!e.scheduledDate).sort((a,b)=>a.scheduledDate.localeCompare(b.scheduledDate));
+ const pending=all.filter(e=>!e.scheduledStatus||e.scheduledStatus==="pending");
+ const list=$("futureStatusFilter").value==="all"?all:pending;
+ $("futureIncomeTotal").textContent=money(pending.filter(e=>e.type==="income").reduce((sum,e)=>sum+Number(e.amount),0));
+ $("futureExpenseTotal").textContent=money(pending.filter(e=>e.type==="expense").reduce((sum,e)=>sum+Number(e.amount),0));
+ $("futureTransactionsBody").innerHTML=list.map(e=>{const overdue=e.scheduledDate<new Date().toISOString().slice(0,10)&&(!e.scheduledStatus||e.scheduledStatus==="pending");const status=e.scheduledStatus==="received"?"Recebido/pago":e.scheduledStatus==="cancelled"?"Cancelado":overdue?"Atrasado":"Pendente";return '<tr><td>'+esc(e.scheduledDate.split("-").reverse().join("/"))+'</td><td><div class="merchant"><div class="logo">'+window.brandLogoHTML(e.name,e.logo||e.name.slice(0,2),e.category)+'</div><span class="merchant-name">'+esc(e.name)+'</span></div></td><td>'+(e.type==="income"?"Receita":"Despesa")+'</td><td class="amount '+(e.type==="income"?"income":"expense")+'">'+(e.type==="income"?"+ ":"− ")+money(e.amount)+'</td><td><span class="future-status '+(overdue?"overdue":e.scheduledStatus==="received"?"received":"")+'">'+status+'</span></td><td><div class="future-row-actions"><button class="icon-btn" data-future-action="edit" data-id="'+esc(e.id)+'">Editar</button>'+(e.scheduledStatus==="received"?"":'<button class="icon-btn" data-future-action="complete" data-id="'+esc(e.id)+'">Confirmar</button>')+'<button class="icon-btn" data-future-action="delete" data-id="'+esc(e.id)+'">Excluir</button></div></td></tr>'}).join("");
+ $("futureEmpty").classList.toggle("hide",list.length>0);
+}
+async function updateScheduledEntry(id,patch){
+ const e=entries.find(x=>String(x.id)===String(id));if(!e)return;
+ const updated={...e,...patch};
+ if(currentUser&&!String(id).startsWith("seed")&&!String(id).startsWith("local")){
+  const {error}=await supabaseClient.from("financial_entries").update(toDb(updated,currentUser.id)).eq("id",id).eq("user_id",currentUser.id);
+  if(error){toast("Não foi possível atualizar: "+error.message);return}
+ }
+ entries=entries.map(x=>String(x.id)===String(id)?updated:x);persist();renderFutureView();render();toast("Lançamento atualizado.");
+}
+
 function editFromLedger(id){editEntry(id);showView("addView");}
 document.querySelectorAll(".navtab").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
+$("futureAddButton").addEventListener("click",()=>{showView("addView");resetForm();$("entryFutureToggle").checked=true;$("entryFutureDateWrap").classList.remove("hide");const d=new Date();d.setDate(d.getDate()+1);$("entryFutureDate").value=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");$("entryName").focus()});
+$("futureStatusFilter").addEventListener("change",renderFutureView);
+$("futureTransactionsBody").addEventListener("click",async ev=>{const b=ev.target.closest("[data-future-action]");if(!b)return;const id=b.dataset.id,action=b.dataset.futureAction,e=entries.find(x=>String(x.id)===String(id));if(!e)return;if(action==="edit"){editEntry(id);showView("addView")}else if(action==="complete"){await updateScheduledEntry(id,{scheduledStatus:"received"})}else if(action==="delete"){await deleteEntry(id);renderFutureView()}});
 $("sidebarViewProfile").addEventListener("click",()=>{
  $("sidebarProfilePopover").hidden=false;
  $("sidebarProfileModalName").textContent=$("sidebarUserName").textContent;
