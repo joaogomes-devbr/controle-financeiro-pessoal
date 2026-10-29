@@ -516,6 +516,26 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .sidebar-profile-action{width:100%;margin-top:12px;padding:9px 10px;border:1px solid #29475e;border-radius:9px;background:#10283a;color:#bde9ff;font-size:11px;cursor:pointer}
 @media(max-width:700px){.navbar .sidebar-user-card{margin-top:6px}.sidebar-profile-popover{position:fixed;left:16px;right:16px;bottom:18px;width:auto}}
 
+
+/* Perfil fixo dentro do espaço livre da própria barra lateral */
+nav.navbar .sidebar-user-card{
+ display:flex!important;visibility:visible!important;opacity:1!important;
+ position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;
+ width:100%;box-sizing:border-box;flex-shrink:0;margin-top:auto!important;
+ padding:10px 9px!important;gap:9px!important;
+ border:1px solid #1b3550!important;border-radius:12px!important;
+ background:linear-gradient(135deg,#0d2034,#091727)!important;
+}
+nav.navbar .sidebar-user-avatar{width:34px!important;height:34px!important;flex:0 0 34px!important;border-radius:50%!important}
+nav.navbar .sidebar-user-copy{min-width:0!important;flex:1!important}
+nav.navbar .sidebar-user-copy strong{font-size:10px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+nav.navbar .sidebar-user-profile-link{font-size:9px!important;margin-top:2px!important}
+nav.navbar .sidebar-user-settings{width:29px!important;height:29px!important;flex:0 0 29px!important}
+nav.navbar .sidebar-profile-popover{position:fixed!important;z-index:100!important}
+@media(max-width:700px){
+ nav.navbar .sidebar-user-card{margin-top:10px!important}
+}
+
 </style>
 </head>
 <body>
