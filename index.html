@@ -497,6 +497,25 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
 .sidebar-user-status{width:7px;height:7px;flex:none;border-radius:50%;background:#39d6a9;box-shadow:0 0 8px #39d6a966}
 @media(max-width:700px){.sidebar-user-card{margin-top:4px}}
 
+
+/* Perfil compacto inspirado no padrão de navegação de aplicativos */
+.navbar .sidebar-user-card{display:flex;align-items:center;gap:9px;flex:none;margin-top:auto;padding:10px 9px;border:1px solid #1b3550;border-radius:12px;background:rgba(8,22,37,.92);box-shadow:0 4px 14px #0002;min-width:0}
+.sidebar-user-avatar{width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:50%;background:linear-gradient(145deg,#1c4770,#122b49);border:1px solid #28547b;color:#c6e4ff;font-size:12px;font-weight:800}
+.sidebar-user-copy{min-width:0;flex:1}
+.sidebar-user-copy strong{display:block;color:#edf5ff;font-size:10px;font-weight:750;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sidebar-user-profile-link{display:block;margin:2px 0 0;padding:0;border:0;background:transparent;color:#69baff;font-size:9px;line-height:1.3;cursor:pointer;text-align:left}
+.sidebar-user-profile-link:hover{color:#a7d9ff;text-decoration:underline}
+.sidebar-user-settings{width:29px;height:29px;display:grid;place-items:center;flex:none;border:1px solid #263e58;border-radius:9px;background:#0b1b2d;color:#a8bdd4;font-size:14px;cursor:pointer}
+.sidebar-user-settings:hover{border-color:#4a789c;color:#eaf5ff;background:#122942}
+.sidebar-profile-popover{position:fixed;z-index:80;left:16px;bottom:70px;width:250px;box-sizing:border-box;padding:14px;border:1px solid #2a435c;border-radius:14px;background:#0c1b2c;box-shadow:0 18px 50px #0008;color:#eef5ff}
+.sidebar-profile-popover[hidden]{display:none}
+.sidebar-profile-popover-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sidebar-profile-popover-head strong{font-size:13px}
+.sidebar-profile-popover-head button{border:0;background:transparent;color:#9fb4ca;font-size:20px;cursor:pointer}
+.sidebar-profile-modal-email{margin-top:5px;color:#8ea7c0;font-size:10px;overflow-wrap:anywhere}
+.sidebar-profile-action{width:100%;margin-top:12px;padding:9px 10px;border:1px solid #29475e;border-radius:9px;background:#10283a;color:#bde9ff;font-size:11px;cursor:pointer}
+@media(max-width:700px){.navbar .sidebar-user-card{margin-top:6px}.sidebar-profile-popover{position:fixed;left:16px;right:16px;bottom:18px;width:auto}}
+
 </style>
 </head>
 <body>
@@ -547,11 +566,16 @@ h1,h2,.metric-value,.merchant-name{letter-spacing:-.035em}
   <div class="budget-guide-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>É uma referência, não uma regra. Ajuste à sua realidade.</span></div>
  </section>
  <section class="sidebar-tip-card" aria-label="Dica financeira prática"><div class="sidebar-tip-head"><span class="sidebar-tip-icon">↗</span><span class="sidebar-tip-label">DICA DA SEMANA</span></div><h3>Pague-se primeiro</h3><p>Ao receber, separe um valor para sua reserva antes de começar a gastar. Mesmo pequenas quantias, com constância, ajudam a criar o hábito de poupar.</p><div class="sidebar-tip-footer">Comece com um valor que caiba no seu orçamento.</div></section>
- <section class="sidebar-user-card" aria-label="Usuário conectado">
-  <div class="sidebar-user-avatar" id="sidebarUserAvatar">SV</div>
-  <div class="sidebar-user-copy"><span>USUÁRIO CONECTADO</span><strong id="sidebarUserName">Sua conta</strong><small id="sidebarUserEmail">Sessão ativa</small></div>
-  <span class="sidebar-user-status" title="Conectado"></span>
+ <section class="sidebar-user-card" aria-label="Perfil do usuário">
+  <div class="sidebar-user-avatar" id="sidebarUserAvatar" aria-hidden="true">●</div>
+  <div class="sidebar-user-copy"><strong id="sidebarUserName">Sua conta</strong><button type="button" class="sidebar-user-profile-link" id="sidebarViewProfile">Ver perfil</button></div>
+  <button type="button" class="sidebar-user-settings" id="sidebarUserSettings" aria-label="Configurações do perfil" title="Configurações">⚙</button>
 </section>
+<div class="sidebar-profile-popover" id="sidebarProfilePopover" hidden>
+ <div class="sidebar-profile-popover-head"><strong id="sidebarProfileModalName">Sua conta</strong><button type="button" id="sidebarProfileClose" aria-label="Fechar">×</button></div>
+ <div id="sidebarProfileModalEmail" class="sidebar-profile-modal-email"></div>
+ <button type="button" id="sidebarProfileChangePassword" class="sidebar-profile-action">Alterar senha</button>
+</div>
 </nav>
 
 <div class="monthbar"><div class="month-control"><label for="monthPickerButton">PERÍODO DE ANÁLISE</label><div class="month-picker-wrap"><input type="month" id="monthSelect" value="2026-10" aria-hidden="true" tabindex="-1"><button type="button" class="month-picker-button" id="monthPickerButton" aria-expanded="false" aria-controls="monthPickerPanel"><span class="calendar-icon">▦</span><span id="monthPickerText">Outubro de 2026</span><span class="calendar-chevron">⌄</span></button><div class="month-picker-panel" id="monthPickerPanel" hidden><div class="month-picker-head"><button type="button" id="monthYearPrev" aria-label="Ano anterior">‹</button><strong id="monthYearLabel">2026</strong><button type="button" id="monthYearNext" aria-label="Próximo ano">›</button></div><div class="month-picker-grid" id="monthPickerGrid"></div><div class="month-picker-foot"><button type="button" id="monthClear">Limpar</button><button type="button" id="monthToday">Este mês</button></div></div></div></div><span class="note">Seus dados são sincronizados com sua conta.</span></div>
@@ -772,6 +796,16 @@ function renderLedgerViews(){
 }
 function editFromLedger(id){editEntry(id);showView("addView");}
 document.querySelectorAll(".navtab").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
+$("sidebarViewProfile").addEventListener("click",()=>{
+ $("sidebarProfilePopover").hidden=false;
+ $("sidebarProfileModalName").textContent=$("sidebarUserName").textContent;
+ $("sidebarProfileModalEmail").textContent=String(currentUser?.email||"");
+});
+$("sidebarProfileClose").addEventListener("click",()=>$("sidebarProfilePopover").hidden=true);
+$("sidebarUserSettings").addEventListener("click",()=>{$("changePasswordBtn").click()});
+$("sidebarProfileChangePassword").addEventListener("click",()=>{$("sidebarProfilePopover").hidden=true;$("changePasswordBtn").click()});
+document.addEventListener("click",ev=>{const panel=$("sidebarProfilePopover");if(panel&&!panel.hidden&&!panel.contains(ev.target)&&!$("sidebarViewProfile").contains(ev.target))panel.hidden=true;});
+
 
 toggleInstallments();
 $("logoutBtn").addEventListener("click",async()=>{await supabaseClient.auth.signOut();currentUser=null;entries=[];$("financeApp").style.display="none";$("authGate").style.display="grid";$("authPassword").value="";$("authMessage").textContent="Sessão encerrada."});
@@ -809,11 +843,12 @@ function formatSidebarUser(user){
  const metadataName=String(user?.user_metadata?.full_name||user?.user_metadata?.name||"").trim();
  const raw=metadataName||email.split("@")[0]||"Usuário";
  const name=raw.replace(/[._-]+/g," ").replace(/\s+/g," ").trim().split(" ").map(part=>part?part.charAt(0).toLocaleUpperCase("pt-BR")+part.slice(1):"").join(" ");
- const initials=name.split(" ").filter(Boolean).slice(0,2).map(part=>part[0]).join("").toLocaleUpperCase("pt-BR")||"SV";
- const nameEl=$("sidebarUserName"),emailEl=$("sidebarUserEmail"),avatarEl=$("sidebarUserAvatar");
+ const nameEl=$("sidebarUserName"),avatarEl=$("sidebarUserAvatar"),modalName=$("sidebarProfileModalName"),modalEmail=$("sidebarProfileModalEmail");
  if(nameEl)nameEl.textContent=name;
- if(emailEl)emailEl.textContent=email||"Sessão ativa";
- if(avatarEl)avatarEl.textContent=initials;
+ if(avatarEl)avatarEl.textContent=""; 
+ if(avatarEl)avatarEl.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21a8 8 0 0 1 16 0" fill="currentColor"/></svg>';
+ if(modalName)modalName.textContent=name;
+ if(modalEmail)modalEmail.textContent=email;
 }
 async function startFinanceSession(session){
  currentUser=session.user;
