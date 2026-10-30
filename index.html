@@ -1038,8 +1038,23 @@ $("changePasswordForm").addEventListener("submit",async ev=>{
 });
 
 let currentUser=null;
+function updateSidebarProfile(user){
+ const meta=user?.user_metadata||{};
+ const raw=String(meta.full_name||meta.name||user?.email?.split("@")[0]||"Sua conta").replace(/[._-]+/g," ").trim();
+ const name=raw.replace(/\b\p{L}/gu,c=>c.toLocaleUpperCase("pt-BR"));
+ const initials=name.split(/\s+/).filter(Boolean).slice(0,2).map(part=>part[0]).join("").toUpperCase()||"JG";
+ $("sidebarUserName").textContent=name;
+ $("sidebarUserAvatar").textContent=initials;
+ $("sidebarProfileModalName").textContent=name;
+ $("sidebarProfileModalEmail").textContent=user?.email||"";
+}
+$("sidebarViewProfile").addEventListener("click",()=>{$("sidebarProfilePopover").hidden=!$("sidebarProfilePopover").hidden});
+$("sidebarProfileClose").addEventListener("click",()=>{$("sidebarProfilePopover").hidden=true});
+$("sidebarUserSettings").addEventListener("click",()=>{$("changePasswordBtn").click()});
+$("sidebarProfileChangePassword").addEventListener("click",()=>{$("sidebarProfilePopover").hidden=true;$("changePasswordBtn").click()});
 async function startFinanceSession(session){
  currentUser=session.user;
+ updateSidebarProfile(currentUser);
  $("authGate").style.display="none";$("financeApp").style.display="block";
  try{await syncFromCloud(currentUser);$("monthSelect").value=selectedMonth;render();toast("Dados sincronizados com o Supabase.")}
  catch(err){$("authGate").style.display="grid";$("financeApp").style.display="none";$("authMessage").textContent="Falha ao carregar dados: "+(err.message||"verifique a configuração do banco.");console.error(err)}
