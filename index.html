@@ -688,6 +688,11 @@ nav.navbar>.sidebar-profile-popover{position:fixed!important;z-index:1000!import
 
 /* Remoção definitiva do perfil lateral */
 .sidebar-user-card,.sidebar-profile-popover,#sidebarUserAvatar,#sidebarUserName,#sidebarViewProfile,#sidebarUserSettings,#sidebarProfilePopover{display:none!important}
+
+/* Estado de autenticação: o painel inteiro fica oculto antes do login.
+   Sobrescreve regras antigas de layout que aplicavam display:block!important. */
+#financeApp[style*="display:none"]{display:none!important}
+#authGate[style*="display:none"]{display:none!important}
 </style>
 </head>
 <body>
