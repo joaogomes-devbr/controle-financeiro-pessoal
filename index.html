@@ -685,6 +685,9 @@ nav.navbar>.sidebar-profile-popover{position:fixed!important;z-index:1000!import
  .sidebar-profile-popover{position:fixed!important;left:12px!important;right:12px!important;bottom:12px!important;width:auto!important}
 }
 
+
+/* Remoção definitiva do perfil lateral */
+.sidebar-user-card,.sidebar-profile-popover,#sidebarUserAvatar,#sidebarUserName,#sidebarViewProfile,#sidebarUserSettings,#sidebarProfilePopover{display:none!important}
 </style>
 </head>
 <body>
@@ -739,17 +742,6 @@ nav.navbar>.sidebar-profile-popover{position:fixed!important;z-index:1000!import
  <section class="sidebar-tip-card" aria-label="Dica financeira prática"><div class="sidebar-tip-head"><span class="sidebar-tip-icon">↗</span><span class="sidebar-tip-label">DICA DA SEMANA</span></div><h3>Pague-se primeiro</h3><p>Ao receber, separe um valor para sua reserva antes de começar a gastar. Mesmo pequenas quantias, com constância, ajudam a criar o hábito de poupar.</p><div class="sidebar-tip-footer">Comece com um valor que caiba no seu orçamento.</div></section>
 </nav>
 
-<section class="sidebar-user-card" aria-label="Perfil do usuário">
- <div class="sidebar-user-avatar" id="sidebarUserAvatar" aria-hidden="true">JG</div>
- <div class="sidebar-user-copy"><strong id="sidebarUserName">Sua conta</strong><button type="button" class="sidebar-user-profile-link" id="sidebarViewProfile">Ver perfil</button></div>
- <button type="button" class="sidebar-user-settings" id="sidebarUserSettings" aria-label="Configurações do perfil" title="Configurações">⚙</button>
-</section>
-<div class="sidebar-profile-popover" id="sidebarProfilePopover" hidden>
- <div class="sidebar-profile-popover-head"><strong>Seu perfil</strong><button type="button" id="sidebarProfileClose" aria-label="Fechar">×</button></div>
- <div class="sidebar-profile-modal-email" id="sidebarProfileModalName"></div>
- <div class="sidebar-profile-modal-email" id="sidebarProfileModalEmail"></div>
- <button type="button" class="sidebar-profile-action" id="sidebarProfileChangePassword">Alterar senha</button>
-</div>
 
 <div class="monthbar"><div class="month-control"><label for="monthPickerButton">PERÍODO DE ANÁLISE</label><div class="month-picker-wrap"><input type="month" id="monthSelect" value="2026-10" aria-hidden="true" tabindex="-1"><button type="button" class="month-picker-button" id="monthPickerButton" aria-expanded="false" aria-controls="monthPickerPanel"><span class="calendar-icon">▦</span><span id="monthPickerText">Outubro de 2026</span><span class="calendar-chevron">⌄</span></button><div class="month-picker-panel" id="monthPickerPanel" hidden><div class="month-picker-head"><button type="button" id="monthYearPrev" aria-label="Ano anterior">‹</button><strong id="monthYearLabel">2026</strong><button type="button" id="monthYearNext" aria-label="Próximo ano">›</button></div><div class="month-picker-grid" id="monthPickerGrid"></div><div class="month-picker-foot"><button type="button" id="monthClear">Limpar</button><button type="button" id="monthToday">Este mês</button></div></div></div></div><span class="note">Seus dados são sincronizados com sua conta.</span></div>
 <div id="dashboardView" class="page-view"><section class="grid">
@@ -1038,23 +1030,8 @@ $("changePasswordForm").addEventListener("submit",async ev=>{
 });
 
 let currentUser=null;
-function updateSidebarProfile(user){
- const meta=user?.user_metadata||{};
- const raw=String(meta.full_name||meta.name||user?.email?.split("@")[0]||"Sua conta").replace(/[._-]+/g," ").trim();
- const name=raw.replace(/\b\p{L}/gu,c=>c.toLocaleUpperCase("pt-BR"));
- const initials=name.split(/\s+/).filter(Boolean).slice(0,2).map(part=>part[0]).join("").toUpperCase()||"JG";
- $("sidebarUserName").textContent=name;
- $("sidebarUserAvatar").textContent=initials;
- $("sidebarProfileModalName").textContent=name;
- $("sidebarProfileModalEmail").textContent=user?.email||"";
-}
-$("sidebarViewProfile").addEventListener("click",()=>{$("sidebarProfilePopover").hidden=!$("sidebarProfilePopover").hidden});
-$("sidebarProfileClose").addEventListener("click",()=>{$("sidebarProfilePopover").hidden=true});
-$("sidebarUserSettings").addEventListener("click",()=>{$("changePasswordBtn").click()});
-$("sidebarProfileChangePassword").addEventListener("click",()=>{$("sidebarProfilePopover").hidden=true;$("changePasswordBtn").click()});
 async function startFinanceSession(session){
  currentUser=session.user;
- updateSidebarProfile(currentUser);
  $("authGate").style.display="none";$("financeApp").style.display="block";
  try{await syncFromCloud(currentUser);$("monthSelect").value=selectedMonth;render();toast("Dados sincronizados com o Supabase.")}
  catch(err){$("authGate").style.display="grid";$("financeApp").style.display="none";$("authMessage").textContent="Falha ao carregar dados: "+(err.message||"verifique a configuração do banco.");console.error(err)}
