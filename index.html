@@ -835,7 +835,11 @@ const initial=[
 const $=id=>document.getElementById(id);
 const money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 const monthNames=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
-let entries=[];let selectedMonth=new Date().toISOString().slice(0,7);
+function defaultAnalysisMonth(){
+ const now=new Date(),base=new Date(now.getFullYear(),now.getMonth()+(now.getDate()>=11?1:0),1);
+ return base.getFullYear()+"-"+String(base.getMonth()+1).padStart(2,"0");
+}
+let entries=[];let selectedMonth=defaultAnalysisMonth();
 function financeStorageKey(){return currentUser?"painelFinanceiroEntries:"+currentUser.id:"painelFinanceiroEntries:guest"}
 function loadLocal(){try{let d=JSON.parse(localStorage.getItem(financeStorageKey()));return Array.isArray(d)?d:[]}catch(e){return []}}
 function persist(){localStorage.setItem(financeStorageKey(),JSON.stringify(entries))}
@@ -958,7 +962,7 @@ $("monthPickerButton").addEventListener("click",()=>toggleMonthPicker());
 $("monthYearPrev").addEventListener("click",()=>{monthPickerYear--;drawMonthPicker()});
 $("monthYearNext").addEventListener("click",()=>{monthPickerYear++;drawMonthPicker()});
 $("monthPickerGrid").addEventListener("click",ev=>{const b=ev.target.closest("[data-month-value]");if(!b)return;$("monthSelect").value=b.dataset.monthValue;drawMonthPicker();toggleMonthPicker(false);render()});
-$("monthToday").addEventListener("click",()=>{const d=new Date();$("monthSelect").value=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");drawMonthPicker();toggleMonthPicker(false);render()});
+$("monthToday").addEventListener("click",()=>{$("monthSelect").value=defaultAnalysisMonth();drawMonthPicker();toggleMonthPicker(false);render()});
 $("monthClear").addEventListener("click",()=>{toggleMonthPicker(false)});
 document.addEventListener("click",ev=>{if(!$("monthPickerPanel").hidden&&!$("monthPickerPanel").parentElement.contains(ev.target))toggleMonthPicker(false)});
 document.addEventListener("keydown",ev=>{if(ev.key==="Escape"&&!$("monthPickerPanel").hidden)toggleMonthPicker(false)});
@@ -1057,7 +1061,7 @@ let currentUser=null;
 async function startFinanceSession(session){
  currentUser=session.user;
  $("authGate").style.display="none";$("financeApp").style.display="block";
- try{await syncFromCloud(currentUser);$("monthSelect").value=selectedMonth;render();toast("Dados sincronizados com o Supabase.")}
+ try{await syncFromCloud(currentUser);selectedMonth=defaultAnalysisMonth();$("monthSelect").value=selectedMonth;drawMonthPicker();render();toast("Dados sincronizados com o Supabase.")}
  catch(err){$("authGate").style.display="grid";$("financeApp").style.display="none";$("authMessage").textContent="Falha ao carregar dados: "+(err.message||"verifique a configuração do banco.");console.error(err)}
 }
 $("authForm").addEventListener("submit",async ev=>{
