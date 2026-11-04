@@ -854,17 +854,12 @@ function monthLabel(m){let [y,mm]=m.split("-");return monthNames[Number(mm)-1].t
 function esc(s){return String(s??"").replace(/\\[nr]/g," ").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function activeFor(e,m){if(e.scheduledDate)return e.scheduledDate.slice(0,7)===m;if(e.type==="income"||e.kind==="once")return e.month===m;if(e.kind==="recurring")return m>=(e.startMonth||e.month);if(e.kind==="installment"){let [sy,sm]=(e.startMonth||e.month).split("-").map(Number),[y,mm]=m.split("-").map(Number),offset=(y-sy)*12+(mm-sm),total=Number(e.total)||1,current=Number(e.current)||1,remaining=total-current+1;return offset>=0&&offset<remaining}return e.month===m}
 function expenseMonthFor(referenceMonth){
- const now=new Date();
- const currentMonth=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0");
- // Do dia 1 ao dia 10, o dashboard mantém a fatura anterior
- // (ex.: 01/11 a 10/11 mostra outubro, com vencimento em 10/11).
- // A partir do dia 11, passa a mostrar os gastos do mês vigente.
- if(referenceMonth!==currentMonth)return referenceMonth;
- if(now.getDate()<=10){
-  const previous=new Date(now.getFullYear(),now.getMonth()-1,1);
-  return previous.getFullYear()+"-"+String(previous.getMonth()+1).padStart(2,"0");
- }
- return currentMonth;
+ // O período selecionado representa o mês de vencimento/pagamento.
+ // Portanto, sempre exibe a competência de despesas do mês anterior:
+ // dezembro/2026 -> despesas de novembro/2026; janeiro/2027 -> dezembro/2026.
+ const [year,month]=referenceMonth.split("-").map(Number);
+ const previous=new Date(year,month-2,1);
+ return previous.getFullYear()+"-"+String(previous.getMonth()+1).padStart(2,"0");
 }
 function isFinanciallyDue(e){
  if(!e.scheduledDate)return true;
