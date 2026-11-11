@@ -839,7 +839,7 @@ function defaultAnalysisMonth(){
  const now=new Date(),base=new Date(now.getFullYear(),now.getMonth()+(now.getDate()>=11?1:0),1);
  return base.getFullYear()+"-"+String(base.getMonth()+1).padStart(2,"0");
 }
-let entries=[];let selectedMonth=defaultAnalysisMonth();
+let entries=[];let selectedMonth=defaultAnalysisMonth();let autoMonthMode=true;
 function financeStorageKey(){return currentUser?"painelFinanceiroEntries:"+currentUser.id:"painelFinanceiroEntries:guest"}
 function loadLocal(){try{let d=JSON.parse(localStorage.getItem(financeStorageKey()));return Array.isArray(d)?d:[]}catch(e){return []}}
 function persist(){localStorage.setItem(financeStorageKey(),JSON.stringify(entries))}
@@ -941,7 +941,7 @@ function render(){selectedMonth=$("monthSelect").value||"2026-10";$("entryDate")
 const expenseMonth=expenseMonthFor(selectedMonth);
 let rows=entries.filter(e=>activeFor(e,entryReferenceMonth(e,selectedMonth))),dueRows=rows.filter(isFinanciallyDue),inc=dueRows.filter(e=>e.type==="income").reduce((s,e)=>s+Number(e.amount),0),exp=dueRows.filter(e=>e.type==="expense").reduce((s,e)=>s+Number(e.amount),0),card=dueRows.filter(e=>e.type==="expense"&&e.payment==="Cartão de crédito").reduce((s,e)=>s+Number(e.amount),0),bal=inc-exp;
 $("incomeTotal").textContent=money(inc);$("expenseTotal").textContent=money(exp);$("balanceTotal").textContent=money(bal);$("cardTotal").textContent=money(card);$("balanceTotal").style.color=bal<0?"var(--red)":"var(--ink)";
-$("incomeFoot").textContent=rows.filter(e=>e.type==="income").length+" receita(s) registrada(s)";$("expenseFoot").textContent=rows.filter(e=>e.type==="expense").length+" despesa(s) · referência "+monthLabel(expenseMonth);$("cardFoot").textContent="Cartão de crédito · "+(exp?Math.round(card/exp*100):0)+"% das despesas";const cardPct=exp?Math.min(100,Math.round(card/exp*100)):0;if($("cardRingProgress"))$("cardRingProgress").setAttribute("stroke-dashoffset",String(157*(1-cardPct/100)));if($("cardRingText"))$("cardRingText").textContent=cardPct+"%";
+$("incomeFoot").textContent=rows.filter(e=>e.type==="income").length+" receita(s) registrada(s)";$("expenseFoot").textContent=rows.filter(e=>e.type==="expense").length+" despesa(s) · cartão: "+monthLabel(expenseMonth)+" / demais: "+monthLabel(selectedMonth);$("cardFoot").textContent="Cartão de crédito · "+(exp?Math.round(card/exp*100):0)+"% das despesas";const cardPct=exp?Math.min(100,Math.round(card/exp*100)):0;if($("cardRingProgress"))$("cardRingProgress").setAttribute("stroke-dashoffset",String(157*(1-cardPct/100)));if($("cardRingText"))$("cardRingText").textContent=cardPct+"%";
 const movement=inc+exp;const incomePct=movement?inc/movement*100:0;const expensePct=movement?exp/movement*100:0;const expenseRatio=inc?exp/inc*100:0;const scale=Math.max(inc,exp,1);$("legendIncome").textContent=money(inc);$("legendExpense").textContent=money(exp);$("legendBalance").textContent=money(bal);
 $("incomeBar").style.width=(inc/scale*100)+"%";$("expenseBar").style.width=(exp/scale*100)+"%";$("incomeShareLabel").textContent=Math.round(incomePct)+"% da movimentação total";$("expenseShareLabel").textContent=Math.round(expensePct)+"% da movimentação total";$("expenseShare").textContent=(inc?Math.round(expenseRatio):0)+"%";const overPct=inc>0?Math.round((exp-inc)/inc*100):0;const bannerTitle=bal<0?(inc>0?"Gastos acima das receitas":"Comece registrando suas receitas"):(bal>0?"Você está no azul!":"Receitas e despesas equilibradas");const bannerText=bal<0?(inc>0?"Suas despesas foram "+overPct+"% maiores que suas receitas neste mês. Tente revisar os maiores gastos para equilibrar suas finanças.":"Cadastre suas receitas para acompanhar quanto do seu dinheiro está comprometido."):(bal>0?"Você tem "+money(bal)+" disponíveis após as despesas registradas. Continue acompanhando seus gastos para manter esse resultado.":"Até agora, suas receitas e despesas estão no mesmo nível.");$("insightTitle").textContent=bannerTitle;$("insightText").textContent=bannerText;$("insightBanner").classList.toggle("insight-negative",bal<0);$("insightBanner").classList.toggle("insight-positive",bal>0);
 let cats={};rows.filter(e=>e.type==="expense").forEach(e=>{const category=e.category||"Outros";cats[category]=(cats[category]||0)+Number(e.amount)});const allCategories=Object.entries(cats).sort((a,b)=>b[1]-a[1]);const totalCat=allCategories.reduce((sum,item)=>sum+item[1],0);const categoryColors=["#ff4d4f","#ff8a24","#f8c52b","#258cff","#a875f5","#8b9bb4"];let categoryData=allCategories;if(allCategories.length>6){const topFive=allCategories.slice(0,5),otherTotal=allCategories.slice(5).reduce((sum,item)=>sum+item[1],0);categoryData=[...topFive,["Outros",otherTotal]]}let angle=0;const gradientStops=categoryData.map(([name,value],i)=>{const start=angle;angle+=totalCat?value/totalCat*100:0;return categoryColors[i%categoryColors.length]+" "+start.toFixed(2)+"% "+angle.toFixed(2)+"%"}).join(",");$("categoryDonut").style.background=totalCat?"conic-gradient("+gradientStops+")":"conic-gradient(#24364a 0% 100%)";$("categoryDonutTotal").textContent=money(totalCat);$("categoryBars").innerHTML=categoryData.length?categoryData.map(([name,value],i)=>{const pct=totalCat?value/totalCat*100:0;return '<div class="expense-legend-row"><span class="expense-legend-dot" style="background:'+categoryColors[i%categoryColors.length]+'"></span><span class="expense-legend-name" title="'+esc(name)+'">'+esc(name)+'</span><strong>'+Math.round(pct)+'%</strong></div>'}).join(""):'<div class="empty">Sem despesas no período.</div>';
@@ -967,8 +967,8 @@ $("entryKind").addEventListener("change",toggleInstallments);$("monthSelect").ad
 $("monthPickerButton").addEventListener("click",()=>toggleMonthPicker());
 $("monthYearPrev").addEventListener("click",()=>{monthPickerYear--;drawMonthPicker()});
 $("monthYearNext").addEventListener("click",()=>{monthPickerYear++;drawMonthPicker()});
-$("monthPickerGrid").addEventListener("click",ev=>{const b=ev.target.closest("[data-month-value]");if(!b)return;$("monthSelect").value=b.dataset.monthValue;drawMonthPicker();toggleMonthPicker(false);render()});
-$("monthToday").addEventListener("click",()=>{$("monthSelect").value=defaultAnalysisMonth();drawMonthPicker();toggleMonthPicker(false);render()});
+$("monthPickerGrid").addEventListener("click",ev=>{const b=ev.target.closest("[data-month-value]");if(!b)return;autoMonthMode=false;$("monthSelect").value=b.dataset.monthValue;drawMonthPicker();toggleMonthPicker(false);render()});
+$("monthToday").addEventListener("click",()=>{autoMonthMode=true;selectedMonth=defaultAnalysisMonth();$("monthSelect").value=selectedMonth;drawMonthPicker();toggleMonthPicker(false);render()});
 $("monthClear").addEventListener("click",()=>{toggleMonthPicker(false)});
 document.addEventListener("click",ev=>{if(!$("monthPickerPanel").hidden&&!$("monthPickerPanel").parentElement.contains(ev.target))toggleMonthPicker(false)});
 document.addEventListener("keydown",ev=>{if(ev.key==="Escape"&&!$("monthPickerPanel").hidden)toggleMonthPicker(false)});
@@ -1065,7 +1065,7 @@ $("changePasswordForm").addEventListener("submit",async ev=>{
 
 let currentUser=null;
 async function startFinanceSession(session){
- currentUser=session.user;
+ currentUser=session.user;autoMonthMode=true;
  $("authGate").style.display="none";$("financeApp").style.display="block";
  try{await syncFromCloud(currentUser);selectedMonth=defaultAnalysisMonth();$("monthSelect").value=selectedMonth;drawMonthPicker();render();toast("Dados sincronizados com o Supabase.")}
  catch(err){$("authGate").style.display="grid";$("financeApp").style.display="none";$("authMessage").textContent="Falha ao carregar dados: "+(err.message||"verifique a configuração do banco.");console.error(err)}
@@ -1096,6 +1096,17 @@ $("authForm").addEventListener("submit",async ev=>{
  }
 });
 (async()=>{const {data,error}=await supabaseClient.auth.getSession();if(error){$("authMessage").textContent="Erro de autenticação: "+error.message;return}if(data.session)await startFinanceSession(data.session)})();
+
+// Mantém o período automático alinhado à virada do ciclo (dia 11), mesmo com a aba aberta.
+function refreshAutomaticMonth(){
+ if(!autoMonthMode||!currentUser||$("financeApp").style.display==="none")return;
+ const next=defaultAnalysisMonth();
+ if($("monthSelect").value!==next){selectedMonth=next;$("monthSelect").value=next;drawMonthPicker();render();}
+}
+window.addEventListener("focus",refreshAutomaticMonth);
+window.addEventListener("pageshow",refreshAutomaticMonth);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshAutomaticMonth()});
+setInterval(refreshAutomaticMonth,60000);
 
 /* Importação local de CSV de fatura: não usa API externa nem credenciais bancárias. */
 let invoiceImportRows=[];
