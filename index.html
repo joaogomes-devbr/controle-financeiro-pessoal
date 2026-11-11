@@ -1000,7 +1000,9 @@ function showView(viewId, presetType){
  window.scrollTo({top:0,behavior:"smooth"});
 }
 function renderLedgerViews(){
- const active=entries.filter(e=>activeFor(e,entryReferenceMonth(e,selectedMonth)));
+ // A lista de lançamentos mostra tudo que pertence ao mês-calendário selecionado.
+ // O deslocamento para o mês anterior vale apenas para o resumo da fatura do cartão.
+ const active=entries.filter(e=>activeFor(e,selectedMonth));
  const ins=active.filter(e=>e.type==="income"), outs=active.filter(e=>e.type==="expense");
  $("incomeBody").innerHTML=ins.map(e=>`<tr><td><div class="merchant"><div class="logo">${window.brandLogoHTML(e.name,e.logo||e.name.slice(0,2),e.category)}</div><span class="merchant-name">${esc(e.name)}</span></div></td><td>${esc(e.category)}</td><td class="amount income">${money(e.amount)}</td><td>${esc(e.month)}</td><td><div class="row-actions"><button class="icon-btn" onclick="editFromLedger('${e.id}')">Editar</button><button class="icon-btn" onclick="deleteEntry('${e.id}')">Excluir</button></div></td></tr>`).join("");
  $("expenseBody").innerHTML=outs.map(e=>`<tr><td><div class="merchant"><div class="logo">${window.brandLogoHTML(e.name,e.logo||e.name.slice(0,2),e.category)}</div><span class="merchant-name">${esc(e.name)}</span></div></td><td>${esc(e.category)}</td><td><span class="pill ${e.kind==="installment"?"installment":e.kind==="recurring"?"recurring":""}">${installmentLabel(e)}</span></td><td class="amount expense">${money(e.amount)}</td><td>${esc(e.payment||"—")}</td><td><div class="row-actions"><button class="icon-btn" onclick="editFromLedger('${e.id}')">Editar</button><button class="icon-btn" onclick="deleteEntry('${e.id}')">Excluir</button></div></td></tr>`).join("");
