@@ -836,8 +836,8 @@ const $=id=>document.getElementById(id);
 const money=n=>Number(n||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 const monthNames=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 function defaultAnalysisMonth(){
- const now=new Date(),base=new Date(now.getFullYear(),now.getMonth()+(now.getDate()>=11?1:0),1);
- return base.getFullYear()+"-"+String(base.getMonth()+1).padStart(2,"0");
+ const now=new Date();
+ return now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0");
 }
 let entries=[];let selectedMonth=defaultAnalysisMonth();let autoMonthMode=true;
 function financeStorageKey(){return currentUser?"painelFinanceiroEntries:"+currentUser.id:"painelFinanceiroEntries:guest"}
@@ -1097,7 +1097,7 @@ $("authForm").addEventListener("submit",async ev=>{
 });
 (async()=>{const {data,error}=await supabaseClient.auth.getSession();if(error){$("authMessage").textContent="Erro de autenticação: "+error.message;return}if(data.session)await startFinanceSession(data.session)})();
 
-// Mantém o período automático alinhado à virada do ciclo (dia 11), mesmo com a aba aberta.
+// Mantém o período automático no mês-calendário vigente, mesmo com a aba aberta.
 function refreshAutomaticMonth(){
  if(!autoMonthMode||!currentUser||$("financeApp").style.display==="none")return;
  const next=defaultAnalysisMonth();
